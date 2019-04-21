@@ -5,6 +5,9 @@
  */
 package techevents;
 
+import Dao.UserDao;
+import Entity.User;
+
 /**
  *
  * @author AYMEN
@@ -15,7 +18,10 @@ public class TechEvents {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        User user=new User("jeddy", "aymen", "tunis", "aymen@gmail.com", "123");
+        UserDao userDao=new UserDao();
+        userDao.insert(user);
     }
     
 }
