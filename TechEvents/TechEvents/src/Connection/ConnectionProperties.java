@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class ConnectionProperties {
 	
-	public static String url = "jdbc:mysql://localhost:3306/bd1";
+	public static String url = "jdbc:mysql://localhost:3306/techeventdb";
 	public static String username = "root";
 	public static String password = "";
 	private static Connection cnx = null ;
