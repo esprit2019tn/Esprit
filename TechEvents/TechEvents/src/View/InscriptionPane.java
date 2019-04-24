@@ -8,8 +8,11 @@ package View;
 import Dao.UserDao;
 import Entity.User;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -18,7 +21,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author AYMEN
  */
-public class InscriptionPane extends AnchorPane {
+public class InscriptionPane extends AnchorPane implements Initializable{
     
     @FXML
     private PasswordField password;
@@ -64,5 +67,10 @@ public class InscriptionPane extends AnchorPane {
         userDao.insert(user);
         System.out.println(nom.getText()+" "+prenom.getText()+" "+adresse.getText()+" "+email.getText()+" "+password.getText()+"");
         initialize();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
