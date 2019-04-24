@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package View;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,11 +13,11 @@ import javafx.stage.Stage;
  *
  * @author AYMEN
  */
-public class Inscription extends Application {
+public class Authentification extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        InscriptionPane root = new InscriptionPane();
+        AuthentificationPane root = new AuthentificationPane();
         
         Scene scene = new Scene(root);
         

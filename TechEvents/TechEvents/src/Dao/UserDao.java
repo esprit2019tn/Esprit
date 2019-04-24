@@ -81,8 +81,41 @@ public class UserDao implements IDao<User> {
     }
 
     @Override
-    public User findById() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public User findById(String id) {
+		User user = null;
+		try {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs=stmt.executeQuery("SELECT * FROM user WHERE "
+                                + "idUser='"+id+"'");  
+			while (rs.next()){
+			 user = new User(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));	
+			}
+			cnx.close();  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return user;
+    }
+    
+    @Override
+    public User findUser(String email,String password) {
+		User user = null;
+		try {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs=stmt.executeQuery("SELECT * FROM user WHERE "
+                                + "password='"+password+"'"
+                                + "and email='"+email+"'");  
+			while (rs.next()){
+			 user = new User(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+			
+			}
+			cnx.close();  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return user;
     }
     
     

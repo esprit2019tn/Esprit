@@ -1,6 +1,5 @@
 package Dao;
 
-import Entity.User;
 import java.util.List;
 
 public interface IDao<T>{
@@ -9,6 +8,9 @@ public interface IDao<T>{
 	public void delete(int id);
 	public void update(T obj);
 	public List<T> findAll();
-	public T findById();
+	public T findById(String id);
+        public T findUser(String email,String password);
+
+        
 
 }

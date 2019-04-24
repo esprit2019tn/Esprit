@@ -5,11 +5,8 @@
  */
 package techevents;
 
-import Dao.UserDao;
-import Entity.User;
-import Controller.Inscription;
-import javafx.application.Application;
-import javafx.stage.Stage;
+import View.Authentification;
+import View.Inscription;
 
 /**
  *
@@ -21,8 +18,9 @@ public class TechEvents {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
-          Inscription.main(args);
+           Authentification.main(args);
+      
+         // Inscription.main(args);
 
     }
 
