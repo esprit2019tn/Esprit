@@ -27,7 +27,7 @@ public class TechEvents extends Application{
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../View/AccueilEvent.fxml"));
         Scene scene = new Scene(root);
-            stage.setTitle("TechEvent");
+            stage.setTitle("TechEvent"); 
 
     // Set the application icon.
     stage.getIcons().add(new Image("file:resources/img/TechEvent.png"));
