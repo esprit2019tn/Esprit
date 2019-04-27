@@ -7,6 +7,13 @@ public class Event {
 
 	public Event() {
 	}
+
+    public Event(String titre, String desc) {
+        this.titre = titre;
+        this.desc = desc;
+    }
+        
+        
 	private int idEvent;
 	private String titre;
 	private String desc;
