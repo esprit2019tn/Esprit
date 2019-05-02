@@ -7,21 +7,60 @@ public class Event {
 
 	public Event() {
 	}
-
-    public Event(String titre, String desc) {
-        this.titre = titre;
-        this.desc = desc;
-    }
-        
-        
 	private int idEvent;
 	private String titre;
 	private String desc;
 	private Long capaciteMax;
 	private Long capaciteMin;
-	private Date dateEvent;
+	private String dateEvent;
 	public Long duree;
 	private Localisation localisation;
+
+    public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree, Localisation localisation) {
+        this.idEvent = idEvent;
+        this.titre = titre;
+        this.desc = desc;
+        this.capaciteMax = capaciteMax;
+        this.capaciteMin = capaciteMin;
+        this.dateEvent = dateEvent;
+        this.duree = duree;
+        this.localisation = localisation;
+    }
+
+    public Event(String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree, Localisation localisation) {
+        this.titre = titre;
+        this.desc = desc;
+        this.capaciteMax = capaciteMax;
+        this.capaciteMin = capaciteMin;
+        this.dateEvent = dateEvent;
+        this.duree = duree;
+        this.localisation = localisation;
+    }
+
+    public Event(String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent) {
+        this.titre = titre;
+        this.desc = desc;
+        this.capaciteMax = capaciteMax;
+        this.capaciteMin = capaciteMin;
+        this.dateEvent = dateEvent;
+    }
+
+    public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree) {
+        this.idEvent = idEvent;
+        this.titre = titre;
+        this.desc = desc;
+        this.capaciteMax = capaciteMax;
+        this.capaciteMin = capaciteMin;
+        this.dateEvent = dateEvent;
+        this.duree = duree;
+    }
+
+    public Event(String titre, String desc) {
+        this.titre = titre;
+        this.desc = desc;
+    }
+     
+    
 
     public int getIdEvent() {
         return idEvent;
@@ -63,11 +102,11 @@ public class Event {
         this.capaciteMin = capaciteMin;
     }
 
-    public Date getDateEvent() {
+    public String getDateEvent() {
         return dateEvent;
     }
 
-    public void setDateEvent(Date dateEvent) {
+    public void setDateEvent(String dateEvent) {
         this.dateEvent = dateEvent;
     }
 

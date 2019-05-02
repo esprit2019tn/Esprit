@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vbox" prefHeight="390.0" prefWidth="203.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Separator prefWidth="200.0" />
+      <ImageView fitHeight="166.0" fitWidth="203.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/evolusi.jpg" />
+         </image>
+      </ImageView>
+      <JFXButton buttonType="RAISED" prefHeight="62.0" prefWidth="206.0" style="-fx-background-color: #E0F2F7;" text="Gérer utilisateur">
+         <ripplerFill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </RadialGradient>
+         </ripplerFill>
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <Separator prefWidth="200.0" />
+      <JFXButton buttonType="RAISED" prefHeight="59.0" prefWidth="215.0" style="-fx-background-color: #E0F2F7;" text="Gérer événement">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <Separator prefWidth="200.0" />
+      <JFXButton buttonType="RAISED" prefHeight="59.0" prefWidth="215.0" style="-fx-background-color: #E0F2F7;" text="Gérer publication">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <Separator prefWidth="200.0" />
+      <JFXButton buttonType="RAISED" prefHeight="59.0" prefWidth="215.0" style="-fx-background-color: #E0F2F7;" text="Gérer réclamation">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+   </children>
+</VBox>
