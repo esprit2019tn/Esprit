@@ -12,6 +12,27 @@ public class Reclamation {
 	private User user;
 	private Event event;
 
+    public Reclamation(int idReclam, String texte, User user, Event event) {
+        this.idReclam = idReclam;
+        this.texte = texte;
+        this.user = user;
+        this.event = event;
+    }
+
+    public Reclamation(String texte, User user, Event event) {
+        this.texte = texte;
+        this.user = user;
+        this.event = event;
+    }
+
+    public Reclamation(int idReclam, User user, Event event) {
+        this.idReclam = idReclam;
+        this.user = user;
+        this.event = event;
+    }
+
+        
+        
     public int getIdReclam() {
         return idReclam;
     }
