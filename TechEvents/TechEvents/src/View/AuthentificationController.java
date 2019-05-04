@@ -62,11 +62,24 @@ public class AuthentificationController implements Initializable {
        
               UserDao userDao=new UserDao();
         User user=userDao.findUser(email.getText(), password.getText());
-        if(user!=null){
-            Errors.setText("connecté avec succès");
+        if(user==null){
+             Errors.setText("Email ou mot de passe incorrect");
         }
         else{
-             Errors.setText("Email ou mot de passe incorrect");
+            if(!user.getConfirmation()){
+                FXMLLoader loader=new FXMLLoader(getClass().getResource("ConfirmationAdresse.fxml"));
+                Parent home_page_parent = (Parent) loader.load();
+                 ConfirmationAdresseController confAdrController=loader.getController();
+                 confAdrController.setEmail(email.getText());
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        app_stage.hide();
+                        app_stage.setScene(home_page_scene);
+                        app_stage.show(); 
+            }
+            else if(!user.getActive()){
+                Errors.setText("Votre inscription est en cours de validation");
+            }
 
         }
     }
