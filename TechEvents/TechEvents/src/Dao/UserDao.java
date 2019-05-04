@@ -151,11 +151,7 @@ public class UserDao implements IDao<User> {
                          "SET confirmation =1"+
                          "where email='"+email+"'"
                         );
-                        
-			//while (rs.next()){
-			//code=rs.getString("confirmationCode");
-			//}
-			//cnx.close();  
+ 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
