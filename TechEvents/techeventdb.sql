@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 21 avr. 2019 à 16:05
+-- Généré le :  sam. 04 mai 2019 à 12:57
 -- Version du serveur :  5.7.24
 -- Version de PHP :  7.2.14
 
@@ -90,7 +90,14 @@ CREATE TABLE IF NOT EXISTS `localisation` (
   `ville` varchar(20) NOT NULL,
   `adresse` text NOT NULL,
   PRIMARY KEY (`idLoc`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `localisation`
+--
+
+INSERT INTO `localisation` (`idLoc`, `ville`, `adresse`) VALUES
+(1, 'tunis', 'chargia 2');
 
 -- --------------------------------------------------------
 
@@ -149,7 +156,14 @@ CREATE TABLE IF NOT EXISTS `sponsor` (
   `nom` varchar(20) NOT NULL,
   `logo` text NOT NULL,
   PRIMARY KEY (`idSponsor`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `sponsor`
+--
+
+INSERT INTO `sponsor` (`idSponsor`, `nom`, `logo`) VALUES
+(1, 'testspons', '');
 
 -- --------------------------------------------------------
 
@@ -162,21 +176,30 @@ CREATE TABLE IF NOT EXISTS `user` (
   `idUser` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(20) NOT NULL,
   `prenom` varchar(20) NOT NULL,
+  `dateNaiss` date DEFAULT NULL,
+  `sexe` varchar(10) NOT NULL,
   `adresse` text NOT NULL,
   `email` text NOT NULL,
   `password` text NOT NULL,
+  `role` varchar(20) NOT NULL DEFAULT 'SimpleUser',
+  `confirmationCode` varchar(20) NOT NULL,
+  `confirmation` tinyint(1) NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`idUser`, `nom`, `prenom`, `adresse`, `email`, `password`) VALUES
-(1, 'jeddy', 'aymen', 'tunis', 'aymen@gmail.com', '123'),
-(2, 'ben salah', 'ahmed', 'tunis', 'ahmed@gmail.com', '123456'),
-(3, 'test', 'test', 'test', 'test@test.com', '7845'),
-(4, 'test2', 'test2', 'test2', 'test2', 'test2');
+INSERT INTO `user` (`idUser`, `nom`, `prenom`, `dateNaiss`, `sexe`, `adresse`, `email`, `password`, `role`, `confirmationCode`, `confirmation`, `active`) VALUES
+(1, 'jeddy', 'aymen', NULL, '', 'tunis', 'aymen@gmail.com', '123', '', '', 0, 0),
+(2, 'ben salah', 'ahmed', NULL, '', 'tunis', 'ahmed@gmail.com', '123456', '', '', 0, 0),
+(3, 'test', 'test', NULL, '', 'test', 'test@test.com', '7845', '', '', 0, 0),
+(4, 'test2', 'test2', NULL, '', 'test2', 'test2', 'test2', '', '', 0, 0),
+(5, 'ahmmed', 'ben ahmed ', NULL, '', 'tunis', 'ahmend@gmail.com', '123456', '', '', 0, 0),
+(6, 'admin', 'admin', '1995-06-06', 'Homme', 'Tunis', 'aymen.jeddey@esprit.tn', '123456', 'Admin', '', 1, 1),
+(10, 'esprit7', 'esprit7', '2019-05-14', 'Homme', 'chargia 2', 'aymenjeddey@gmail.com', '123', 'SimpleUser', '251124', 0, 0);
 
 --
 -- Contraintes pour les tables déchargées
@@ -200,8 +223,7 @@ ALTER TABLE `commentaire`
 --
 ALTER TABLE `evenement`
   ADD CONSTRAINT `evenement_ibfk_1` FOREIGN KEY (`idLoc`) REFERENCES `localisation` (`idLoc`),
-  ADD CONSTRAINT `evenement_ibfk_2` FOREIGN KEY (`idSponsor`) REFERENCES `sponsor` (`idSponsor`),
-  ADD CONSTRAINT `evenement_ibfk_3` FOREIGN KEY (`idEvent`) REFERENCES `reclamation` (`idEvent`);
+  ADD CONSTRAINT `evenement_ibfk_2` FOREIGN KEY (`idSponsor`) REFERENCES `sponsor` (`idSponsor`);
 
 --
 -- Contraintes pour la table `organisation`
@@ -214,7 +236,8 @@ ALTER TABLE `organisation`
 -- Contraintes pour la table `reclamation`
 --
 ALTER TABLE `reclamation`
-  ADD CONSTRAINT `reclamation_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`);
+  ADD CONSTRAINT `reclamation_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`),
+  ADD CONSTRAINT `reclamation_ibfk_2` FOREIGN KEY (`idEvent`) REFERENCES `evenement` (`idEvent`);
 
 --
 -- Contraintes pour la table `reservation`
