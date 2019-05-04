@@ -48,13 +48,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
@@ -119,6 +124,10 @@ public class CreteEVTController implements Initializable {
     private JFXButton Annuler1;
     @FXML
     private JFXButton Annuler11;
+//    @FXML
+//    private ScrollBar sc;
+     @FXML
+    private AnchorPane achp1;
 
     private boolean nav = false;
     EventDao uda = new EventDao();
@@ -148,7 +157,23 @@ public class CreteEVTController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(CreteEVTController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+       
     }
+    
+//    public void scrollable(){
+//         achp1.setTranslateY(20);
+//        
+//        sc.setLayoutX(800-sc.getWidth());
+//        sc.setMin(0);
+//        sc.setOrientation(Orientation.VERTICAL);
+//        sc.setPrefHeight(180);
+//        sc.setMax(360);
+//        
+//        sc.valueProperty().addListener(event->{
+//            achp1.setTranslateY(20+sc.getValue());
+//        });
+//    }
 
 //        public ObservableList<Event> list = FXCollections.observableArrayList(
 //                new Event("", "", Long.valueOf(3), Long.valueOf(2), "")
@@ -168,15 +193,21 @@ public class CreteEVTController implements Initializable {
         cptmax.setCellValueFactory(new PropertyValueFactory<Event, Integer>("capaciteMax"));
         cptmin.setCellValueFactory(new PropertyValueFactory<Event, Integer>("capaciteMin"));
         clndescri.setCellValueFactory(new PropertyValueFactory<Event, String>("desc"));
-
-        clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
-        clntitre.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitre(e.getNewValue());
-        });
-        table.setEditable(true);
+        
         table.setItems(list);
+        table.setEditable(true);
+        clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
 
     }
+    
+        public void editable(CellEditEvent ce){
+            Event e = table.getSelectionModel().getSelectedItem();
+            e.setTitre(ce.getNewValue().toString());
+          //  clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
+//            clntitre.setOnEditCommit(e -> {
+//                e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitre(e.getNewValue());
+//            });        
+        }
 
     @FXML
     public void create() {
