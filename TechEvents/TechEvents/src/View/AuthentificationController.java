@@ -80,6 +80,15 @@ public class AuthentificationController implements Initializable {
             else if(!user.getActive()){
                 Errors.setText("Votre inscription est en cours de validation");
             }
+            else{
+                Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationUser.fxml"));
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+                
+            }
 
         }
     }

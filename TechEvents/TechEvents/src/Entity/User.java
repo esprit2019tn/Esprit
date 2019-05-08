@@ -1,6 +1,9 @@
 package Entity;
 
 import java.util.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.StringPropertyBase;
 
 public class User {
 	private int id;
@@ -164,6 +167,18 @@ public class User {
 
     public void setEvents(ArrayList<Event> events) {
         this.events = events;
+    }
+    
+    
+    
+    public StringProperty firstNameProperty() {
+             return new SimpleStringProperty(nom);
+    }
+
+
+
+    public StringProperty lastNameProperty() {
+             return new SimpleStringProperty(prenom);
     }
         
         

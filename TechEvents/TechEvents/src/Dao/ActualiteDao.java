@@ -67,7 +67,7 @@ public class ActualiteDao implements IDao<Actualite> {
             stmt.executeUpdate("update act set "
                     + "nom = '" + obj.getNumActu() + "' ,"
                     + "prenom = '" + obj.getDesc() + "' ,"
-                    + "where id = " + obj.getDateActualite() + "");
+                    + "where id = " + obj.getDateActu() + "");
             System.out.println("Utilisateur N� " + obj.getNumActu() + " a �t� modifi�");
         } catch (SQLException e) {
             // TODO Auto-generated catch block

@@ -84,6 +84,25 @@ public class UserDao implements IDao<User> {
 		} 
                 return lstuser;
     }
+    public List<User> findUserToValid() {
+		// TODO Auto-generated method stub
+		List<User> lstuser = new ArrayList<User>();
+		try {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs=stmt.executeQuery("select * from user where active=0 ");  
+			while (rs.next()){
+				System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+			User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getDate(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),RoleUser.valueOf(rs.getString(9)), rs.getString(10),rs.getBoolean(11),rs.getBoolean(11));
+			lstuser.add(user);
+			
+			}
+			//cnx.close();  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return lstuser;
+    }
 
     @Override
     public User findById(String id) {
@@ -147,9 +166,27 @@ public class UserDao implements IDao<User> {
                                 +"SET confirmation ="+Boolean.TRUE
                                 +"where email='"+email+"'");     */
                         rs=stmt.execute(
-                         "UPDATE user " +
-                         "SET confirmation =1"+
-                         "where email='"+email+"'"
+                         "UPDATE user SET confirmation =1 "+
+                         " where email='"+email+"'"
+                        );
+ 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return rs;
+    }
+        
+        public Boolean setValidationUser(String email) {
+            Boolean rs=false;
+		try {
+			Statement stmt = cnx.createStatement();
+			/* rs=stmt.execute("UPDATE user "
+                                +"SET confirmation ="+Boolean.TRUE
+                                +"where email='"+email+"'");     */
+                        rs=stmt.execute(
+                         "UPDATE user SET active =1 "+
+                         " where email='"+email+"'"
                         );
  
 		} catch (SQLException e) {
