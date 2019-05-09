@@ -5,7 +5,7 @@
  */
 package View;
 
-import Controller.EmailSend;
+import Metier.EmailSend;
 import Dao.UserDao;
 import Entity.RoleUser;
 import Entity.User;
@@ -27,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -67,6 +68,9 @@ public class InscriptionController implements Initializable {
 
     @FXML
     private JFXRadioButton femme;
+    
+    @FXML
+    private Label erreur;
 
     ToggleGroup groupSexe=new ToggleGroup();
    /**
@@ -82,6 +86,9 @@ public class InscriptionController implements Initializable {
     
         @FXML
     void onClick(ActionEvent event) throws IOException {
+        
+        if(password.getText().equals(password1.getText())){
+        
         String sexe=null;
         if(homme.isSelected())
             sexe="Homme";
@@ -111,8 +118,13 @@ public class InscriptionController implements Initializable {
                 app_stage.hide();
                 app_stage.setScene(home_page_scene);
                 app_stage.show(); 
+        }
+        else{
+            erreur.setText("Les mots de passe ne correspondent pas");
+        }
                
         
     }
+    
     
 }

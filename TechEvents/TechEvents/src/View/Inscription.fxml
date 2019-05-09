@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -24,5 +25,6 @@
       <JFXDatePicker fx:id="dateNaiss" layoutX="49.0" layoutY="181.0" prefHeight="30.0" prefWidth="270.0" promptText="Date de naissance" />
       <JFXRadioButton fx:id="homme" layoutX="412.0" layoutY="181.0" prefHeight="30.0" prefWidth="102.0" text="Homme" />
       <JFXRadioButton fx:id="femme" layoutX="517.0" layoutY="181.0" prefHeight="30.0" prefWidth="102.0" text="Femme" />
+      <Label fx:id="erreur" layoutX="170.0" layoutY="352.0" prefHeight="20.0" prefWidth="371.0" textFill="#ff6354" />
    </children> 
 </AnchorPane>

@@ -6,10 +6,13 @@
 package View;
 
 import Dao.UserDao;
+import Entity.RoleUser;
 import Entity.User;
+import Metier.UserSession;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,15 +54,7 @@ public class AuthentificationController implements Initializable {
     }    
     
     @FXML
-    void connexion(ActionEvent event) throws IOException {
-       /* Parent home_page_parent = FXMLLoader.load(getClass().getResource("Authentification.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                app_stage.hide();
-                app_stage.setScene(home_page_scene);
-                app_stage.show();  */
-       
-       
+    void connexion(ActionEvent event) throws IOException {     
               UserDao userDao=new UserDao();
         User user=userDao.findUser(email.getText(), password.getText());
         if(user==null){
@@ -80,15 +75,28 @@ public class AuthentificationController implements Initializable {
             else if(!user.getActive()){
                 Errors.setText("Votre inscription est en cours de validation");
             }
-            else{
+            else if(user.getRole().equals(RoleUser.Admin)){
+                UserSession.createUserSession(user);
                 Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationUser.fxml"));
                 Scene home_page_scene = new Scene(home_page_parent);
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.hide();
                 app_stage.setScene(home_page_scene);
-                app_stage.show(); 
+                app_stage.show();       
+            }
+            else if(user.getRole().equals(RoleUser.SimpleUser)){
+                UserSession.createUserSession(user);
+                FXMLLoader loader=new FXMLLoader(getClass().getResource("AccueilEvent.fxml"));
+                Parent home_page_parent = (Parent) loader.load();
+                 AccueilEventController confAdrController=loader.getController();
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        app_stage.hide();
+                        app_stage.setScene(home_page_scene);
+                        app_stage.show(); 
                 
             }
+            
 
         }
     }
@@ -104,5 +112,6 @@ public class AuthentificationController implements Initializable {
 
     }
     
+
     
 }

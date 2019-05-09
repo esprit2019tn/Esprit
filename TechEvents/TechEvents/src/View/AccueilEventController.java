@@ -6,21 +6,24 @@
 package View;
 
 import Entity.Event;
+import Entity.User;
+import Metier.UserSession;
+import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -34,8 +37,20 @@ import javafx.util.Callback;
  * @author AYMEN
  */
 public class AccueilEventController implements Initializable {
+    
+    @FXML
+    private JFXButton btnInscription;
 
-        @FXML
+    @FXML
+    private JFXButton btnDeconnexion;
+    
+    @FXML
+    private JFXButton btnConnexion;
+    
+    @FXML
+    private Label userName;
+    
+    @FXML
     private ListView<?> listView;
     /**
      * Initializes the controller class.
@@ -60,6 +75,16 @@ public class AccueilEventController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        User user=UserSession.getUserSession();
+        if(!user.getNom().equals(""))
+        {
+            btnConnexion.setVisible(false);
+            btnInscription.setVisible(false);
+            btnDeconnexion.setVisible(true);
+            userName.setVisible(true);
+            userName.setText("Bienvenue "+user.getNom()+" "+user.getPrenom());
+            
+        }
         
 
     
@@ -98,4 +123,21 @@ public class AccueilEventController implements Initializable {
 
         }   
      }
+
+     
+    @FXML
+    void deconnexion(ActionEvent event) throws BackingStoreException, IOException {
+        UserSession.destroyUserSession();
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+        
+
+    }
+
+     
+     
 }

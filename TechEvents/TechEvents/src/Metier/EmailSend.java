@@ -1,5 +1,5 @@
 
-package Controller;
+package Metier;
 
 /**
  *
