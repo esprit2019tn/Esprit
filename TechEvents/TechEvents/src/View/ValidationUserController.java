@@ -36,6 +36,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -86,6 +87,10 @@ public class ValidationUserController implements Initializable {
     
         @FXML
     private Label label;
+        
+    @FXML
+    private Pane menu;
+    
 
 
 
@@ -177,6 +182,65 @@ void validUser(ActionEvent event) throws IOException {
                 app_stage.setScene(home_page_scene);
                 app_stage.show();  
     }
+
+
+
+
+    @FXML
+    void splitMenu(ActionEvent event) {
+        if(menu.isVisible())
+            menu.setVisible(false);
+        else
+            menu.setVisible(true);
+    }
+    
+    
+    
+    @FXML
+    void btnGrEvent(ActionEvent event) throws IOException {
+    Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationEvent.fxml"));
+    Scene home_page_scene = new Scene(home_page_parent);
+    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+
+    }
+
+    @FXML
+    void btnGrPubli(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnGrRec(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnGrUser(ActionEvent event) throws IOException {
+    Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationUser.fxml"));
+    Scene home_page_scene = new Scene(home_page_parent);
+    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+
+    }
+
+    @FXML
+    void btnHome(ActionEvent event) throws IOException {
+    Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
+    Scene home_page_scene = new Scene(home_page_parent);
+    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+
+    }
+
+
+    
 
     
 }

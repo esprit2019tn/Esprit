@@ -1,6 +1,8 @@
 package Entity;
 
 import java.util.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 
 public class Event {
@@ -124,6 +126,14 @@ public class Event {
 
     public void setLocalisation(Localisation localisation) {
         this.localisation = localisation;
+    }
+    
+    public StringProperty titreProperty() {
+        return new SimpleStringProperty(titre);
+    }
+    
+     public StringProperty descProperty() {
+        return new SimpleStringProperty(desc);
     }
         
         
