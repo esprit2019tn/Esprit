@@ -7,16 +7,25 @@ package View;
 
 import Dao.UserDao;
 import Entity.User;
+import Metier.UserSession;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -30,6 +39,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -41,11 +51,16 @@ public class ValidationUserController implements Initializable {
     private ObservableList<User> personData = FXCollections.observableArrayList();
 
     @FXML
+    private Label userName;
+    
+    @FXML
     private TableView<User> personTable;
     @FXML
     private TableColumn<User, String> firstNameColumn;
     @FXML
     private TableColumn<User, String> lastNameColumn;
+    @FXML
+    private TableColumn<User, String> emailColumn;
 
     @FXML
     private Label prenomLabel;
@@ -67,6 +82,20 @@ public class ValidationUserController implements Initializable {
     
     @FXML
     private JFXListView<Label> listview;
+    ////////////////////////////////////////////////////////////
+    
+        @FXML
+    private Label label;
+
+
+
+
+
+
+
+
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -83,7 +112,13 @@ public class ValidationUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setTable();
+        try {
+            if(UserSession.verifUserSession())
+                userName.setText(UserSession.getUserSession().getNom()+" "+UserSession.getUserSession().getPrenom());
+                setTable();
+        } catch (BackingStoreException ex) {
+            Logger.getLogger(ValidationUserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }   
     
@@ -91,7 +126,9 @@ public class ValidationUserController implements Initializable {
                // Initialize the person table with the two columns.
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-       getPersonData();
+        emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+
+        getPersonData();
         personTable.getItems().clear();
         personTable.setItems(personData);
         
@@ -130,10 +167,15 @@ public class ValidationUserController implements Initializable {
 
         
 @FXML
-void validUser(ActionEvent event) {
+void validUser(ActionEvent event) throws IOException {
     UserDao userDao=new UserDao();
     userDao.setValidationUser(emailLabel.getText());
-    setTable();
+    Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationUser.fxml"));
+    Scene home_page_scene = new Scene(home_page_parent);
+    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();  
     }
 
     

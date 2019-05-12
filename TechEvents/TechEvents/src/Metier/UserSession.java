@@ -25,6 +25,7 @@ public class UserSession {
         userPreferences.putInt("id", user.getId());
         userPreferences.put("nom", user.getNom());
         userPreferences.put("prenom", user.getPrenom());
+        userPreferences.put("email", user.getEmail());
     }
     
     
@@ -34,14 +35,22 @@ public class UserSession {
         user.setId(userPreferences.getInt("id",0));
         user.setNom(userPreferences.get("nom",""));
         user.setPrenom(userPreferences.get("prenom",""));
+        user.setEmail(userPreferences.get("email",""));
+
         return  user;
     }
     
-        public static void destroyUserSession() throws BackingStoreException{ 
+    public static void destroyUserSession() throws BackingStoreException{ 
         Preferences userPreferences = Preferences.userRoot();
         userPreferences.clear();
     }
-    
+        
+    public static Boolean verifUserSession() throws BackingStoreException{ 
+        Boolean res=true;
+            if(getUserSession().getNom().equals("")||getUserSession().getNom().equals(""))
+                res=false;          
+        return res;
+    }    
     
     
     

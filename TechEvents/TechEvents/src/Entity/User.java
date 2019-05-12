@@ -180,6 +180,10 @@ public class User {
     public StringProperty lastNameProperty() {
              return new SimpleStringProperty(prenom);
     }
+    
+        public StringProperty emailProperty() {
+             return new SimpleStringProperty(email);
+    }
         
         
         
