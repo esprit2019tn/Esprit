@@ -6,10 +6,11 @@
 package View;
 
 import Dao.EventDao;
+import Dao.UserDao;
 import Entity.Event;
 import Entity.User;
 import Metier.UserSession;
-import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,44 +37,45 @@ import javafx.stage.Stage;
  *
  * @author AYMEN
  */
-public class AccueilEventController implements Initializable {
+public class ValidationEventController implements Initializable {
     
-     private ObservableList<Event> eventData = FXCollections.observableArrayList();
-
-    @FXML
-    private Pane userPane;
+        private ObservableList<Event> eventData = FXCollections.observableArrayList();
 
     @FXML
     private Label userName;
+    
+
+
 
     @FXML
-    private JFXButton btnInscription;
+    private TableView<Event> eventTable;
 
     @FXML
-    private JFXButton btnConnexion;
+    private TableColumn<Event,String> titreColumn;
 
     @FXML
-    private JFXButton btnDeconnexion;
+    private TableColumn<Event,String>  descriptionColumn;
 
     @FXML
-    private TableView<?> eventTable;
+    private Label titreLabel;
 
     @FXML
-    private TableColumn<?, ?> titreColumn;
+    private Label descriptionLabel;
 
     @FXML
-    private TableColumn<?, ?> descriptionColumn;
+    private Label dateEventLabel;
+
+    @FXML
+    private Label capaciteMaxLabel;
+
+    @FXML
+    private Label capaciteMinLabel;
+
+    @FXML
+    private Label dureeLabel;
 
     @FXML
     private Pane menu;
-    
-    ////////////////////////////////
-
-
-
-
-
-    
 
 
     /**
@@ -95,19 +97,6 @@ public class AccueilEventController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        User user=UserSession.getUserSession();
-        if(!user.getNom().equals(""))
-        {
-            btnConnexion.setVisible(false);
-            btnInscription.setVisible(false);
-            btnDeconnexion.setVisible(true);
-            userName.setVisible(true);
-            userName.setText("Bienvenue "+user.getNom()+" "+user.getPrenom());
-            
-        }
-        
-        
         try {
             if(UserSession.verifUserSession())
                 userName.setText(UserSession.getUserSession().getNom()+" "+UserSession.getUserSession().getPrenom());
@@ -119,22 +108,46 @@ public class AccueilEventController implements Initializable {
     }   
     
     public void setTable(){
-     /*          // Initialize the person table with the two columns.
+               // Initialize the person table with the two columns.
         titreColumn.setCellValueFactory(cellData -> cellData.getValue().titreProperty());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descProperty());
 
         getPersonData();
         eventTable.getItems().clear();
         eventTable.setItems(eventData);
-        */
+        
 
+        
+        // Clear person details.
+        showPersonDetails(null);
 
+        // Listen for selection changes and show the person details when changed.
+        eventTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showPersonDetails(newValue)); 
     }
     
     
     
     
-
+        private void showPersonDetails(Event event) {
+        if (event != null) {
+            // Fill the labels with info from the person object.
+            titreLabel.setText(event.getTitre());
+            descriptionLabel.setText(event.getDesc());
+            capaciteMaxLabel.setText(event.getCapaciteMax().toString());
+            capaciteMinLabel.setText(event.getCapaciteMin().toString());
+            dateEventLabel.setText(event.getDateEvent().toString());
+            dureeLabel.setText(event.getDuree().toString());
+        } else {
+            // Person is null, remove all the text.
+            titreLabel.setText("");
+            descriptionLabel.setText("");
+            capaciteMaxLabel.setText("");
+            capaciteMinLabel.setText("");
+            dateEventLabel.setText("");
+            dureeLabel.setText("");
+        }
+    }
 
         
 @FXML
@@ -158,41 +171,6 @@ void validUser(ActionEvent event) throws IOException {
             menu.setVisible(false);
         else
             menu.setVisible(true);
-    }
-    
-    
-    
-    @FXML
-    void connexion(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Authentification.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                app_stage.hide();
-                app_stage.setScene(home_page_scene);
-                app_stage.show();  
-    }
-
-    @FXML
-    void inscription(ActionEvent event) throws IOException {
-                Parent home_page_parent = FXMLLoader.load(getClass().getResource("Inscription.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                app_stage.hide();
-                app_stage.setScene(home_page_scene);
-                app_stage.show(); 
-
-    } 
-    @FXML
-    void deconnexion(ActionEvent event) throws BackingStoreException, IOException {
-        UserSession.destroyUserSession();
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                app_stage.hide();
-                app_stage.setScene(home_page_scene);
-                app_stage.show(); 
-        
-
     }
 
     
