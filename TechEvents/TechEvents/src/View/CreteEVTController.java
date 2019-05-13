@@ -41,6 +41,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+<<<<<<< HEAD
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -51,9 +52,20 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+=======
+import javafx.geometry.Orientation;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TreeTableColumn;
+>>>>>>> eb045fb00ac91d979ade4862295df94e27facc92
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
@@ -123,10 +135,17 @@ public class CreteEVTController implements Initializable {
     private JFXButton Annuler1;
     @FXML
     private JFXButton Annuler11;
+<<<<<<< HEAD
     @FXML
     private TreeTableView<Event> treetable;
     @FXML
     private TreeTableColumn<Event, Integer> col1;
+=======
+//    @FXML
+//    private ScrollBar sc;
+     @FXML
+    private AnchorPane achp1;
+>>>>>>> eb045fb00ac91d979ade4862295df94e27facc92
 
     private boolean nav = false;
     EventDao uda = new EventDao();
@@ -160,6 +179,7 @@ public class CreteEVTController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(CreteEVTController.class.getName()).log(Level.SEVERE, null, ex);
         }
+<<<<<<< HEAD
         table.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -179,6 +199,25 @@ public class CreteEVTController implements Initializable {
     }
 });
     }
+=======
+
+       
+    }
+    
+//    public void scrollable(){
+//         achp1.setTranslateY(20);
+//        
+//        sc.setLayoutX(800-sc.getWidth());
+//        sc.setMin(0);
+//        sc.setOrientation(Orientation.VERTICAL);
+//        sc.setPrefHeight(180);
+//        sc.setMax(360);
+//        
+//        sc.valueProperty().addListener(event->{
+//            achp1.setTranslateY(20+sc.getValue());
+//        });
+//    }
+>>>>>>> eb045fb00ac91d979ade4862295df94e27facc92
 
 //        public ObservableList<Event> list = FXCollections.observableArrayList(
 //                new Event("", "", Long.valueOf(3), Long.valueOf(2), "")
@@ -196,6 +235,7 @@ public class CreteEVTController implements Initializable {
         clntitre.setCellValueFactory(new PropertyValueFactory<Event, String>("titre"));
         clndate.setCellValueFactory(new PropertyValueFactory<Event, String>("dateEvent"));
         clnduree.setCellValueFactory(new PropertyValueFactory<Event, Integer>("duree"));
+<<<<<<< HEAD
         cptmax.setCellValueFactory(new PropertyValueFactory<>("capaciteMax"));
 
         cptmin.setCellValueFactory(new PropertyValueFactory<>("capaciteMin"));
@@ -297,6 +337,15 @@ public class CreteEVTController implements Initializable {
         list.clear();
         list();
     }
+=======
+        cptmax.setCellValueFactory(new PropertyValueFactory<Event, Integer>("capaciteMax"));
+        cptmin.setCellValueFactory(new PropertyValueFactory<Event, Integer>("capaciteMin"));
+        clndescri.setCellValueFactory(new PropertyValueFactory<Event, String>("desc"));
+        
+        table.setItems(list);
+        table.setEditable(true);
+        clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
+>>>>>>> eb045fb00ac91d979ade4862295df94e27facc92
 
     @FXML
     public void changecptmax(CellEditEvent cv) {
@@ -327,6 +376,15 @@ public class CreteEVTController implements Initializable {
         list.clear();
         list();
     }
+    
+        public void editable(CellEditEvent ce){
+            Event e = table.getSelectionModel().getSelectedItem();
+            e.setTitre(ce.getNewValue().toString());
+          //  clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
+//            clntitre.setOnEditCommit(e -> {
+//                e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitre(e.getNewValue());
+//            });        
+        }
 
     @FXML
     public void create() {
