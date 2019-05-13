@@ -9,21 +9,15 @@ import Dao.EventDao;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import com.sun.javafx.tk.Toolkit;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.concurrent.Task;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,26 +30,34 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import Entity.Event;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.NumberStringConverter;
 import javax.imageio.ImageIO;
 
 /**
@@ -71,14 +73,14 @@ public class CreteEVTController implements Initializable {
     private JFXDrawer drawer;
     private VBox vbox;
     @FXML
-    private DatePicker date;
+    private JFXDatePicker date;
     @FXML
-    private TextField titre;
+    private JFXTextField titre;
     private ComboBox<String> lstsponsor;
     @FXML
-    private TextField ville;
+    private JFXTextField ville;
     @FXML
-    private TextField adresse;
+    private JFXTextField adresse;
     @FXML
     private Spinner<?> spinner;
     @FXML
@@ -88,10 +90,12 @@ public class CreteEVTController implements Initializable {
     private JFXButton Annuler;
     @FXML
     private JFXButton valider;
+     @FXML
+    private JFXTextField duree;
     @FXML
-    private TextField capacitemax;
+    private JFXTextField capacitemax;
     @FXML
-    private TextField capacitemin;
+    private JFXTextField capacitemin;
     @FXML
     private ImageView myimg;
     @FXML
@@ -109,9 +113,9 @@ public class CreteEVTController implements Initializable {
     @FXML
     private TableColumn<Event, Integer> clnduree;
     @FXML
-    private TableColumn<Event, Integer> cptmax;
+    private TableColumn<Event, Number> cptmax;
     @FXML
-    private TableColumn<Event, Integer> cptmin;
+    private TableColumn<Event, Number> cptmin;
     @FXML
     private TableColumn<Event, String> clndescri;
 
@@ -119,9 +123,17 @@ public class CreteEVTController implements Initializable {
     private JFXButton Annuler1;
     @FXML
     private JFXButton Annuler11;
+    @FXML
+    private TreeTableView<Event> treetable;
+    @FXML
+    private TreeTableColumn<Event, Integer> col1;
 
     private boolean nav = false;
     EventDao uda = new EventDao();
+    int id;
+    int a = 0;
+    @FXML
+    private TableColumn<Event, ImageView> photo;
 
     /**
      * Initializes the controller class.
@@ -133,21 +145,39 @@ public class CreteEVTController implements Initializable {
             VBox vbx = FXMLLoader.load(getClass().getResource("/View/Menu.fxml"));
             drawer.setSidePane(vbx);
 
-            HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(humburger);
+            HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(humburger);
             transition.setRate(-1);
             humburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
                 transition.setRate(transition.getRate() * -1);
                 transition.play();
 
-                if (drawer.isHidden()) {
-                    drawer.open();
-                } else {
+                if (drawer.isShown()) {
                     drawer.close();
+                } else {
+                    drawer.open();
                 }
             });
         } catch (IOException ex) {
             Logger.getLogger(CreteEVTController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        table.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println(".handle()" + table.getSelectionModel().getSelectedItem().getTitre());
+                a = table.getSelectionModel().getSelectedItem().getIdEvent();
+                setA(table.getSelectionModel().getSelectedItem().getIdEvent());
+            }
+
+        });
+        capacitemax.textProperty().addListener(new ChangeListener<String>() {
+    @Override
+    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+        String newValue) {
+        if (!newValue.matches("\\d*")) {
+            capacitemax.setText(newValue.replaceAll("[^\\d]", ""));
+        }
+    }
+});
     }
 
 //        public ObservableList<Event> list = FXCollections.observableArrayList(
@@ -155,8 +185,9 @@ public class CreteEVTController implements Initializable {
 //                );
     public ObservableList<Event> list = FXCollections.observableArrayList();
 
+    @FXML
     public void list() {
-
+        Event e = table.getSelectionModel().getSelectedItem();
         EventDao uda = new EventDao();
         if (list.isEmpty()) {
             list.addAll(uda.findAll());
@@ -165,17 +196,136 @@ public class CreteEVTController implements Initializable {
         clntitre.setCellValueFactory(new PropertyValueFactory<Event, String>("titre"));
         clndate.setCellValueFactory(new PropertyValueFactory<Event, String>("dateEvent"));
         clnduree.setCellValueFactory(new PropertyValueFactory<Event, Integer>("duree"));
-        cptmax.setCellValueFactory(new PropertyValueFactory<Event, Integer>("capaciteMax"));
-        cptmin.setCellValueFactory(new PropertyValueFactory<Event, Integer>("capaciteMin"));
-        clndescri.setCellValueFactory(new PropertyValueFactory<Event, String>("desc"));
+        cptmax.setCellValueFactory(new PropertyValueFactory<>("capaciteMax"));
 
+        cptmin.setCellValueFactory(new PropertyValueFactory<>("capaciteMin"));
+        clndescri.setCellValueFactory(new PropertyValueFactory<Event, String>("desc"));
+        photo.setCellValueFactory(new PropertyValueFactory<Event, ImageView>("image"));
+        //  edittable();
         clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
-        clntitre.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitre(e.getNewValue());
-        });
+        //  cptmax.setCellFactory(col -> new IntegerEditingCell());
+        cptmax.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        cptmin.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        
+//        Callback<TableColumn<Event, Number>, TableCell<Event, Number>> txtCellFactory
+//                = (TableColumn<Event, Number> p) -> {
+//                    System.out.println(".handlellll()");
+//                    return new IntegerEditingCell();
+//                };
+//        cptmax.setCellFactory(new Callback<TableColumn<Event, String>, TableCell<Event, String>>() {
+//            @Override
+//            public TableCell<Event, String> call(TableColumn<Event, String> param) {
+//                TableCell<Event,String> clc = new TableCell<>();
+//                return clc ;
+//            }
+//        });
+        //   cptmin.setCellFactory(TextFieldTableCell.forTableColumn());
+
         table.setEditable(true);
         table.setItems(list);
 
+    }
+
+    @FXML
+    public void edit() {
+        clntitre.setOnEditStart(e -> {
+            //    e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitre(e.getNewValue());
+            System.out.println("OLD----VALUE--" + e.getOldValue().toString());
+        });
+        System.out.println("View.CreteEVTController.edit()" + table.getSelectionModel().getSelectedItem().getIdEvent());
+        a = table.getSelectionModel().getSelectedItem().getIdEvent();
+        setA(table.getSelectionModel().getSelectedItem().getIdEvent());
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA" + a);
+    }
+
+    public void f(String az) {
+//          table.setOnMousePressed(new EventHandler<MouseEvent>(){
+//                    @Override
+//                    public void handle(MouseEvent event) {
+//                        System.out.println(".handle()"+table.getSelectionModel().getSelectedItem().getIdEvent());
+//                    }
+//            
+//        });
+        System.out.println("View.CreteEVTController.f()" + az + "ROW" + a);
+    }
+
+    public void v(CellEditEvent c) {
+        System.out.println("View.CreteEVTController.v()");
+    }
+
+    public void commit() {
+        clntitre.setOnEditCommit(e -> {
+            //    e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitre(e.getNewValue());
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).getTitre();
+            System.out.println("NEW----VALUE--" + e.getNewValue().toString());
+        });
+        clntitre.setOnEditCommit(new EventHandler<CellEditEvent<Event, String>>() {
+            @Override
+            public void handle(CellEditEvent<Event, String> event) {
+                System.out.println("NEW----VALUE--" + event.getNewValue().toString());
+            }
+        });
+        clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        table.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue != null) {
+                System.out.println("Selected Person: "
+                        + newValue.getTitre() + " | "
+                );
+            }
+        });
+    }
+
+    public void edittable() {
+
+        clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        table.setEditable(true);
+    }
+
+    @FXML
+    public void changeTitle(CellEditEvent cv) {
+        Event e = table.getSelectionModel().getSelectedItem();
+        TablePosition pos = table.getSelectionModel().getSelectedCells().get(0);
+        int row = pos.getRow();
+        System.out.println("New--Value =" + cv.getNewValue().toString() + " Event " + e.getIdEvent() + " titre " + clntitre.getCellObservableValue(row).getValue().toString());
+        Event evt = new Event(clnid.getCellObservableValue(row).getValue(), cv.getNewValue().toString(), clndescri.getCellObservableValue(row).getValue().toString(),
+                Long.parseLong(String.valueOf(cptmax.getCellObservableValue(row).getValue())), Long.parseLong(String.valueOf(cptmin.getCellObservableValue(row).getValue())),
+                clndate.getCellObservableValue(row).getValue().toString());
+        System.out.println("View.CreteEVTController.changename()" + cptmax.getCellObservableValue(row).getValue());
+        uda.update(evt);
+        list.clear();
+        list();
+    }
+
+    @FXML
+    public void changecptmax(CellEditEvent cv) {
+        Event e = table.getSelectionModel().getSelectedItem();
+        TablePosition pos = table.getSelectionModel().getSelectedCells().get(0);
+        int row = pos.getRow();
+        System.out.println("New--Value =" + cv.getNewValue().toString() + " Event " + e.getIdEvent() + " titre " + clntitre.getCellObservableValue(row).getValue().toString());
+        Event evt = new Event(clnid.getCellObservableValue(row).getValue(), clntitre.getCellObservableValue(row).getValue().toString(), clndescri.getCellObservableValue(row).getValue().toString(),
+                Long.parseLong(cv.getNewValue().toString()), Long.parseLong(String.valueOf(cptmin.getCellObservableValue(row).getValue())),
+                clndate.getCellObservableValue(row).getValue().toString());
+        System.out.println("View.CreteEVTController.changename()" + cptmax.getCellObservableValue(row).getValue());
+        uda.update(evt);
+        list.clear();
+        list();
+    }
+
+    @FXML
+    public void changecptmin(CellEditEvent cv) {
+        Event e = table.getSelectionModel().getSelectedItem();
+        TablePosition pos = table.getSelectionModel().getSelectedCells().get(0);
+        int row = pos.getRow();
+        System.out.println("New--Value =" + cv.getNewValue().toString() + " Event " + e.getIdEvent() + " titre " + clntitre.getCellObservableValue(row).getValue().toString());
+        Event evt = new Event(clnid.getCellObservableValue(row).getValue(), clntitre.getCellObservableValue(row).getValue().toString(), clndescri.getCellObservableValue(row).getValue().toString(),
+                Long.parseLong(String.valueOf(cptmax.getCellObservableValue(row).getValue())), Long.parseLong(String.valueOf(cv.getNewValue().toString())),
+                clndate.getCellObservableValue(row).getValue().toString());
+        System.out.println("View.CreteEVTController.changename()" + cptmax.getCellObservableValue(row).getValue());
+        uda.update(evt);
+        list.clear();
+        list();
     }
 
     @FXML
@@ -192,13 +342,14 @@ public class CreteEVTController implements Initializable {
 //        java.sql.Date dateDB = new java.sql.Date(dateStr.getTime());
         try {
             dateStr = formatter.parse(dt);
-            Event evt = new Event(titre.getText(), description.getText(),
+            Event evt = new Event(titre.getText(), description.getText(), Long.parseLong(duree.getText()),
                     Long.parseLong(capacitemax.getText()), Long.parseLong(capacitemin.getText()),
-                    dt);
+                    dt, myimg);
 //            String h = new SimpleDateFormat("yyyy-MM-dd").format(dts);
 //             Date fs = formatter.parse(h);
             System.out.println("---_______i_______-------_" + remove(new Date()));
-            uda.insert(evt);
+            // uda.insert(evt);
+            uda.inserer(evt, fl);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Evenement");
             alert.setHeaderText("Evenement crée avec succées");
@@ -212,6 +363,7 @@ public class CreteEVTController implements Initializable {
         list.clear();
     }
 
+    @FXML
     public void delete() {
         Event e = table.getItems().get(table.getSelectionModel().getSelectedIndex());
         uda.delete(e.getIdEvent());
@@ -225,21 +377,26 @@ public class CreteEVTController implements Initializable {
         list();
         System.out.println(e.getTitre());
     }
+    File fl;
 
     @FXML
-    public void choosefile() {
+    public File choosefile() {
         FileChooser fc = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG
                 = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG");
         FileChooser.ExtensionFilter extFilterjpg
                 = new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg");
+        FileChooser.ExtensionFilter extFilterjpeg
+                = new FileChooser.ExtensionFilter("jpeg files (*.jpeg)", "*.jpeg");
+        FileChooser.ExtensionFilter extFilterJPEG
+                = new FileChooser.ExtensionFilter("JPEG files (*.JPEG)", "*.JPEG");
         FileChooser.ExtensionFilter extFilterPNG
                 = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG");
         FileChooser.ExtensionFilter extFilterpng
                 = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
         fc.getExtensionFilters()
-                .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
-        File fl = fc.showOpenDialog(null);
+                .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng, extFilterjpeg, extFilterJPEG);
+        fl = fc.showOpenDialog(null);
 
         try {
             BufferedImage bufferedImage = ImageIO.read(fl);
@@ -248,7 +405,7 @@ public class CreteEVTController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
+        return fl;
     }
 
     public void init() {
@@ -297,15 +454,15 @@ public class CreteEVTController implements Initializable {
         return date;
     }
 
-    public void setDate(DatePicker date) {
+    public void setDate(JFXDatePicker date) {
         this.date = date;
     }
 
-    public TextField getTitre() {
+    public JFXTextField getTitre() {
         return titre;
     }
 
-    public void setTitre(TextField titre) {
+    public void setTitre(JFXTextField titre) {
         this.titre = titre;
     }
 
@@ -324,19 +481,19 @@ public class CreteEVTController implements Initializable {
         this.lstsponsor = lstsponsor;
     }
 
-    public TextField getVille() {
+    public JFXTextField getVille() {
         return ville;
     }
 
-    public void setVille(TextField ville) {
+    public void setVille(JFXTextField ville) {
         this.ville = ville;
     }
 
-    public TextField getAdresse() {
+    public JFXTextField getAdresse() {
         return adresse;
     }
 
-    public void setAdresse(TextField adresse) {
+    public void setAdresse(JFXTextField adresse) {
         this.adresse = adresse;
     }
 
@@ -380,19 +537,19 @@ public class CreteEVTController implements Initializable {
         this.valider = valider;
     }
 
-    public TextField getCapacitemax() {
+    public JFXTextField getCapacitemax() {
         return capacitemax;
     }
 
-    public void setCapacitemax(TextField capacitemax) {
+    public void setCapacitemax(JFXTextField capacitemax) {
         this.capacitemax = capacitemax;
     }
 
-    public TextField getCapacitemin() {
+    public JFXTextField getCapacitemin() {
         return capacitemin;
     }
 
-    public void setCapacitemin(TextField capacitemin) {
+    public void setCapacitemin(JFXTextField capacitemin) {
         this.capacitemin = capacitemin;
     }
 
@@ -402,6 +559,14 @@ public class CreteEVTController implements Initializable {
 
     public void setNav(boolean nav) {
         this.nav = nav;
+    }
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
     }
 
 }
