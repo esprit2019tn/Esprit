@@ -1,13 +1,11 @@
 package Entity;
 
 import java.util.*;
-<<<<<<< HEAD
 import javafx.scene.image.ImageView;
-=======
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
->>>>>>> eb045fb00ac91d979ade4862295df94e27facc92
 
 public class Event {
 
@@ -177,8 +175,7 @@ public class Event {
     public void setLocalisation(Localisation localisation) {
         this.localisation = localisation;
     }
-<<<<<<< HEAD
-=======
+
     
     public StringProperty titreProperty() {
         return new SimpleStringProperty(titre);
@@ -189,7 +186,6 @@ public class Event {
     }
         
         
->>>>>>> eb045fb00ac91d979ade4862295df94e27facc92
 
     public ImageView getImage() {
         return image;

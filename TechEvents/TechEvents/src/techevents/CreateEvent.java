@@ -24,14 +24,11 @@ public class CreateEvent extends Application{
     public void start(Stage primaryStage) throws Exception {
          //To change body of generated methods, choose Tools | Templates.
          Parent root = FXMLLoader.load(getClass().getResource("/View/CreteEvt.fxml"));
-<<<<<<< HEAD
          Scene scene = new Scene(root,900,950);
          //scene.getStylesheets().add(getClass().getResource("").toExternalForm());
-=======
+
         // scene = new Scene(root,800,700) ;
-         Scene scene = new Scene(root,800,700);
          //scene.getStylesheets().add(get1lass().getResource("").toExternalForm());
->>>>>>> eb045fb00ac91d979ade4862295df94e27facc92
          primaryStage.setScene(scene);
          primaryStage.show();
     }

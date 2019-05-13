@@ -19,8 +19,8 @@ public class ActualiteDao implements IDao<Actualite> {
             PreparedStatement st = cnx.prepareStatement(sql);
             st.setObject(1, "'" + act.getNumActu() + "'", Types.VARCHAR);
             st.setObject(2, "'" + act.getDesc() + "'", Types.VARCHAR);
-            st.setObject(3, "'" + act.getCapaciteMax() + "'", Types.INTEGER);
-            st.setObject(4, "'" + act.getCapaciteMin() + "'", Types.INTEGER);
+          //  st.setObject(3, "'" + act.getCapaciteMax() + "'", Types.INTEGER);
+           // st.setObject(4, "'" + act.getCapaciteMin() + "'", Types.INTEGER);
             // st.setObject(5, "'"+act.getDateActualite()+"'",Types.DATE);
             // st.setDate(5, act.getDateActualite());
             st.setObject(6, 4,Types.INTEGER);
@@ -84,7 +84,7 @@ public class ActualiteDao implements IDao<Actualite> {
             ResultSet rs = stmt.executeQuery("select * from actualite");
             while (rs.next()) {
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
-                lstact.add(act);
+              //  lstact.add(act);
             }
             // cnx.close();
         } catch (SQLException e) {
