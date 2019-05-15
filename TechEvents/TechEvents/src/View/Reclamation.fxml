@@ -1,83 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXRadioButton?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ReclamationController">
-   <children>
-      <Label layoutX="147.0" layoutY="192.0" text="Explication" />
-      <Label layoutX="147.0" layoutY="64.0" text="ID  réclamé" />
-      <JFXTextArea layoutX="233.0" layoutY="159.0" maxWidth="353.0" minWidth="353.0" prefHeight="101.0" prefWidth="353.0" />
-      <TextField layoutX="358.0" layoutY="60.0" />
-      <JFXButton layoutX="433.0" layoutY="310.0" ripplerFill="#4123d7" text="Valider" textFill="#86acee" />
-      <JFXButton layoutX="349.0" layoutY="310.0" ripplerFill="#3c1fd0" text="Annuler" textFill="#86acee" />
-      <Pane layoutX="-1.0" layoutY="-5.0" prefHeight="42.0" prefWidth="600.0" style="-fx-background-color: #86acee;">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../Resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ReclamationController">
+     <children>
+      <Pane layoutY="-6.0" prefHeight="161.0" prefWidth="884.0" style="-fx-background-color: #1d76ba;">
          <children>
-            <JFXButton layoutX="36.0" layoutY="9.0" ripplerFill="WHITE" text="Retour" textFill="WHITE" />
-            <JFXButton layoutX="228.0" layoutY="9.0" text="Liste des réclamations" textFill="WHITE" />
-            <JFXHamburger fx:id="humburger" layoutX="526.0" layoutY="12.0" />
+            <JFXButton layoutX="349.0" layoutY="40.0" text="Liste des réclamations" textFill="WHITE" />
+         </children></Pane>
+      <TextField layoutX="537.0" layoutY="170.0" />
+      <JFXRadioButton layoutX="630.0" layoutY="222.0" text="Event" />
+      <JFXRadioButton layoutX="537.0" layoutY="222.0" text="User" />
+      <JFXButton layoutX="643.0" layoutY="305.0" ripplerFill="#4123d7" text="Valider" textFill="#86acee" />
+      <JFXButton layoutX="537.0" layoutY="305.0" ripplerFill="#3c1fd0" text="Annuler" textFill="#86acee" />
+      <JFXButton layoutX="15.0" layoutY="123.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="34.0" prefWidth="180.0" text="Menu" />
+      <Pane fx:id="userPane" layoutX="24.0" layoutY="24.0" prefHeight="60.0" prefWidth="200.0" visible="false">
+         <children>
+            <ImageView fitHeight="34.0" fitWidth="25.0" layoutX="-1.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@user.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="45.0" layoutY="7.0" text="Bienvenue" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="userName" layoutX="44.0" layoutY="36.0" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <JFXRadioButton layoutX="347.0" layoutY="115.0" text="User" />
-      <JFXRadioButton layoutX="439.0" layoutY="115.0" text="Event" />
-      <JFXDrawer fx:id="drawer" layoutY="37.0" prefHeight="217.0" prefWidth="86.0">
+      <JFXButton fx:id="btnInscription" layoutX="630.0" layoutY="38.0" mnemonicParsing="false" onAction="#inscription" prefHeight="32.0" prefWidth="106.0" text="Inscription" />
+      <JFXButton fx:id="btnConnexion" layoutX="745.0" layoutY="38.0" mnemonicParsing="false" onAction="#connexion" prefHeight="32.0" prefWidth="106.0" text="Connexion" />
+      <JFXButton fx:id="btnDeconnexion" layoutX="674.0" layoutY="42.0" mnemonicParsing="false" onAction="#deconnexion" prefHeight="32.0" prefWidth="106.0" text="Deconnexion" visible="false" />
+      <Pane fx:id="menu" layoutX="10.0" layoutY="172.0" prefHeight="404.0" prefWidth="180.0" style="-fx-background-color: #f2f2f2;" visible="false">
          <children>
-            <VBox fx:id="vbox" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Separator prefWidth="200.0" />
-                  <ImageView fitHeight="166.0" fitWidth="203.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/evolusi.jpg" />
-                     </image>
-                  </ImageView>
-                  <JFXButton buttonType="RAISED" prefHeight="62.0" prefWidth="206.0" style="-fx-background-color: #E0F2F7;" text="Gérer utilisateur">
-                     <ripplerFill>
-                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                           <stops>
-                              <Stop color="BLACK" />
-                              <Stop color="WHITE" offset="1.0" />
-                           </stops>
-                        </RadialGradient>
-                     </ripplerFill>
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </JFXButton>
-                  <Separator prefWidth="200.0" />
-                  <JFXButton buttonType="RAISED" prefHeight="59.0" prefWidth="215.0" style="-fx-background-color: #E0F2F7;" text="Gérer événement">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </JFXButton>
-                  <Separator prefWidth="200.0" />
-                  <JFXButton buttonType="RAISED" prefHeight="59.0" prefWidth="215.0" style="-fx-background-color: #E0F2F7;" text="Gérer publication">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </JFXButton>
-                  <Separator prefWidth="200.0" />
-                  <JFXButton buttonType="RAISED" prefHeight="59.0" prefWidth="215.0" style="-fx-background-color: #E0F2F7;" text="Gérer réclamation">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </JFXButton>
-               </children>
-            </VBox>
+            <JFXButton nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="180.0" text="   Home" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <JFXButton graphicTextGap="5.0" layoutY="37.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="180.0" ripplerFill="#15d755" text="Gérer utilisateur" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <JFXButton graphicTextGap="5.0" layoutY="74.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="180.0" text="Gérer événement" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutY="111.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="180.0" text="Gérer publication" textAlignment="CENTER" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <ImageView layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@homebtn.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="14.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@stat.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="14.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@task.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="14.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@team.png" />
+               </image>
+            </ImageView>
+            <JFXButton layoutY="148.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="180.0" text="Gérer réclamation" textAlignment="CENTER" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <ImageView layoutX="14.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@task.png" />
+               </image>
+            </ImageView>
          </children>
-      </JFXDrawer>
+      </Pane>
    </children>
 </AnchorPane>

@@ -5,6 +5,9 @@
  */
 package View;
 
+import Entity.User;
+import Metier.UserSession;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
@@ -13,10 +16,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -26,35 +32,62 @@ import javafx.scene.layout.VBox;
  */
 public class ReclamationController implements Initializable {
 
+
     @FXML
-    private JFXHamburger humburger;
+    private Pane userPane;
+
     @FXML
-    private JFXDrawer drawer;
+    private Label userName;
+
     @FXML
-    private VBox vbox;
+    private JFXButton btnInscription;
+
+    @FXML
+    private JFXButton btnConnexion;
+
+    @FXML
+    private JFXButton btnDeconnexion;
+
+    @FXML
+    private Pane menu;
+
+    @FXML
+    void connexion(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deconnexion(ActionEvent event) {
+
+    }
+
+    @FXML
+    void inscription(ActionEvent event) {
+
+    }
+
+    @FXML
+    void splitMenu(ActionEvent event) {
+
+    }
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        //  vbox = FXMLLoader.load(getClass().getResource("/View/Menu.fxml"));
-        drawer.setSidePane(vbox);
         
-        HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(humburger);
-        transition.setRate(-1);
-        humburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
-            transition.setRate(transition.getRate() * -1);
-            transition.play();
+        User user=UserSession.getUserSession();
+        if(!user.getNom().equals(""))
+        {   
+            btnConnexion.setVisible(false);
+            btnInscription.setVisible(false);
+            btnDeconnexion.setVisible(true);
+            userPane.setVisible(true);
+            userName.setVisible(true);
+            userName.setText("Bienvenue "+user.getNom()+" "+user.getPrenom());
             
-            if (drawer.isHidden()) {
-                drawer.open();
-            } else {
-                drawer.close();
-            }
-        });
-
-    }    
+        }  
     
+    }
 }
