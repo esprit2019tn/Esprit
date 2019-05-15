@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 04 mai 2019 à 12:57
+-- Généré le :  mer. 15 mai 2019 à 16:47
 -- Version du serveur :  5.7.24
 -- Version de PHP :  7.2.14
 
@@ -73,10 +73,12 @@ CREATE TABLE IF NOT EXISTS `evenement` (
   `duree` int(11) NOT NULL,
   `idSponsor` int(11) NOT NULL,
   `idLoc` int(11) NOT NULL,
+  `photoEvent` longblob NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idEvent`),
   KEY `idLoc` (`idLoc`),
   KEY `idSponsor` (`idSponsor`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -186,20 +188,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `confirmation` tinyint(1) NOT NULL DEFAULT '0',
   `active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`idUser`, `nom`, `prenom`, `dateNaiss`, `sexe`, `adresse`, `email`, `password`, `role`, `confirmationCode`, `confirmation`, `active`) VALUES
-(1, 'jeddy', 'aymen', NULL, '', 'tunis', 'aymen@gmail.com', '123', '', '', 0, 0),
-(2, 'ben salah', 'ahmed', NULL, '', 'tunis', 'ahmed@gmail.com', '123456', '', '', 0, 0),
-(3, 'test', 'test', NULL, '', 'test', 'test@test.com', '7845', '', '', 0, 0),
-(4, 'test2', 'test2', NULL, '', 'test2', 'test2', 'test2', '', '', 0, 0),
-(5, 'ahmmed', 'ben ahmed ', NULL, '', 'tunis', 'ahmend@gmail.com', '123456', '', '', 0, 0),
-(6, 'admin', 'admin', '1995-06-06', 'Homme', 'Tunis', 'aymen.jeddey@esprit.tn', '123456', 'Admin', '', 1, 1),
-(10, 'esprit7', 'esprit7', '2019-05-14', 'Homme', 'chargia 2', 'aymenjeddey@gmail.com', '123', 'SimpleUser', '251124', 0, 0);
+(6, 'admin', 'admin', '1995-06-06', 'Homme', 'Tunis', 'aymen.jeddey@esprit.tn', '123456', 'Admin', '251124', 1, 1),
+(11, 'jeddey', 'aymen', '1995-06-06', 'Homme', 'tunis', 'aymenjeddey@gmail.com', '123', 'SimpleUser', '476219', 1, 1),
+(12, 'skander', 'baj', '2019-05-21', 'Homme', 'tunis', 'skander1673@gmail.com', '123', 'SimpleUser', '819310', 1, 1);
 
 --
 -- Contraintes pour les tables déchargées
