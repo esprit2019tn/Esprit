@@ -30,6 +30,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import Entity.Event;
+import Entity.Sponsor;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.awt.image.BufferedImage;
@@ -54,7 +55,9 @@ import javafx.scene.control.TreeTableView;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -86,12 +89,9 @@ public class CreteEVTController implements Initializable {
     @FXML
     private JFXTextField titre;
     private ComboBox<String> lstsponsor;
-    @FXML
     private JFXTextField ville;
-    @FXML
     private JFXTextField adresse;
-    @FXML
-    private Spinner<?> spinner;
+    private Spinner<Sponsor> spinner;
     @FXML
     private TextArea description;
     private ImageView img;
@@ -99,7 +99,7 @@ public class CreteEVTController implements Initializable {
     private JFXButton Annuler;
     @FXML
     private JFXButton valider;
-     @FXML
+    @FXML
     private JFXTextField duree;
     @FXML
     private JFXTextField capacitemax;
@@ -136,10 +136,6 @@ public class CreteEVTController implements Initializable {
     private TreeTableView<Event> treetable;
     @FXML
     private TreeTableColumn<Event, Integer> col1;
-//    @FXML
-//    private ScrollBar sc;
-     @FXML
-    private AnchorPane achp1;
 
     private boolean nav = false;
     EventDao uda = new EventDao();
@@ -147,6 +143,10 @@ public class CreteEVTController implements Initializable {
     int a = 0;
     @FXML
     private TableColumn<Event, ImageView> photo;
+    @FXML
+    private ListView<String> sponsorlst;
+
+    public ObservableList<String> lstspr = FXCollections.observableArrayList("sp1","sp2","sp3");
 
     /**
      * Initializes the controller class.
@@ -178,24 +178,23 @@ public class CreteEVTController implements Initializable {
             public void handle(MouseEvent event) {
                 System.out.println(".handle()" + table.getSelectionModel().getSelectedItem().getTitre());
                 a = table.getSelectionModel().getSelectedItem().getIdEvent();
-    //            setA(table.getSelectionModel().getSelectedItem().getIdEvent());
+                //            setA(table.getSelectionModel().getSelectedItem().getIdEvent());
             }
 
         });
         capacitemax.textProperty().addListener(new ChangeListener<String>() {
-    @Override
-    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-        String newValue) {
-        if (!newValue.matches("\\d*")) {
-            capacitemax.setText(newValue.replaceAll("[^\\d]", ""));
-        }
-    }
-});
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                    String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    capacitemax.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+        sponsorlst.setItems(lstspr);
+        sponsorlst.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
-       
-    
-    
 //    public void scrollable(){
 //         achp1.setTranslateY(20);
 //        
@@ -209,7 +208,6 @@ public class CreteEVTController implements Initializable {
 //            achp1.setTranslateY(20+sc.getValue());
 //        });
 //    }
-
 //        public ObservableList<Event> list = FXCollections.observableArrayList(
 //                new Event("", "", Long.valueOf(3), Long.valueOf(2), "")
 //                );
@@ -236,9 +234,7 @@ public class CreteEVTController implements Initializable {
         //  cptmax.setCellFactory(col -> new IntegerEditingCell());
         cptmax.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
         cptmin.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
-        
-        
-        
+
 //        Callback<TableColumn<Event, Number>, TableCell<Event, Number>> txtCellFactory
 //                = (TableColumn<Event, Number> p) -> {
 //                    System.out.println(".handlellll()");
@@ -252,7 +248,6 @@ public class CreteEVTController implements Initializable {
 //            }
 //        });
         //   cptmin.setCellFactory(TextFieldTableCell.forTableColumn());
-
         table.setEditable(true);
         table.setItems(list);
 
@@ -329,7 +324,6 @@ public class CreteEVTController implements Initializable {
         list.clear();
         list();
     }
-        
 
     @FXML
     public void changecptmax(CellEditEvent cv) {
@@ -360,15 +354,15 @@ public class CreteEVTController implements Initializable {
         list.clear();
         list();
     }
-    
-        public void editable(CellEditEvent ce){
-            Event e = table.getSelectionModel().getSelectedItem();
-            e.setTitre(ce.getNewValue().toString());
-          //  clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
+
+    public void editable(CellEditEvent ce) {
+        Event e = table.getSelectionModel().getSelectedItem();
+        e.setTitre(ce.getNewValue().toString());
+        //  clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
 //            clntitre.setOnEditCommit(e -> {
 //                e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitre(e.getNewValue());
 //            });        
-        }
+    }
 
     @FXML
     public void create() {
@@ -537,14 +531,6 @@ public class CreteEVTController implements Initializable {
 
     public void setAdresse(JFXTextField adresse) {
         this.adresse = adresse;
-    }
-
-    public Spinner<?> getSpinner() {
-        return spinner;
-    }
-
-    public void setSpinner(Spinner<?> spinner) {
-        this.spinner = spinner;
     }
 
     public TextArea getDescription() {
