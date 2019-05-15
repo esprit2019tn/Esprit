@@ -6,6 +6,15 @@ import java.util.List;
 
 import Entity.Event;
 import Connection.ConnectionProperties;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javax.imageio.ImageIO;
 
 public class EventDao implements IDao<Event> {
 
@@ -23,7 +32,7 @@ public class EventDao implements IDao<Event> {
             st.setObject(4, "'" + evt.getCapaciteMin() + "'", Types.INTEGER);
             // st.setObject(5, "'"+evt.getDateEvent()+"'",Types.DATE);
             // st.setDate(5, evt.getDateEvent());
-            st.setObject(6, 4,Types.INTEGER);
+            st.setObject(6, 4, Types.INTEGER);
             st.setObject(7, 4, Types.INTEGER);
             st.setObject(8, 3, Types.INTEGER);
             st.executeUpdate();
@@ -36,15 +45,18 @@ public class EventDao implements IDao<Event> {
     public void insert(Event event) {
         // TODO Auto-generated method stub
         try {
+
             Statement stmt = cnx.createStatement();
-            stmt.executeUpdate("insert into evenement  (titre,description,capacitemax,capacitemin,dateevent,duree,idsponsor,idloc) "
+            stmt.executeUpdate("insert into evenement  (titre,description,capacitemax,capacitemin,dateevent,duree,photoEvent,idsponsor,idloc) "
                     + "values ('"
                     + event.getTitre() + "','"
                     + event.getDesc() + "','"
                     + event.getCapaciteMax() + "','"
                     + event.getCapaciteMin() + "','"
                     + event.getDateEvent() + "',"
-                    + event.getDuree() + ",1,1 "
+                    + event.getDuree() + ",'"
+                    + event.getImage() + "'"
+                    + ",1,1 "
                     + ") ");
 
         } catch (SQLException e) {
@@ -53,8 +65,44 @@ public class EventDao implements IDao<Event> {
         }
     }
 
+    public void inserer(Event evt, File fl) {
+        try {
+            ImageView p = new ImageView();
+            // File fileImage = new File(p.);
+//            BufferedImage bImage = SwingFXUtils.fromFXImage(evt.getImage().getImage(), null);
+//            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                ImageIO.write(bImage, "png", outputStream);
+//                byte[] res = outputStream.toByteArray();
+//                InputStream inputStream = new ByteArrayInputStream(res);
+
+            //  File imgfile = new File("C:\\Users\\ikb\\Desktop\\img.png");
+            FileInputStream input = new FileInputStream(fl);
+
+            // InputStream input = imgfile.geti
+            // Image image = new Image(input);
+            // ImageView imageView = new ImageView(image);
+            PreparedStatement pre = cnx.prepareStatement("insert into  evenement (titre,description,capacitemax,capacitemin,photoEvent,dateevent,duree,idsponsor,idloc) values(?,?,?,?,?,?,?,?,?)");
+
+            pre.setString(1, evt.getTitre());
+            pre.setString(2, evt.getDesc());
+            pre.setLong(3, evt.getCapaciteMax());
+            pre.setLong(4, evt.getCapaciteMin());
+            pre.setBinaryStream(5, (InputStream) input, (int) fl.length());
+            pre.setString(6, evt.getDateEvent());
+            pre.setLong(7, evt.getDuree());
+            pre.setInt(8, 1);
+            pre.setInt(9, 1);
+
+            // pre.setBinaryStream(2, input);
+            pre.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
-    public void delete(int id) {
+    public void delete(int id
+    ) {
         try {
             Statement stmt = cnx.createStatement();
             stmt.executeUpdate("delete from evenement where idEvent = " + id + "");
@@ -63,19 +111,28 @@ public class EventDao implements IDao<Event> {
         }
     }
 
+    public void e(String a, int za) {
+        try {
+            Statement stmt = cnx.createStatement();
+            stmt.executeUpdate("UPDATE evenement SET titre =  '" + a + "' WHERE idEvent =" + za);
+        } catch (Exception z) {
+
+        }
+    }
+
     @Override
     public void update(Event obj) {
         // TODO Auto-generated method stub
         try {
             Statement stmt = cnx.createStatement();
-            stmt.executeUpdate("update event set "
-                    + "nom = '" + obj.getTitre() + "' ,"
-                    + "prenom = '" + obj.getDesc() + "' ,"
-                    + "adresse = '" + obj.getCapaciteMax() + "' "
-                    + "email = '" + obj.getCapaciteMin() + "' "
-                    + "password = '" + obj.getDuree() + "' "
-                    + "where id = " + obj.getDateEvent() + "");
-            System.out.println("Utilisateur N� " + obj.getTitre() + " a �t� modifi�");
+            stmt.executeUpdate("update evenement set "
+                    + "titre = '" + obj.getTitre() + "' ,"
+                    + "description = '" + obj.getDesc() + "' ,"
+                    + "capaciteMax = " + obj.getCapaciteMax() + ", "
+                    + "capaciteMin = " + obj.getCapaciteMin() + ", "
+                    + "dateEvent = '" + obj.getDateEvent() + "' "
+                    + "where idEvent = " + obj.getIdEvent() + "");
+            System.out.println("Event " + obj.getTitre() + " a été modifié");
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -87,17 +144,42 @@ public class EventDao implements IDao<Event> {
         // TODO Auto-generated method stub
         List<Event> lstevent = new ArrayList<Event>();
         try {
-            Statement stmt = cnx.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from evenement");
+            // Statement stmt = cnx.createStatement();
+            //ResultSet rs = stmt.executeQuery("select * from evenement");
+
+            Statement pst = cnx.prepareStatement("select * from evenement");
+            ResultSet rs = pst.executeQuery("select * from evenement");
             while (rs.next()) {
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
-                Event event = new Event(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6),rs.getLong(7));
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                InputStream is = rs.getBinaryStream("photoEvent");
+                OutputStream os = new FileOutputStream(new File("img.jpg"));
+                byte[] content = new byte[1024];
+                int size = 0;
+
+                while ((size = is.read(content)) != -1) {
+                    os.write(content, 0, size);
+                }
+                os.close();
+                is.close();
+                Image img = new Image("file:img.jpg", 111, 111, true, true);
+                ImageView imv = new ImageView(img);
+                imv.setFitWidth(111);
+                imv.setFitHeight(111);
+                imv.setPreserveRatio(true);
+
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7), imv);
                 lstevent.add(event);
             }
             // cnx.close();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lstevent;
     }
