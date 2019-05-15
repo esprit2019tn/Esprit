@@ -42,6 +42,8 @@ public class AccueilEventController implements Initializable {
 
     @FXML
     private Pane userPane;
+    
+
 
     @FXML
     private Label userName;
@@ -98,10 +100,11 @@ public class AccueilEventController implements Initializable {
         
         User user=UserSession.getUserSession();
         if(!user.getNom().equals(""))
-        {
+        {   
             btnConnexion.setVisible(false);
             btnInscription.setVisible(false);
             btnDeconnexion.setVisible(true);
+            userPane.setVisible(true);
             userName.setVisible(true);
             userName.setText("Bienvenue "+user.getNom()+" "+user.getPrenom());
             

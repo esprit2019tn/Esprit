@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -104,6 +105,20 @@ public class AuthentificationController implements Initializable {
     @FXML
     void inscription(ActionEvent event) throws IOException {
                 Parent home_page_parent = FXMLLoader.load(getClass().getResource("Inscription.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+
+    }
+    
+    
+
+    
+        @FXML
+    void recupererPassword(MouseEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("RecupererPassword.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.hide();
