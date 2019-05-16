@@ -6,6 +6,8 @@ import java.util.List;
 
 import Entity.Event;
 import Connection.ConnectionProperties;
+import Entity.RoleUser;
+import Entity.User;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.*;
@@ -207,4 +209,24 @@ public class EventDao implements IDao<Event> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+                public List<Event> findEventByUser(String idUser) {
+		List<Event> lstEvent = null;
+		try {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs=stmt.executeQuery( 
+                        "select e.* from evenement e "
+                        + "inner join organisation o "
+                        + "where o.idUser='"+idUser+"'");
+			while (rs.next()){
+			 Event event = new Event(0, idUser, idUser, Long.MAX_VALUE, Long.MAX_VALUE, idUser, Long.MIN_VALUE, localisation)
+			lstEvent.add(event);
+                        }
+			//cnx.close();  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return lstEvent;
+    }
 }

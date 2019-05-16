@@ -5,19 +5,24 @@
  */
 package View;
 
-import Dao.EventDao;
-import Entity.Event;
+import Dao.UserDao;
 import Entity.User;
 import Metier.UserSession;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +31,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -37,17 +39,47 @@ import javafx.stage.Stage;
  *
  * @author AYMEN
  */
-public class AccueilEventController implements Initializable {
-    
-     private ObservableList<Event> eventData = FXCollections.observableArrayList();
+public class UserController implements Initializable {
 
-    @FXML
+    /**
+     * Initializes the controller class.
+     */
+    
+       @FXML
     private Pane userPane;
-    
-
 
     @FXML
     private Label userName;
+
+    @FXML
+    private JFXPasswordField password;
+
+    @FXML
+    private JFXTextField nom;
+
+    @FXML
+    private JFXTextField prenom;
+
+    @FXML
+    private JFXTextField adresse;
+
+    @FXML
+    private JFXTextField email;
+
+    @FXML
+    private JFXPasswordField password1;
+
+    @FXML
+    private JFXDatePicker dateNaiss;
+
+    @FXML
+    private JFXRadioButton homme;
+
+    @FXML
+    private JFXRadioButton femme;
+
+    @FXML
+    private Label erreur;
 
     @FXML
     private JFXButton btnInscription;
@@ -56,51 +88,20 @@ public class AccueilEventController implements Initializable {
     private JFXButton btnConnexion;
 
     @FXML
+    private Pane menu;
+
+    @FXML
     private JFXButton btnDeconnexion;
 
-    @FXML
-    private TableView<?> eventTable;
-
-    @FXML
-    private TableColumn<?, ?> titreColumn;
-
-    @FXML
-    private TableColumn<?, ?> descriptionColumn;
-
-    @FXML
-    private Pane menu;
-    
-    ////////////////////////////////
-
-
 
 
 
     
-
-
-    /**
-     * Initializes the controller class.
-     */
-   /**
-     * Initializes the controller class.
-     */
-    
-    
-    public void getPersonData() {
-        EventDao eventDao=new EventDao();
-
-        for (Event event : eventDao.findAll()) 
-        { 
-           eventData.add(event);
-        } 
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         User user=UserSession.getUserSession();
-        if(user!=null)
+        if(!user.getNom().equals(""))
         {   
             btnConnexion.setVisible(false);
             btnInscription.setVisible(false);
@@ -111,47 +112,40 @@ public class AccueilEventController implements Initializable {
             
         }
         
+        nom.setText(user.getNom());
+        prenom.setText(user.getPrenom());
+        Date date = user.getDateNaiss();		
+	//ZoneId defaultZoneId = ZoneId.systemDefault();		
+	//Instant instant = date.toInstant();		
+	//LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+        //dateNaiss.setValue(localDate);
         
-        try {
-            if(UserSession.verifUserSession())
-                userName.setText(UserSession.getUserSession().getNom()+" "+UserSession.getUserSession().getPrenom());
-                setTable();
-        } catch (BackingStoreException ex) {
-            Logger.getLogger(ValidationUserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if(user.getSexe().equals("Homme"))
+            homme.setSelected(true);
+        else if(user.getSexe().equals("Femme"))
+            femme.setSelected(true); 
+        email.setText(user.getEmail());
+        adresse.setText(user.getAdresse());
+        
+
+
+
+        
+        
+
+        
+
         
     }   
     
-    public void setTable(){
-     /*          // Initialize the person table with the two columns.
-        titreColumn.setCellValueFactory(cellData -> cellData.getValue().titreProperty());
-        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descProperty());
 
-        getPersonData();
-        eventTable.getItems().clear();
-        eventTable.setItems(eventData);
-        */
-
-
-    }
     
     
     
     
 
 
-        
-@FXML
-void validUser(ActionEvent event) throws IOException {
-   /* UserDao userDao=new UserDao();
-    userDao.setValidationUser(emailLabel.getText());
-    Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationUser.fxml"));
-    Scene home_page_scene = new Scene(home_page_parent);
-    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                app_stage.hide();
-                app_stage.setScene(home_page_scene);
-                app_stage.show();  */
-    }
+
 
 
 
@@ -195,19 +189,11 @@ void validUser(ActionEvent event) throws IOException {
                 app_stage.hide();
                 app_stage.setScene(home_page_scene);
                 app_stage.show(); 
-        
-
-    }
-    
+    }  
     
     @FXML
-    void userPage(MouseEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("User.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                app_stage.hide();
-                app_stage.setScene(home_page_scene);
-                app_stage.show();
+    void modifier(ActionEvent event) {
+
     }
     
 }
