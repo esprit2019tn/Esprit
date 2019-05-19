@@ -1,5 +1,7 @@
 package com.esprit.TechEvents;
 
+import Entity.GuiComponent;
+import Entity.GuiComponent_1;
 import static com.codename1.ui.CN.*;
 import com.codename1.components.SpanLabel;
 import com.codename1.io.Log;
@@ -100,10 +102,13 @@ public class TechEvents {
         home.getToolbar().addCommandToLeftSideMenu("page1", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                Inscription inscription=new Inscription();
-                inscription.setTheme(theme);
-                inscription.setHome(home);
-                inscription.getCurrent().show();
+//                Inscription inscription=new Inscription();
+//                inscription.setTheme(theme);
+//                inscription.setHome(home);
+//                inscription.getCurrent().show();
+                 // Inscription.fr().show();
+                  GuiComponent_1 gp = new GuiComponent_1();
+                  gp.show();
             }
         });
 
