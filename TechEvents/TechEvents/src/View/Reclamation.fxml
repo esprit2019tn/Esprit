@@ -13,17 +13,19 @@
      <children>
       <Pane layoutY="-4.0" prefHeight="161.0" prefWidth="884.0" style="-fx-background-color: #1d76ba;">
          <children>
-            <JFXButton layoutX="349.0" layoutY="40.0" text="Liste des réclamations" textFill="WHITE" />
+            <JFXButton layoutX="1.0" layoutY="126.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="34.0" prefWidth="180.0" text="Menu" />
          </children></Pane>
-      <TextField layoutX="537.0" layoutY="170.0" />
+      <TextField fx:id="sujetReclam" layoutX="538.0" layoutY="185.0" />
       <JFXButton fx:id="btnValider" layoutX="644.0" layoutY="460.0" onAction="#insertReclam" ripplerFill="#4123d7" text="Valider" textFill="#86acee" />
       <JFXButton fx:id="btnAnnuler" layoutX="457.0" layoutY="460.0" onAction="#init" ripplerFill="#3c1fd0" text="Annuler" textFill="#86acee" />
-      <JFXButton layoutX="15.0" layoutY="123.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="34.0" prefWidth="180.0" text="Menu" />
-      <Pane fx:id="userPane" layoutX="24.0" layoutY="24.0" prefHeight="60.0" prefWidth="200.0" visible="false">
+      <TextField fx:id="explicationReclam" layoutX="423.0" layoutY="331.0" prefHeight="87.0" prefWidth="304.0" />
+      <Label layoutX="253.0" layoutY="341.0" text="Explication" />
+      <Label layoutX="253.0" layoutY="190.0" text="Sujet" />
+      <Pane fx:id="userPane" layoutX="24.0" layoutY="24.0" onMouseClicked="#userPage" prefHeight="60.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fitHeight="34.0" fitWidth="25.0" layoutX="-1.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@user.png" />
+                  <Image url="@../Resources/user.png" />
                </image>
             </ImageView>
             <Label layoutX="45.0" layoutY="7.0" text="Bienvenue" textFill="WHITE">
@@ -41,7 +43,7 @@
       <JFXButton fx:id="btnInscription" layoutX="630.0" layoutY="38.0" mnemonicParsing="false" onAction="#inscription" prefHeight="32.0" prefWidth="106.0" text="Inscription" />
       <JFXButton fx:id="btnConnexion" layoutX="745.0" layoutY="38.0" mnemonicParsing="false" onAction="#connexion" prefHeight="32.0" prefWidth="106.0" text="Connexion" />
       <JFXButton fx:id="btnDeconnexion" layoutX="674.0" layoutY="42.0" mnemonicParsing="false" onAction="#deconnexion" prefHeight="32.0" prefWidth="106.0" text="Deconnexion" visible="false" />
-      <Pane fx:id="menu" layoutX="10.0" layoutY="172.0" prefHeight="404.0" prefWidth="180.0" style="-fx-background-color: #f2f2f2;" visible="false">
+      <Pane fx:id="menu" layoutY="159.0" prefHeight="404.0" prefWidth="180.0" style="-fx-background-color: #f2f2f2;" visible="false">
          <children>
             <JFXButton nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="180.0" text="   Home" textFill="#1d76ba">
                <font>
@@ -53,7 +55,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton graphicTextGap="5.0" layoutY="74.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="180.0" text="Gérer événement" textFill="#1d76ba">
+            <JFXButton graphicTextGap="5.0" layoutY="74.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#showEvent" prefHeight="37.0" prefWidth="180.0" text="Gérer événement" textFill="#1d76ba">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -65,22 +67,22 @@
             </JFXButton>
             <ImageView layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@homebtn.png" />
+                  <Image url="@../Resources/homebtn.png" />
                </image>
             </ImageView>
             <ImageView layoutX="14.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@stat.png" />
+                  <Image url="@../Resources/stat.png" />
                </image>
             </ImageView>
             <ImageView layoutX="14.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@task.png" />
+                  <Image url="@../Resources/task.png" />
                </image>
             </ImageView>
             <ImageView layoutX="14.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@team.png" />
+                  <Image url="@../Resources/team.png" />
                </image>
             </ImageView>
             <JFXButton layoutY="148.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="180.0" text="Gérer réclamation" textAlignment="CENTER" textFill="#1d76ba">
@@ -90,13 +92,10 @@
             </JFXButton>
             <ImageView layoutX="14.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@task.png" />
+                  <Image url="@../Resources/task.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <TextField layoutX="452.0" layoutY="307.0" prefHeight="87.0" prefWidth="304.0" />
-      <Label layoutX="253.0" layoutY="341.0" text="Explication" />
-      <Label layoutX="253.0" layoutY="190.0" text="Sujet" />
    </children>
 </AnchorPane>

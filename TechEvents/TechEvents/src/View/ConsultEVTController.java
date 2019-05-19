@@ -7,6 +7,8 @@ package View;
 
 import Dao.EventDao;
 import Dao.SponsorDao;
+import Entity.Event;
+import Entity.Reclamation;
 import Entity.Sponsor;
 import Entity.User;
 import Metier.UserSession;
@@ -14,6 +16,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +31,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -71,6 +79,8 @@ public class ConsultEVTController implements Initializable {
     private JFXButton updatebtn;
     @FXML
     private JFXListView<Sponsor> LstSprEvent;
+    @FXML
+    private JFXButton reclambtn;
 
     /**
      * Initializes the controller class.
@@ -158,6 +168,23 @@ public class ConsultEVTController implements Initializable {
         for (Sponsor l : lstsponsor) {
             System.out.println("-------------ID---------------" + l.getIdSponsor());
         }
+    }
+
+    @FXML
+    private void reclamer(ActionEvent event) throws IOException {        
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("Reclamation.fxml"));
+        Parent home_page_parent = (Parent) loader.load();
+
+        ReclamationController reclamationController=loader.getController();
+ //       Reclamation reclamation=new Reclamation();
+ //       reclamation.setEvent(CreteEVTController.getevt());
+        reclamationController.setIdEvent(CreteEVTController.getevt().getIdEvent());
+
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
     }
 
 }

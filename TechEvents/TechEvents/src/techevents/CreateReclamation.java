@@ -23,7 +23,7 @@ public class CreateReclamation extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
          //To change body of generated methods, choose Tools | Templates.
-         Parent root = FXMLLoader.load(getClass().getResource("/View/Reclamation.fxml"));
+         Parent root = FXMLLoader.load(getClass().getResource("../View/Reclamation.fxml"));
         // scene = new Scene(root,800,700) ;
          Scene scene = new Scene(root,800,700);
          //scene.getStylesheets().add(get1lass().getResource("").toExternalForm());

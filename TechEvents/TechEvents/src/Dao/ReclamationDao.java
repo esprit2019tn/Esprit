@@ -20,11 +20,12 @@ public class ReclamationDao implements IDao<Reclamation> {
         // TODO Auto-generated method stub
         try {
             Statement stmt = cnx.createStatement();
-            stmt.executeUpdate("insert into reclamation  (textReclam,sujetReclam) "
+            stmt.executeUpdate("insert into reclamation  (textReclam,sujetReclam,idEvent,idUser) "
                     + "values ('"
-                    + reclamation.getTexte()+ "','"
-                    + reclamation.getSujet()+ "','"
-                   
+                    + reclamation.getTextReclam()+ "','"
+                    + reclamation.getSujetReclam()+ "',"
+                    + reclamation.getEvent().getIdEvent()+ ","
+                    + reclamation.getUser().getId()                 
                     + ") ");
 
         } catch (SQLException e) {
@@ -49,8 +50,8 @@ public class ReclamationDao implements IDao<Reclamation> {
         try {
             Statement stmt = cnx.createStatement();
             stmt.executeUpdate("update reclamation set "
-                    + "sujet = '" + obj.getSujet()+ "' ,"
-                    + "textReclam = '" + obj.getTexte()+ "' ,");
+                    + "sujet = '" + obj.getSujetReclam()+ "' ,"
+                    + "textReclam = '" + obj.getTextReclam()+ "' ,");
                    
             System.out.println("Utilisateur N " + obj.getUser()+ " a a ete modifie");
         } catch (SQLException e) {
