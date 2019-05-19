@@ -39,6 +39,8 @@ public class UserSession {
         Preferences userPreferences = Preferences.userRoot();
         userPreferences.clear();
     }
+    
+    
         
     public static Boolean verifUserSession() throws BackingStoreException{ 
         Boolean res=true;

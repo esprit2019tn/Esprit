@@ -50,6 +50,10 @@ public class ReclamationController implements Initializable {
 
     @FXML
     private Pane menu;
+    @FXML
+    private JFXButton btnValider;
+    @FXML
+    private JFXButton btnAnnuler;
 
     @FXML
     void connexion(ActionEvent event) {
@@ -89,5 +93,14 @@ public class ReclamationController implements Initializable {
             
         }  
     
+    }
+
+    @FXML
+    private void insertReclam(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void init(ActionEvent event) {
     }
 }
