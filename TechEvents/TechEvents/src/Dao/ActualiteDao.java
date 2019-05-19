@@ -12,39 +12,17 @@ public class ActualiteDao implements IDao<Actualite> {
     //Connection cnx = ConnectionProperties.connect();
     Connection cnx = ConnectionProperties.getConnectionProperties().getCnx();
 
-    public void create(Actualite act) {
-        try {
-            String sql = " insert into actualite  (titre,description,capacitemax,capacitemin,dateact,duree,idsponsor,idloc) "
-                    + "values (?,?,?,?,?,?,?,?)";
-            PreparedStatement st = cnx.prepareStatement(sql);
-            st.setObject(1, "'" + act.getNumActu() + "'", Types.VARCHAR);
-            st.setObject(2, "'" + act.getDesc() + "'", Types.VARCHAR);
-          //  st.setObject(3, "'" + act.getCapaciteMax() + "'", Types.INTEGER);
-           // st.setObject(4, "'" + act.getCapaciteMin() + "'", Types.INTEGER);
-            // st.setObject(5, "'"+act.getDateActualite()+"'",Types.DATE);
-            // st.setDate(5, act.getDateActualite());
-            st.setObject(6, 4,Types.INTEGER);
-            st.setObject(7, 4, Types.INTEGER);
-            st.setObject(8, 3, Types.INTEGER);
-            st.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void insert(Actualite act) {
-        // TODO Auto-generated method stub
-        try {
-            Statement stmt = cnx.createStatement();
-            stmt.executeUpdate("insert into actualite  (titre,description,capacitemax,capacitemin,dateact,duree,idsponsor,idloc) "
-                    + "values ('"
-                    + act.getNumActu()+ "','"
-                    + act.getDesc() + "','"
-                    + ") ");
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
+         try {
+            String sql = " insert into actualite  (descActu,idEvent) "
+                    + "values (?,?)";
+            PreparedStatement st = cnx.prepareStatement(sql);
+            st.setObject(1, "'" + act.getDescActu()+ "'", Types.VARCHAR);
+            st.setObject(2, "" + act.getIdEvent() + "", Types.INTEGER);
+            st.executeUpdate();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -66,7 +44,7 @@ public class ActualiteDao implements IDao<Actualite> {
             Statement stmt = cnx.createStatement();
             stmt.executeUpdate("update act set "
                     + "nom = '" + obj.getNumActu() + "' ,"
-                    + "prenom = '" + obj.getDesc() + "' ,"
+                    + "prenom = '" + obj.getDescActu()+ "' ,"
                     + "where id = " + obj.getDateActu() + "");
             System.out.println("Utilisateur N� " + obj.getNumActu() + " a �t� modifi�");
         } catch (SQLException e) {
@@ -81,8 +59,9 @@ public class ActualiteDao implements IDao<Actualite> {
         List<Actualite> lstact = new ArrayList<Actualite>();
         try {
             Statement stmt = cnx.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from actualite");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM evenement e, actualite a WHERE e.idEvent = a.idEvent");
             while (rs.next()) {
+                lstact.add(new Actualite(rs.getString(2), rs.getDate(13), rs.getString(15)));
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
               //  lstact.add(act);
             }

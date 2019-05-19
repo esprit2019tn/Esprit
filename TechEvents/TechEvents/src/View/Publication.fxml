@@ -1,39 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="View.PublicationController">
+<AnchorPane id="AnchorPane" prefHeight="566.0" prefWidth="889.0" stylesheets="@../Resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PublicationController">
    <children>
-      <Label layoutX="66.0" layoutY="64.0" prefHeight="17.0" prefWidth="94.0" text="Num Actualites" />
-      <Label layoutX="66.0" layoutY="119.0" prefHeight="17.0" prefWidth="94.0" text="Date" />
-      <Label layoutX="66.0" layoutY="183.0" prefHeight="17.0" prefWidth="94.0" text="Id Evenement" />
-      <Label layoutX="66.0" layoutY="252.0" prefHeight="17.0" prefWidth="94.0" text="Description" />
-      <JFXTabPane layoutY="7.0" prefHeight="30.0" prefWidth="369.0">
-         <tabs>
-            <Tab text="Créer publication">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="listes des publications">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-         </tabs>
-      </JFXTabPane>
-      <JFXDatePicker layoutX="274.0" layoutY="112.0" prefHeight="31.0" prefWidth="149.0" />
-      <JFXTextField layoutX="266.0" layoutY="57.0" />
-      <JFXTextField layoutX="266.0" layoutY="176.0" />
-      <JFXTextField layoutX="217.0" layoutY="245.0" maxWidth="302.0" minWidth="198.0" prefHeight="66.0" prefWidth="302.0" />
-      <JFXButton layoutX="87.0" layoutY="336.0" />
-      <JFXButton layoutX="363.0" layoutY="336.0" />
+      <Pane layoutY="-6.0" prefHeight="161.0" prefWidth="884.0" style="-fx-background-color: #1d76ba;">
+         <children>
+            <JFXButton layoutY="113.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="34.0" prefWidth="230.0" text="Creer une Publication" />
+         </children>
+      </Pane>
+      <Label contentDisplay="CENTER" layoutX="275.0" layoutY="246.0" prefHeight="23.0" prefWidth="102.0" text="Evenement" textAlignment="CENTER" />
+      <Label contentDisplay="CENTER" layoutX="275.0" layoutY="330.0" prefHeight="23.0" prefWidth="75.0" text="Description" textAlignment="CENTER" />
+      <JFXTextField fx:id="desc" layoutX="463.0" layoutY="312.0" maxWidth="204.0" minWidth="166.0" prefHeight="82.0" prefWidth="204.0" />
+      <JFXButton fx:id="publierbtn" layoutX="305.0" layoutY="485.0" onAction="#publier" prefHeight="34.0" prefWidth="296.0" text="Publier" />
+      <JFXComboBox fx:id="comboEvent" layoutX="463.0" layoutY="242.0" prefHeight="30.0" prefWidth="204.0" />
    </children>
 </AnchorPane>
