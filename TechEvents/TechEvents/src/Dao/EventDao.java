@@ -149,7 +149,7 @@ public class EventDao implements IDao<Event> {
             Statement stmt = cnx.createStatement();
             // ResultSet rs = stmt.executeQuery("select * from eventuser where UserID = " + evt.getIdEvent() + " and EventID = " + usr.getId() + "");
             // if (rs == null || rs.next() == false) {
-            stmt.executeUpdate("insert into eventuser (EventID,UserID) values (" + evt.getIdEvent() + "," + usr.getId() + ")");
+            stmt.executeUpdate("insert into reservation (idEvent,idUser) values (" + evt.getIdEvent() + "," + usr.getId() + ")");
             System.out.println("Event " + evt.getIdEvent() + " a été affecté à user n°" + usr.getId());
             //} else {
             //  return null;
@@ -164,7 +164,7 @@ public class EventDao implements IDao<Event> {
     public boolean existe(Event evt, User usr) {
         try {
             Statement stmt = cnx.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from eventuser where UserID = " + usr.getId() + " and EventID = " + evt.getIdEvent() + "");
+            ResultSet rs = stmt.executeQuery("select * from reservation where idUser = " + usr.getId() + " and idEvent = " + evt.getIdEvent() + "");
             if (rs == null || rs.next() == false) {
                 return true;
             } else {
@@ -229,8 +229,8 @@ public class EventDao implements IDao<Event> {
             // Statement stmt = cnx.createStatement();
             //ResultSet rs = stmt.executeQuery("select * from evenement");
 
-            Statement pst = cnx.prepareStatement("select * from evenement , eventuser , user where eventuser.UserID = " + usr.getId() + " and user.idUser = " + usr.getId() + " and eventuser.EventId = evenement.idEvent");
-            ResultSet rs = pst.executeQuery("select * from evenement , eventuser , user where eventuser.UserID = " + usr.getId() + " and user.idUser = " + usr.getId() + " and eventuser.EventId = evenement.idEvent");
+            Statement pst = cnx.prepareStatement("select * from evenement , reservation , user where reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent");
+            ResultSet rs = pst.executeQuery("select * from evenement , reservation , user where reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent");
             while (rs.next()) {
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
