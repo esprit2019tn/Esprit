@@ -21,6 +21,7 @@ public class Event {
     public Long duree;
     private Localisation localisation;
 
+    
     public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree, Localisation localisation) {
         this.idEvent = idEvent;
         this.titre = titre;

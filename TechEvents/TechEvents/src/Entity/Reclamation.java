@@ -8,31 +8,25 @@ public class Reclamation {
 
 
 	private int idReclam;
-	private String texte;
+	private String textReclam;
+        private String sujetReclam;
 	private User user;
 	private Event event;
 
-    public Reclamation(int idReclam, String texte, User user, Event event) {
+    public Reclamation(int idReclam, String textReclam, String sujetReclam, User user, Event event) {
         this.idReclam = idReclam;
-        this.texte = texte;
+        this.textReclam = textReclam;
+        this.sujetReclam = sujetReclam;
         this.user = user;
         this.event = event;
     }
 
-    public Reclamation(String texte, User user, Event event) {
-        this.texte = texte;
-        this.user = user;
-        this.event = event;
-    }
-
-    public Reclamation(int idReclam, User user, Event event) {
+    public Reclamation(int idReclam, String textReclam, String sujetReclam) {
         this.idReclam = idReclam;
-        this.user = user;
-        this.event = event;
+        this.textReclam = textReclam;
+        this.sujetReclam = sujetReclam;
     }
 
-        
-        
     public int getIdReclam() {
         return idReclam;
     }
@@ -41,12 +35,20 @@ public class Reclamation {
         this.idReclam = idReclam;
     }
 
-    public String getTexte() {
-        return texte;
+    public String getTextReclam() {
+        return textReclam;
     }
 
-    public void setTexte(String texte) {
-        this.texte = texte;
+    public void setTextReclam(String textReclam) {
+        this.textReclam = textReclam;
+    }
+
+    public String getSujetReclam() {
+        return sujetReclam;
+    }
+
+    public void setSujetReclam(String sujetReclam) {
+        this.sujetReclam = sujetReclam;
     }
 
     public User getUser() {
@@ -65,5 +67,13 @@ public class Reclamation {
         this.event = event;
     }
 
-        
+
+
+
+  
 }
+    
+
+        
+        
+    

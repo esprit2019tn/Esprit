@@ -5,6 +5,7 @@
  */
 package Metier;
 
+import Dao.UserDao;
 import Entity.User;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -23,31 +24,27 @@ public class UserSession {
     public static void createUserSession(User user){ 
         Preferences userPreferences = Preferences.userRoot();
         userPreferences.putInt("id", user.getId());
-        userPreferences.put("nom", user.getNom());
-        userPreferences.put("prenom", user.getPrenom());
-        userPreferences.put("email", user.getEmail());
     }
     
     
     public static User getUserSession(){ 
-        User user=new User();
+        UserDao userDao=new UserDao();
         Preferences userPreferences = Preferences.userRoot();
-        user.setId(userPreferences.getInt("id",0));
-        user.setNom(userPreferences.get("nom",""));
-        user.setPrenom(userPreferences.get("prenom",""));
-        user.setEmail(userPreferences.get("email",""));
-
-        return  user;
+        int id;
+        id = userPreferences.getInt("id",0);
+        return  userDao.findById(id);
     }
     
     public static void destroyUserSession() throws BackingStoreException{ 
         Preferences userPreferences = Preferences.userRoot();
         userPreferences.clear();
     }
+    
+    
         
     public static Boolean verifUserSession() throws BackingStoreException{ 
         Boolean res=true;
-            if(getUserSession().getNom().equals("")||getUserSession().getNom().equals(""))
+            if(getUserSession()==null)
                 res=false;          
         return res;
     }    
