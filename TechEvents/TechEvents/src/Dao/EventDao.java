@@ -7,6 +7,9 @@ import java.util.List;
 import Entity.User;
 import Entity.Event;
 import Connection.ConnectionProperties;
+import Entity.Localisation;
+import Entity.RoleUser;
+import Entity.User;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.*;
@@ -144,13 +147,13 @@ public class EventDao implements IDao<Event> {
         // TODO Auto-generated method stub
         try {
             Statement stmt = cnx.createStatement();
-           // ResultSet rs = stmt.executeQuery("select * from eventuser where UserID = " + evt.getIdEvent() + " and EventID = " + usr.getId() + "");
-           // if (rs == null || rs.next() == false) {
-                stmt.executeUpdate("insert into eventuser (EventID,UserID) values (" + evt.getIdEvent() + "," + usr.getId() + ")");
-                System.out.println("Event " + evt.getIdEvent() + " a été affecté à user n°" + usr.getId());
+            // ResultSet rs = stmt.executeQuery("select * from eventuser where UserID = " + evt.getIdEvent() + " and EventID = " + usr.getId() + "");
+            // if (rs == null || rs.next() == false) {
+            stmt.executeUpdate("insert into eventuser (EventID,UserID) values (" + evt.getIdEvent() + "," + usr.getId() + ")");
+            System.out.println("Event " + evt.getIdEvent() + " a été affecté à user n°" + usr.getId());
             //} else {
-              //  return null;
-           // }
+            //  return null;
+            // }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -161,18 +164,17 @@ public class EventDao implements IDao<Event> {
     public boolean existe(Event evt, User usr) {
         try {
             Statement stmt = cnx.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from eventuser where UserID = " + usr.getId()+ " and EventID = " + evt.getIdEvent() + "");
+            ResultSet rs = stmt.executeQuery("select * from eventuser where UserID = " + usr.getId() + " and EventID = " + evt.getIdEvent() + "");
             if (rs == null || rs.next() == false) {
-                return true ;
-            }
-            else {
-                return false ;
+                return true;
+            } else {
+                return false;
             }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return false ;
+        return false;
     }
 
     @Override
@@ -287,4 +289,24 @@ public class EventDao implements IDao<Event> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public List<Event> findEventByUser(String idUser) {
+        List<Event> lstEvent = null;
+        Localisation localisation = new Localisation();
+        try {
+            Statement stmt = cnx.createStatement();
+            ResultSet rs = stmt.executeQuery(
+                    "select e.* from evenement e "
+                    + "inner join organisation o "
+                    + "where o.idUser='" + idUser + "'");
+            while (rs.next()) {
+                Event event = new Event(0, idUser, idUser, Long.MAX_VALUE, Long.MAX_VALUE, idUser, Long.MIN_VALUE, localisation);
+                lstEvent.add(event);
+            }
+            //cnx.close();  
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return lstEvent;
+    }
 }
