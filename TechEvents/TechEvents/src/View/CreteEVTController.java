@@ -31,17 +31,23 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import Entity.Event;
 import Entity.Sponsor;
+import Entity.User;
+import Metier.UserSession;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.prefs.BackingStoreException;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -53,6 +59,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.geometry.Orientation;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -62,11 +71,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
@@ -132,10 +143,6 @@ public class CreteEVTController implements Initializable {
     private JFXButton Annuler1;
     @FXML
     private JFXButton Annuler11;
-    @FXML
-    private TreeTableView<Event> treetable;
-    @FXML
-    private TreeTableColumn<Event, Integer> col1;
 
     private boolean nav = false;
     EventDao uda = new EventDao();
@@ -144,9 +151,33 @@ public class CreteEVTController implements Initializable {
     @FXML
     private TableColumn<Event, ImageView> photo;
     @FXML
-    private ListView<String> sponsorlst;
+    private ListView<Sponsor> sponsorlst;
+    Sponsor s = new Sponsor("aaa","bbb");
+    public ObservableList<Sponsor> lstspr = FXCollections.observableArrayList(s);
+    @FXML
+    private Label username;
+    @FXML
+    private JFXButton consultEVT;
 
-    public ObservableList<String> lstspr = FXCollections.observableArrayList("sp1","sp2","sp3");
+    static Event selecedEvent;
+    @FXML
+    private TableView<Event> tableReservation;
+    @FXML
+    private TableColumn<Event, Integer> clnid1;
+    @FXML
+    private TableColumn<Event, String> clntitre1;
+    @FXML
+    private TableColumn<Event, String> clndate1;
+    @FXML
+    private TableColumn<Event, Integer> clnduree1;
+    @FXML
+    private TableColumn<Event, Number> cptmax1;
+    @FXML
+    private TableColumn<Event, Number> cptmin1;
+    @FXML
+    private TableColumn<Event, String> clndescri1;
+    @FXML
+    private TableColumn<Event, ImageView> photo1;
 
     /**
      * Initializes the controller class.
@@ -179,6 +210,7 @@ public class CreteEVTController implements Initializable {
                 System.out.println(".handle()" + table.getSelectionModel().getSelectedItem().getTitre());
                 a = table.getSelectionModel().getSelectedItem().getIdEvent();
                 //            setA(table.getSelectionModel().getSelectedItem().getIdEvent());
+                selecedEvent = table.getSelectionModel().getSelectedItem();
             }
 
         });
@@ -191,10 +223,39 @@ public class CreteEVTController implements Initializable {
                 }
             }
         });
+        
+        sponsorlst.setCellFactory(CheckBoxListCell.forListView(new Callback<Sponsor, ObservableValue<Boolean>>() {
+            @Override
+            public ObservableValue<Boolean> call(Sponsor param) {
+                BooleanProperty observable = new SimpleBooleanProperty();
+                observable.addListener((obs, wasSelected, isNowSelected)
+                        -> {
+                    System.out.println("Check box for " + param + " changed from " + wasSelected + " to " + isNowSelected + " zzz " + obs);
+                    if(isNowSelected)
+                        System.out.println("add"+param);
+                    else
+                        System.out.println("remove"+param);
+                }
+                );
+                return observable;
+            }
+
+        }));
         sponsorlst.setItems(lstspr);
         sponsorlst.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        User user = UserSession.getUserSession();
+        try {
+            if (UserSession.verifUserSession()) {
+                username.setText(UserSession.getUserSession().getNom() + " " + UserSession.getUserSession().getPrenom());
+            }
+        } catch (BackingStoreException ex) {
+            Logger.getLogger(CreteEVTController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    public static Event getevt() {
+        return selecedEvent;
+    }
 //    public void scrollable(){
 //         achp1.setTranslateY(20);
 //        
@@ -212,6 +273,7 @@ public class CreteEVTController implements Initializable {
 //                new Event("", "", Long.valueOf(3), Long.valueOf(2), "")
 //                );
     public ObservableList<Event> list = FXCollections.observableArrayList();
+    public ObservableList<Event> listReservation = FXCollections.observableArrayList();
 
     @FXML
     public void list() {
@@ -251,6 +313,29 @@ public class CreteEVTController implements Initializable {
         table.setEditable(true);
         table.setItems(list);
 
+    }
+
+    @FXML
+    private void reservationlst() {
+        listReservation.clear();
+        if (listReservation.isEmpty()) {
+            listReservation.addAll(uda.findReservationByEvent(UserSession.getUserSession()));
+        }
+        clnid1.setCellValueFactory(new PropertyValueFactory<Event, Integer>("idEvent"));
+        clntitre1.setCellValueFactory(new PropertyValueFactory<Event, String>("titre"));
+        clndate1.setCellValueFactory(new PropertyValueFactory<Event, String>("dateEvent"));
+        clnduree1.setCellValueFactory(new PropertyValueFactory<Event, Integer>("duree"));
+        cptmax1.setCellValueFactory(new PropertyValueFactory<>("capaciteMax"));
+
+        cptmin1.setCellValueFactory(new PropertyValueFactory<>("capaciteMin"));
+        clndescri1.setCellValueFactory(new PropertyValueFactory<Event, String>("desc"));
+        photo1.setCellValueFactory(new PropertyValueFactory<Event, ImageView>("image"));
+        //  edittable();
+        clntitre1.setCellFactory(TextFieldTableCell.forTableColumn());
+        //  cptmax.setCellFactory(col -> new IntegerEditingCell());
+        cptmax1.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        cptmin1.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        tableReservation.setItems(listReservation);
     }
 
     @FXML
@@ -460,6 +545,17 @@ public class CreteEVTController implements Initializable {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
+    }
+
+    @FXML
+    private void consultEVT(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("ConsultEVT.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = new Stage();
+//  Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //   app_stage.hide();
+        app_stage.setScene(home_page_scene);
+        app_stage.show();
     }
 
     public JFXHamburger getHumburger() {

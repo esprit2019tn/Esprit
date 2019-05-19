@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import Entity.User;
 import Entity.Event;
 import Connection.ConnectionProperties;
 import java.awt.image.BufferedImage;
@@ -139,6 +140,41 @@ public class EventDao implements IDao<Event> {
         }
     }
 
+    public String updateUserEvt(Event evt, User usr) {
+        // TODO Auto-generated method stub
+        try {
+            Statement stmt = cnx.createStatement();
+           // ResultSet rs = stmt.executeQuery("select * from eventuser where UserID = " + evt.getIdEvent() + " and EventID = " + usr.getId() + "");
+           // if (rs == null || rs.next() == false) {
+                stmt.executeUpdate("insert into eventuser (EventID,UserID) values (" + evt.getIdEvent() + "," + usr.getId() + ")");
+                System.out.println("Event " + evt.getIdEvent() + " a été affecté à user n°" + usr.getId());
+            //} else {
+              //  return null;
+           // }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public boolean existe(Event evt, User usr) {
+        try {
+            Statement stmt = cnx.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from eventuser where UserID = " + usr.getId()+ " and EventID = " + evt.getIdEvent() + "");
+            if (rs == null || rs.next() == false) {
+                return true ;
+            }
+            else {
+                return false ;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false ;
+    }
+
     @Override
     public List<Event> findAll() {
         // TODO Auto-generated method stub
@@ -149,6 +185,50 @@ public class EventDao implements IDao<Event> {
 
             Statement pst = cnx.prepareStatement("select * from evenement");
             ResultSet rs = pst.executeQuery("select * from evenement");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                InputStream is = rs.getBinaryStream("photoEvent");
+                OutputStream os = new FileOutputStream(new File("img.jpg"));
+                byte[] content = new byte[1024];
+                int size = 0;
+
+                while ((size = is.read(content)) != -1) {
+                    os.write(content, 0, size);
+                }
+                os.close();
+                is.close();
+                Image img = new Image("file:img.jpg", 111, 111, true, true);
+                ImageView imv = new ImageView(img);
+                imv.setFitWidth(111);
+                imv.setFitHeight(111);
+                imv.setPreserveRatio(true);
+
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7), imv);
+                lstevent.add(event);
+            }
+            // cnx.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lstevent;
+    }
+
+    public List<Event> findReservationByEvent(User usr) {
+        // TODO Auto-generated method stub
+        List<Event> lstevent = new ArrayList<Event>();
+        try {
+            // Statement stmt = cnx.createStatement();
+            //ResultSet rs = stmt.executeQuery("select * from evenement");
+
+            Statement pst = cnx.prepareStatement("select * from evenement , eventuser , user where eventuser.UserID = " + usr.getId() + " and user.idUser = " + usr.getId() + " and eventuser.EventId = evenement.idEvent");
+            ResultSet rs = pst.executeQuery("select * from evenement , eventuser , user where eventuser.UserID = " + usr.getId() + " and user.idUser = " + usr.getId() + " and eventuser.EventId = evenement.idEvent");
             while (rs.next()) {
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
