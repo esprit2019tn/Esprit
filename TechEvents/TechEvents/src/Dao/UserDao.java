@@ -7,7 +7,7 @@ import Entity.User;
 import Connection.ConnectionProperties;
 import Entity.RoleUser;
 
-public class UserDao implements IDao<User> {
+public class UserDao implements IDaoClient {
 
 	//Connection cnx = ConnectionProperties.connect();
 	Connection cnx = ConnectionProperties.getConnectionProperties().getCnx();
@@ -92,7 +92,7 @@ public class UserDao implements IDao<User> {
 			ResultSet rs=stmt.executeQuery("select * from user where active=0 ");  
 			while (rs.next()){
 				System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
-			User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getDate(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),RoleUser.valueOf(rs.getString(9)), rs.getString(10),rs.getBoolean(11),rs.getBoolean(11));
+			User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getDate(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),RoleUser.valueOf(rs.getString(9)), rs.getString(10),rs.getBoolean(11),rs.getBoolean(12));
 			lstuser.add(user);
 			
 			}
@@ -105,14 +105,14 @@ public class UserDao implements IDao<User> {
     }
 
     @Override
-    public User findById(String id) {
+    public User findById(int id) {
 		User user = null;
 		try {
 			Statement stmt = cnx.createStatement();
 			ResultSet rs=stmt.executeQuery("SELECT * FROM user WHERE "
                                 + "idUser='"+id+"'");  
 			while (rs.next()){
-			 user = new User(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));	
+			 user = new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getDate(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),RoleUser.valueOf(rs.getString(9)), rs.getString(10),rs.getBoolean(11),rs.getBoolean(12));
 			}
 			//cnx.close();  
 		} catch (SQLException e) {
@@ -197,7 +197,7 @@ public class UserDao implements IDao<User> {
                 return rs;
     }
         
-        public Boolean setValidationUser(String email) {
+        public  Boolean setValidationUser(String email) {
             Boolean rs=false;
 		try {
 			Statement stmt = cnx.createStatement();
@@ -216,6 +216,27 @@ public class UserDao implements IDao<User> {
                 return rs;
     }
     
+        
+            public List<User> findUserByEvent(String idEvent) {
+		List<User> lstUser = null;
+		try {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs=stmt.executeQuery(
+                                "select u.*  " +
+                                " from user " +
+                                " inner join organisation " +
+                                " where o.idEvent='"+idEvent+"'");  
+			while (rs.next()){
+			 User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getDate(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),RoleUser.valueOf(rs.getString(9)), rs.getString(10),rs.getBoolean(11),rs.getBoolean(12));			
+			lstUser.add(user);
+                        }
+			//cnx.close();  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return lstUser;
+    }
     
     
     
