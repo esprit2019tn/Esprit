@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -12,15 +11,13 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../Resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ReclamationController">
      <children>
-      <Pane layoutY="-6.0" prefHeight="161.0" prefWidth="884.0" style="-fx-background-color: #1d76ba;">
+      <Pane layoutY="-4.0" prefHeight="161.0" prefWidth="884.0" style="-fx-background-color: #1d76ba;">
          <children>
             <JFXButton layoutX="349.0" layoutY="40.0" text="Liste des réclamations" textFill="WHITE" />
          </children></Pane>
       <TextField layoutX="537.0" layoutY="170.0" />
-      <JFXRadioButton layoutX="630.0" layoutY="222.0" text="Event" />
-      <JFXRadioButton layoutX="537.0" layoutY="222.0" text="User" />
-      <JFXButton layoutX="643.0" layoutY="305.0" ripplerFill="#4123d7" text="Valider" textFill="#86acee" />
-      <JFXButton layoutX="537.0" layoutY="305.0" ripplerFill="#3c1fd0" text="Annuler" textFill="#86acee" />
+      <JFXButton fx:id="btnValider" layoutX="644.0" layoutY="460.0" onAction="#insertReclam" ripplerFill="#4123d7" text="Valider" textFill="#86acee" />
+      <JFXButton fx:id="btnAnnuler" layoutX="457.0" layoutY="460.0" onAction="#init" ripplerFill="#3c1fd0" text="Annuler" textFill="#86acee" />
       <JFXButton layoutX="15.0" layoutY="123.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="34.0" prefWidth="180.0" text="Menu" />
       <Pane fx:id="userPane" layoutX="24.0" layoutY="24.0" prefHeight="60.0" prefWidth="200.0" visible="false">
          <children>
@@ -98,5 +95,8 @@
             </ImageView>
          </children>
       </Pane>
+      <TextField layoutX="452.0" layoutY="307.0" prefHeight="87.0" prefWidth="304.0" />
+      <Label layoutX="253.0" layoutY="341.0" text="Explication" />
+      <Label layoutX="253.0" layoutY="190.0" text="Sujet" />
    </children>
 </AnchorPane>
