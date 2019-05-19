@@ -195,6 +195,11 @@ public class Event {
         this.image = image;
     }
 
+    @Override
+    public String toString() {
+        return ""+titre + "";
+    }
+
     
     
 }

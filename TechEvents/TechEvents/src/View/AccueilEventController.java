@@ -10,6 +10,8 @@ import Entity.Event;
 import Entity.User;
 import Metier.UserSession;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,40 +42,32 @@ public class AccueilEventController implements Initializable {
     
      private ObservableList<Event> eventData = FXCollections.observableArrayList();
 
-    @FXML
     private Pane userPane;
     
 
 
-    @FXML
     private Label userName;
 
-    @FXML
     private JFXButton btnInscription;
 
-    @FXML
     private JFXButton btnConnexion;
 
-    @FXML
     private JFXButton btnDeconnexion;
 
-    @FXML
-    private TableView<?> eventTable;
 
-    @FXML
-    private TableColumn<?, ?> titreColumn;
-
-    @FXML
-    private TableColumn<?, ?> descriptionColumn;
-
-    @FXML
     private Pane menu;
     
     ////////////////////////////////
+    @FXML
+    private JFXTextField desc;
+    @FXML
+    private JFXComboBox<Event> comboEvent;
 
+    ObservableList<Event> lstevent = FXCollections.observableArrayList();
 
-
-
+    EventDao eda = new EventDao();
+    @FXML
+    private JFXButton publierbtn;
 
     
 
@@ -118,6 +112,8 @@ public class AccueilEventController implements Initializable {
         } catch (BackingStoreException ex) {
             Logger.getLogger(ValidationUserController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        lstevent.addAll(eda.findAll());
+        comboEvent.setItems(lstevent);
         
     }   
     
@@ -140,7 +136,6 @@ public class AccueilEventController implements Initializable {
 
 
         
-@FXML
 void validUser(ActionEvent event) throws IOException {
    /* UserDao userDao=new UserDao();
     userDao.setValidationUser(emailLabel.getText());
@@ -165,7 +160,6 @@ void validUser(ActionEvent event) throws IOException {
     
     
     
-    @FXML
     void connexion(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("Authentification.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
@@ -175,7 +169,6 @@ void validUser(ActionEvent event) throws IOException {
                 app_stage.show();  
     }
 
-    @FXML
     void inscription(ActionEvent event) throws IOException {
                 Parent home_page_parent = FXMLLoader.load(getClass().getResource("Inscription.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
@@ -185,7 +178,6 @@ void validUser(ActionEvent event) throws IOException {
                 app_stage.show(); 
 
     } 
-    @FXML
     void deconnexion(ActionEvent event) throws BackingStoreException, IOException {
         UserSession.destroyUserSession();
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
@@ -196,6 +188,10 @@ void validUser(ActionEvent event) throws IOException {
                 app_stage.show(); 
         
 
+    }
+
+    @FXML
+    private void publier(ActionEvent event) {
     }
 
     
