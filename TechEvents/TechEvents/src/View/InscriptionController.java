@@ -9,6 +9,7 @@ import Dao.UserDao;
 import Entity.RoleUser;
 import Entity.User;
 import Metier.EmailSend;
+import Metier.UserSession;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.prefs.BackingStoreException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -67,16 +70,28 @@ public class InscriptionController implements Initializable {
     @FXML
     private Label erreur;
 
+    @FXML
+    private Pane menu;
+        
     ToggleGroup groupSexe=new ToggleGroup();
    /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         homme.setToggleGroup(groupSexe);
         femme.setToggleGroup(groupSexe);
     }    
     
+    
+    @FXML
+    void splitMenu(ActionEvent event) {
+        if(menu.isVisible())
+            menu.setVisible(false);
+        else
+            menu.setVisible(true);
+    }
 
     
         @FXML
@@ -120,6 +135,23 @@ public class InscriptionController implements Initializable {
                
         
     }
+    
+    
+    @FXML
+    void btnMenuHome(ActionEvent event) throws BackingStoreException, IOException {
+        UserSession.destroyUserSession();
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+        
+
+    }
+    
+    
+
     
     
 }

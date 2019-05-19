@@ -28,7 +28,6 @@ public class UserSession {
     
     
     public static User getUserSession(){ 
-        User user=new User();
         UserDao userDao=new UserDao();
         Preferences userPreferences = Preferences.userRoot();
         int id;
