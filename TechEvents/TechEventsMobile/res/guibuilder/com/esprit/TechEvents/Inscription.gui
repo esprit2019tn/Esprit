@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" layout="LayeredLayout" layeredLayoutPreferredWidthMM="0.0" layeredLayoutPreferredHeightMM="0.0"  autolayout="true" title="Inscription" scrollableY="true" name="Inscription">
+  <component type="Container" layout="BoxLayout" boxLayoutAxis="Y"  preferredSize="57.142857mm 76.190475mm" name="Box_Layout_Y">
+    <layoutConstraint insets="0.0mm 0.0mm 0.0mm 0.0mm" referenceComponents="-1 -1 -1 -1" referencePositions="0.0 0.0 0.0 0.0" />
+    <component type="TextField" hint="Nom" name="TextField">
+    </component>
+    <component type="TextField" text="" hint="Prenom" name="Text_Field">
+    </component>
+    <component type="Picker" text="..." pickerType="4" name="Picker">
+    </component>
+    <component type="Container" layout="BoxLayout" boxLayoutAxis="X"  scrollableX="false" name="Box_Layout_X">
+      <component type="RadioButton" uiid="RadioButton" text="Homme" group="sexe" name="homme">
+      </component>
+      <component type="RadioButton" uiid="RadioButton" text="Femme" group="sexe" name="femme">
+      </component>
+    </component>
+    <component type="TextField" uiid="TextField" text="" hint="Email" name="email">
+    </component>
+    <component type="TextField" uiid="TextField" text="" hint="Adresse" name="adresse">
+    </component>
+    <component type="TextField" uiid="TextField" text="" hint="Mot De Passe" name="motDePasse">
+    </component>
+    <component type="TextField" uiid="TextField" text="" hint="Confirmation Mot De Passe" name="ConfMotDePasse">
+    </component>
+    <component type="Button" uiid="Button" text="S'inscrire" name="Inscrire">
+    </component>
+  </component>
+</component>
