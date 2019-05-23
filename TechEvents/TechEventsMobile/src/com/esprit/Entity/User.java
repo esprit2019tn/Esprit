@@ -1,4 +1,4 @@
-package Entity;
+package com.esprit.Entity;
 
 import java.util.*;
 import javafx.beans.property.SimpleStringProperty;

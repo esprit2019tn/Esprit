@@ -1,6 +1,7 @@
 package com.esprit.TechEvents;
 
 
+import com.esprit.gui.Menu;
 import static com.codename1.ui.CN.*;
 import com.codename1.components.SpanLabel;
 import com.codename1.io.Log;
@@ -64,68 +65,7 @@ public class TechEvents {
     public void start() {
        
             Form home = new Form();
-        Form page1 = new Form();
-        page1.add(new Label("page1"));
-        page1.getToolbar().addMaterialCommandToLeftBar("Back", FontImage.MATERIAL_ARROW_BACK, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                home.showBack();
-            }
-        });
-        Form page2 = new Form();
-        page2.add(new Label("page2"));
-        page2.getToolbar().addCommandToRightBar("Back", null, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                home.showBack();
-            }
-        });
-        Form page3 = new Form();
-        page3.add(new Label("page3"));
-        
-
-        page3.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                home.showBack();
-            }
-        });
-
-        home.add(new Label("Home"));
-        home.getToolbar().addMaterialCommandToLeftSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                home.showBack();
-            }
-        });
-        home.getToolbar().addCommandToLeftSideMenu("page1", null, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-//                Inscription inscription=new Inscription();
-//                inscription.setTheme(theme);
-//                inscription.setHome(home);
-//                inscription.getCurrent().show();
-                 // Inscription.fr().show();
-                  Inscription inscription = new Inscription();
-                  inscription.show();
-            }
-        });
-
-        home.getToolbar().addCommandToLeftSideMenu("page2", null, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                page2.show();
-            }
-        });
-
-        home.getToolbar().addCommandToLeftSideMenu("page3", null, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                page3.show();
-            }
-        });
-        page1.setToolbar(home.getToolbar());
-        page2.setToolbar(home.getToolbar());
+            Menu.getMenu(home);
         home.show();
     }
 

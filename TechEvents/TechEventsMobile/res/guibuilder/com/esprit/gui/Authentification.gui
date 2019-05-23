@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" layout="LayeredLayout" layeredLayoutPreferredWidthMM="0.0" layeredLayoutPreferredHeightMM="0.0"  autolayout="true" title="Authentification" scrollableY="true" name="Authentification">
+  <component type="Container" layout="BoxLayout" boxLayoutAxis="Y"  preferredSize="82.80423mm 39.15344mm" name="Box_Layout_Y">
+    <layoutConstraint insets="0.0mm 0.0mm 0.0mm 0.0mm" referenceComponents="-1 -1 -1 -1" referencePositions="0.0 0.0 0.0 0.0" />
+    <component type="TextField" hint="Email" constraint="1" name="email">
+    </component>
+    <component type="TextField" hint="Mot de passe" constraint="65536" name="motDePasse">
+    </component>
+    <component type="Label" text="Mot de passe oublier ?" name="motDePasseOublier">
+    </component>
+    <component type="Button" text="Connexion" name="connexion" actionEvent="true">
+    </component>
+    <component type="Label" text="-Ou-" styles="alignment:center;" name="Label">
+    </component>
+    <component type="Button" text="Inscription" name="inscription" actionEvent="true">
+    </component>
+  </component>
+</component>

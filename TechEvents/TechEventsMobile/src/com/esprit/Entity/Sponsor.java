@@ -1,4 +1,4 @@
-package Entity;
+package com.esprit.Entity;
 
 
 public class Sponsor {

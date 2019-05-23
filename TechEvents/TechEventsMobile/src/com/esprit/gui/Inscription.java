@@ -3,7 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esprit.TechEvents;
+package com.esprit.gui;
+
+import com.codename1.ui.FontImage;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
+import com.esprit.Service.ServiceUser;
 
 /**
  * GUI builder created Form
@@ -14,6 +19,7 @@ public class Inscription extends com.codename1.ui.Form {
 
     public Inscription() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
+                Menu.getMenu(this);
     }
     
     public Inscription(com.codename1.ui.util.Resources resourceObjectInstance) {
@@ -36,7 +42,37 @@ public class Inscription extends com.codename1.ui.Form {
 
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void guiBuilderBindComponentListeners() {
+        EventCallbackClass callback = new EventCallbackClass();
+        gui_Inscrire.addActionListener(callback);
+    }
+
+    class EventCallbackClass implements com.codename1.ui.events.ActionListener, com.codename1.ui.events.DataChangedListener {
+        private com.codename1.ui.Component cmp;
+        public EventCallbackClass(com.codename1.ui.Component cmp) {
+            this.cmp = cmp;
+        }
+
+        public EventCallbackClass() {
+        }
+
+        public void actionPerformed(com.codename1.ui.events.ActionEvent ev) {
+            com.codename1.ui.Component sourceComponent = ev.getComponent();
+
+            if(sourceComponent.getParent().getLeadParent() != null && (sourceComponent.getParent().getLeadParent() instanceof com.codename1.components.MultiButton || sourceComponent.getParent().getLeadParent() instanceof com.codename1.components.SpanButton)) {
+                sourceComponent = sourceComponent.getParent().getLeadParent();
+            }
+
+            if(sourceComponent == gui_Inscrire) {
+                onInscrireActionEvent(ev);
+            }
+        }
+
+        public void dataChanged(int type, int index) {
+        }
+    }
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
+        guiBuilderBindComponentListeners();
         setLayout(new com.codename1.ui.layouts.LayeredLayout());
         setInlineStylesTheme(resourceObjectInstance);
         setScrollableY(true);
@@ -54,6 +90,7 @@ public class Inscription extends com.codename1.ui.Form {
         gui_Box_Layout_Y.addComponent(gui_Box_Layout_X);
         gui_Box_Layout_X.setScrollableX(false);
                 gui_Box_Layout_X.setInlineStylesTheme(resourceObjectInstance);
+        gui_Box_Layout_X.setInlineAllStyles("alignment:center;");
         gui_Box_Layout_X.setName("Box_Layout_X");
         gui_Box_Layout_X.addComponent(gui_homme);
         gui_Box_Layout_X.addComponent(gui_femme);
@@ -82,19 +119,23 @@ public class Inscription extends com.codename1.ui.Form {
         gui_Picker.setType(4);
         gui_Box_Layout_X.setScrollableX(false);
                 gui_Box_Layout_X.setInlineStylesTheme(resourceObjectInstance);
+        gui_Box_Layout_X.setInlineAllStyles("alignment:center;");
         gui_Box_Layout_X.setName("Box_Layout_X");
         gui_email.setHint("Email");
                 gui_email.setInlineStylesTheme(resourceObjectInstance);
         gui_email.setName("email");
+        gui_email.setConstraint(com.codename1.ui.TextArea.EMAILADDR);
         gui_adresse.setHint("Adresse");
                 gui_adresse.setInlineStylesTheme(resourceObjectInstance);
         gui_adresse.setName("adresse");
         gui_motDePasse.setHint("Mot De Passe");
                 gui_motDePasse.setInlineStylesTheme(resourceObjectInstance);
         gui_motDePasse.setName("motDePasse");
+        gui_motDePasse.setConstraint(com.codename1.ui.TextArea.PASSWORD);
         gui_ConfMotDePasse.setHint("Confirmation Mot De Passe");
                 gui_ConfMotDePasse.setInlineStylesTheme(resourceObjectInstance);
         gui_ConfMotDePasse.setName("ConfMotDePasse");
+        gui_ConfMotDePasse.setConstraint(com.codename1.ui.TextArea.PASSWORD);
         gui_Inscrire.setText("S'inscrire");
                 gui_Inscrire.setInlineStylesTheme(resourceObjectInstance);
         gui_Inscrire.setName("Inscrire");
@@ -105,4 +146,9 @@ public class Inscription extends com.codename1.ui.Form {
     }// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
+    public void onInscrireActionEvent(com.codename1.ui.events.ActionEvent ev) {
+        ServiceUser.ajoutUser(null);
+        
+    }
+
 }
