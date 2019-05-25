@@ -5,10 +5,11 @@
  */
 package com.esprit.gui;
 
-import com.codename1.ui.FontImage;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
+import com.esprit.Entity.RoleUser;
+import com.esprit.Entity.User;
 import com.esprit.Service.ServiceUser;
+import java.util.Date;
+import java.util.Random;
 
 /**
  * GUI builder created Form
@@ -147,8 +148,22 @@ public class Inscription extends com.codename1.ui.Form {
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
     public void onInscrireActionEvent(com.codename1.ui.events.ActionEvent ev) {
-        ServiceUser.ajoutUser(null);
+        String sexe=null;
+        if(gui_homme.isSelected())
+            sexe="Homme";
+        else if(gui_femme.isSelected())
+            sexe="Femme";
+        
+        Random rand = new Random();
+        int randomNum = rand.nextInt((999999 - 100000) + 1) + 100000;
+        String confirmationCode=String.valueOf(randomNum);
+        User user=new User(gui_nom.getText(),gui_prenom.getText(),/*java.sql.Date.valueOf(gui_.getValue())*/new Date(),sexe,gui_adresse.getText(),gui_email.getText(),gui_motDePasse.getText(),RoleUser.SimpleUser,confirmationCode);        
+        ServiceUser.ajoutUser(user);
+//        EmailSend.sendConfirmation(gui_email.getText(),confirmationCode);
         
     }
+
+    
+    
 
 }

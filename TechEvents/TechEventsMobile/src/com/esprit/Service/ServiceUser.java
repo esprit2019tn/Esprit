@@ -11,11 +11,16 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
+import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+
+
 
 /**
  *
@@ -24,20 +29,26 @@ import java.util.Map;
 public class ServiceUser {
 
     public static void ajoutUser(User user) {
-        ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
-        String Url = "http://localhost/Servers/php/tasksApp/addTask.php" ;// création de l'URL
-        con.addRequestHeader(Url, Url);
-        con.addRequestHeader("state", "test");
-
-        
+           ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
+        String Url = "http://localhost/Servers/user/addUser.php";// création de l'URL
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
-
+        con.addArgument("nom",user.getNom());
+        con.addArgument("prenom", user.getPrenom());
+        con.addArgument("dateNaiss", user.getDateNaiss().toString() );
+        con.addArgument("sexe",user.getSexe());
+        con.addArgument("adresse", user.getAdresse());
+        con.addArgument("email", user.getEmail());
+        con.addArgument("password", user.getPassword());
+        con.addArgument("role", RoleUser.SimpleUser.toString());
+        con.addArgument("confirmationCode",user.getConfirmationCode());
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());//Récupération de la réponse du serveur
             System.out.println(str);//Affichage de la réponse serveur sur la console
 
         });
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
+
+   
     }
 
     public static ArrayList<User> parseListTaskJson(String json) {
