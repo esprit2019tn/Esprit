@@ -30,7 +30,7 @@ public class Menu {
                 forme.showBack();
             }
         });
-        forme.getToolbar().addCommandToLeftSideMenu("page1", null, new ActionListener() {
+        forme.getToolbar().addCommandToLeftSideMenu("Inscription", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                   Inscription inscription = new Inscription();
@@ -39,7 +39,7 @@ public class Menu {
             }
         });
 
-        forme.getToolbar().addCommandToLeftSideMenu("page2", null, new ActionListener() {
+        forme.getToolbar().addCommandToLeftSideMenu("Authentification", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                   Authentification authentification = new Authentification();
