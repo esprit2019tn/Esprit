@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../Resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ReclamationController">
+     <children>
+      <Pane layoutY="-4.0" prefHeight="161.0" prefWidth="884.0" style="-fx-background-color: #1d76ba;" />
+      <TextField layoutX="538.0" layoutY="185.0" />
+      <JFXButton fx:id="btnValider" layoutX="644.0" layoutY="460.0" onAction="#insertReclam" ripplerFill="#4123d7" text="Valider" textFill="#86acee" />
+      <JFXButton fx:id="btnAnnuler" layoutX="457.0" layoutY="460.0" onAction="#init" ripplerFill="#3c1fd0" text="Annuler" textFill="#86acee" />
+      <JFXButton fx:id="btnInscription" layoutX="630.0" layoutY="38.0" mnemonicParsing="false" onAction="#inscription" prefHeight="32.0" prefWidth="106.0" text="Inscription" />
+      <JFXButton fx:id="btnConnexion" layoutX="745.0" layoutY="38.0" mnemonicParsing="false" onAction="#connexion" prefHeight="32.0" prefWidth="106.0" text="Connexion" />
+      <JFXButton fx:id="btnDeconnexion" layoutX="674.0" layoutY="42.0" mnemonicParsing="false" onAction="#deconnexion" prefHeight="32.0" prefWidth="106.0" text="Deconnexion" visible="false" />
+      <TextField layoutX="423.0" layoutY="331.0" prefHeight="87.0" prefWidth="304.0" />
+      <Label layoutX="253.0" layoutY="341.0" text="Explication" />
+      <Label layoutX="253.0" layoutY="190.0" text="Sujet" />
+   </children>
+</AnchorPane>
