@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -157,12 +158,20 @@ public class ReclamationController implements Initializable {
 
         ReclamationDao reclamationDao=new ReclamationDao();
         reclamationDao.insert(reclamation);  
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Réclamation");
+        alert.setHeaderText("La réclamation a été ajouté avec succes");
+        alert.setContentText("L'événement " + reclamation.getSujetReclam()+ " à été été ajouté ");
+
+        alert.showAndWait();
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.hide();
                 app_stage.setScene(home_page_scene);
-                app_stage.show(); 
+                app_stage.show();
+                
     }
 
     @FXML
