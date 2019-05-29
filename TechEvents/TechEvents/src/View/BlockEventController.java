@@ -11,6 +11,7 @@ import javafx.beans.property.StringPropertyBase;
 import Entity.User;
 import Dao.EventDao;
 import Dao.ReclamationDao;
+import Entity.Actualite;
 import Entity.Event;
 import Entity.Reclamation;
 import Metier.UserSession;
@@ -27,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
 /**
@@ -87,9 +89,9 @@ public class BlockEventController implements Initializable {
 
     public void setTable(){
                // Initialize the person table with the two columns.
-        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("firstNameColumn"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("lastNameColumn"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("emailNameColumn"));
 
         getPersonData();
         personTable.getItems().clear();
