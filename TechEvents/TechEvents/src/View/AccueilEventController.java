@@ -30,6 +30,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -42,32 +44,43 @@ public class AccueilEventController implements Initializable {
     
      private ObservableList<Event> eventData = FXCollections.observableArrayList();
 
+    @FXML
     private Pane userPane;
     
 
 
+    @FXML
     private Label userName;
 
+    @FXML
     private JFXButton btnInscription;
 
+    @FXML
     private JFXButton btnConnexion;
 
+    @FXML
     private JFXButton btnDeconnexion;
 
 
+    @FXML
     private Pane menu;
     
-    ////////////////////////////////
-    @FXML
-    private JFXTextField desc;
-    @FXML
     private JFXComboBox<Event> comboEvent;
 
     ObservableList<Event> lstevent = FXCollections.observableArrayList();
 
     EventDao eda = new EventDao();
     @FXML
-    private JFXButton publierbtn;
+    private TableView<Event> eventTable;
+    @FXML
+    private TableColumn<Event, ImageView> photoColumn;
+    @FXML
+    private TableColumn<Event, String> titreColumn;
+    @FXML
+    private TableColumn<Event, String> DateColumn;
+    @FXML
+    private TableColumn<Event, Integer> DureeColumn;
+
 
     
 
@@ -91,7 +104,7 @@ public class AccueilEventController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        eventData.addAll(eda.findAll());
         User user=UserSession.getUserSession();
         if(!user.getNom().equals(""))
         {   
@@ -112,9 +125,14 @@ public class AccueilEventController implements Initializable {
         } catch (BackingStoreException ex) {
             Logger.getLogger(ValidationUserController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        lstevent.addAll(eda.findAll());
-        comboEvent.setItems(lstevent);
+       // lstevent.addAll(eda.findAll());
+       // comboEvent.setItems(lstevent);
+        titreColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("titre"));
+        DateColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("dateEvent"));
+        DureeColumn.setCellValueFactory(new PropertyValueFactory<Event, Integer>("duree"));
+        photoColumn.setCellValueFactory(new PropertyValueFactory<Event, ImageView>("image"));
         
+        eventTable.setItems(eventData);
     }   
     
     public void setTable(){
@@ -151,7 +169,7 @@ void validUser(ActionEvent event) throws IOException {
 
 
     @FXML
-    void splitMenu(ActionEvent event) {
+  public  void splitMenu(ActionEvent event) {
         if(menu.isVisible())
             menu.setVisible(false);
         else
@@ -160,7 +178,8 @@ void validUser(ActionEvent event) throws IOException {
     
     
     
-    void connexion(ActionEvent event) throws IOException {
+    @FXML
+  public  void connexion(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("Authentification.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -169,7 +188,8 @@ void validUser(ActionEvent event) throws IOException {
                 app_stage.show();  
     }
 
-    void inscription(ActionEvent event) throws IOException {
+    @FXML
+ public   void inscription(ActionEvent event) throws IOException {
                 Parent home_page_parent = FXMLLoader.load(getClass().getResource("Inscription.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -178,7 +198,8 @@ void validUser(ActionEvent event) throws IOException {
                 app_stage.show(); 
 
     } 
-    void deconnexion(ActionEvent event) throws BackingStoreException, IOException {
+    @FXML
+  public  void deconnexion(ActionEvent event) throws BackingStoreException, IOException {
         UserSession.destroyUserSession();
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
@@ -191,8 +212,147 @@ void validUser(ActionEvent event) throws IOException {
     }
 
     @FXML
-    private void publier(ActionEvent event) {
+    private void showEvent(ActionEvent event) throws BackingStoreException, IOException {
+                Parent home_page_parent = FXMLLoader.load(getClass().getResource("CreteEVT.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+    }
+    
+     @FXML
+    private void showReclamation(ActionEvent event) throws Exception{
+                 Parent home_page_parent = FXMLLoader.load(getClass().getResource("BlockEvent.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
     }
 
+    public ObservableList<Event> getEventData() {
+        return eventData;
+    }
+
+    public void setEventData(ObservableList<Event> eventData) {
+        this.eventData = eventData;
+    }
+
+    public Pane getUserPane() {
+        return userPane;
+    }
+
+    public void setUserPane(Pane userPane) {
+        this.userPane = userPane;
+    }
+
+    public Label getUserName() {
+        return userName;
+    }
+
+    public void setUserName(Label userName) {
+        this.userName = userName;
+    }
+
+    public JFXButton getBtnInscription() {
+        return btnInscription;
+    }
+
+    public void setBtnInscription(JFXButton btnInscription) {
+        this.btnInscription = btnInscription;
+    }
+
+    public JFXButton getBtnConnexion() {
+        return btnConnexion;
+    }
+
+    public void setBtnConnexion(JFXButton btnConnexion) {
+        this.btnConnexion = btnConnexion;
+    }
+
+    public JFXButton getBtnDeconnexion() {
+        return btnDeconnexion;
+    }
+
+    public void setBtnDeconnexion(JFXButton btnDeconnexion) {
+        this.btnDeconnexion = btnDeconnexion;
+    }
+
+    public Pane getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Pane menu) {
+        this.menu = menu;
+    }
+
+    public JFXComboBox<Event> getComboEvent() {
+        return comboEvent;
+    }
+
+    public void setComboEvent(JFXComboBox<Event> comboEvent) {
+        this.comboEvent = comboEvent;
+    }
+
+    public ObservableList<Event> getLstevent() {
+        return lstevent;
+    }
+
+    public void setLstevent(ObservableList<Event> lstevent) {
+        this.lstevent = lstevent;
+    }
+
+    public EventDao getEda() {
+        return eda;
+    }
+
+    public void setEda(EventDao eda) {
+        this.eda = eda;
+    }
+
+    public TableView<Event> getEventTable() {
+        return eventTable;
+    }
+
+    public void setEventTable(TableView<Event> eventTable) {
+        this.eventTable = eventTable;
+    }
+
+    public TableColumn<Event, ImageView> getPhotoColumn() {
+        return photoColumn;
+    }
+
+    public void setPhotoColumn(TableColumn<Event, ImageView> photoColumn) {
+        this.photoColumn = photoColumn;
+    }
+
+    public TableColumn<Event, String> getTitreColumn() {
+        return titreColumn;
+    }
+
+    public void setTitreColumn(TableColumn<Event, String> titreColumn) {
+        this.titreColumn = titreColumn;
+    }
+
+    public TableColumn<Event, String> getDateColumn() {
+        return DateColumn;
+    }
+
+    public void setDateColumn(TableColumn<Event, String> DateColumn) {
+        this.DateColumn = DateColumn;
+    }
+
+    public TableColumn<Event, Integer> getDureeColumn() {
+        return DureeColumn;
+    }
+
+    public void setDureeColumn(TableColumn<Event, Integer> DureeColumn) {
+        this.DureeColumn = DureeColumn;
+    }
+
+   
+
+    
     
 }

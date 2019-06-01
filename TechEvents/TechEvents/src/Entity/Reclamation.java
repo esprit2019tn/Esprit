@@ -67,6 +67,11 @@ public class Reclamation {
         this.event = event;
     }
 
+    @Override
+    public String toString() {
+        return "Reclamation{" + "idReclam=" + idReclam + ", textReclam=" + textReclam + ", sujetReclam=" + sujetReclam + ", user=" + user + ", event=" + event + '}';
+    }
+
 
 
 
