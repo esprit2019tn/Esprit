@@ -7,10 +7,14 @@ package com.esprit.gui;
 
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Image;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.plaf.Style;
+import com.codename1.ui.plaf.UIManager;
 import com.esprit.Entity.User;
 import com.esprit.Metier.UserSession;
+import com.codename1.ui.util.Resources;
 
 /**
  *
@@ -35,10 +39,10 @@ public class Menu {
                 forme.showBack();
             }
         });
-        
-        if(!UserSession.verifUserSession()){
+        Style s = UIManager.getInstance().getComponentStyle("Label");
 
-            forme.getToolbar().addCommandToLeftSideMenu("Inscription", null, new ActionListener() {
+        if(!UserSession.verifUserSession()){
+            forme.getToolbar().addCommandToLeftSideMenu("Inscription",FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
                       Inscription inscription = new Inscription();
@@ -47,7 +51,7 @@ public class Menu {
                 }
             });
 
-            forme.getToolbar().addCommandToLeftSideMenu("Authentification", null, new ActionListener() {
+            forme.getToolbar().addCommandToLeftSideMenu("Authentification", FontImage.createMaterial(FontImage.MATERIAL_OPEN_IN_NEW, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
                       Authentification authentification = new Authentification();
@@ -56,7 +60,7 @@ public class Menu {
             });
         }
         else{
-                forme.getToolbar().addCommandToLeftSideMenu("Déconnexion", null, new ActionListener() {
+                forme.getToolbar().addCommandToLeftSideMenu("Déconnexion", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
                        UserSession.destroyUserSession();
