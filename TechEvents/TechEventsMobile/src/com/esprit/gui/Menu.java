@@ -46,6 +46,14 @@ public class Menu {
                   authentification.show();
             }
         });
+        
+        forme.getToolbar().addCommandToLeftSideMenu("Gérer événement", null, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                  AddEvt adv = new AddEvt();
+                  adv.getF().show();
+            }
+        });
     }
     
 }

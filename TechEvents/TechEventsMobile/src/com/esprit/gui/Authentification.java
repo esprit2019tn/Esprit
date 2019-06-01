@@ -73,17 +73,10 @@ public class Authentification extends com.codename1.ui.Form {
                 setInlineStylesTheme(resourceObjectInstance);
         setTitle("Authentification");
         setName("Authentification");
-        addComponent(gui_Box_Layout_Y);
         gui_Box_Layout_Y.setPreferredSizeStr("82.80423mm 39.15344mm");
                 gui_Box_Layout_Y.setInlineStylesTheme(resourceObjectInstance);
         gui_Box_Layout_Y.setName("Box_Layout_Y");
-        ((com.codename1.ui.layouts.LayeredLayout)gui_Box_Layout_Y.getParent().getLayout()).setInsets(gui_Box_Layout_Y, "0.0mm 0.0mm 0.0mm 0.0mm").setReferenceComponents(gui_Box_Layout_Y, "-1 -1 -1 -1").setReferencePositions(gui_Box_Layout_Y, "0.0 0.0 0.0 0.0");
-        gui_Box_Layout_Y.addComponent(gui_email);
-        gui_Box_Layout_Y.addComponent(gui_motDePasse);
-        gui_Box_Layout_Y.addComponent(gui_motDePasseOublier);
-        gui_Box_Layout_Y.addComponent(gui_connexion);
-        gui_Box_Layout_Y.addComponent(gui_Label);
-        gui_Box_Layout_Y.addComponent(gui_inscription);
+        addComponent(gui_Box_Layout_Y);
         gui_email.setHint("Email");
                 gui_email.setInlineStylesTheme(resourceObjectInstance);
         gui_email.setName("email");
@@ -105,9 +98,12 @@ public class Authentification extends com.codename1.ui.Form {
         gui_inscription.setText("Inscription");
                 gui_inscription.setInlineStylesTheme(resourceObjectInstance);
         gui_inscription.setName("inscription");
-        gui_Box_Layout_Y.setPreferredSizeStr("82.80423mm 39.15344mm");
-                gui_Box_Layout_Y.setInlineStylesTheme(resourceObjectInstance);
-        gui_Box_Layout_Y.setName("Box_Layout_Y");
+        gui_Box_Layout_Y.addComponent(gui_email);
+        gui_Box_Layout_Y.addComponent(gui_motDePasse);
+        gui_Box_Layout_Y.addComponent(gui_motDePasseOublier);
+        gui_Box_Layout_Y.addComponent(gui_connexion);
+        gui_Box_Layout_Y.addComponent(gui_Label);
+        gui_Box_Layout_Y.addComponent(gui_inscription);
         ((com.codename1.ui.layouts.LayeredLayout)gui_Box_Layout_Y.getParent().getLayout()).setInsets(gui_Box_Layout_Y, "0.0mm 0.0mm 0.0mm 0.0mm").setReferenceComponents(gui_Box_Layout_Y, "-1 -1 -1 -1").setReferencePositions(gui_Box_Layout_Y, "0.0 0.0 0.0 0.0");
     }// </editor-fold>
 
