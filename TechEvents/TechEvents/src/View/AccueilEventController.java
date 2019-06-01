@@ -106,7 +106,7 @@ public class AccueilEventController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         eventData.addAll(eda.findAll());
         User user=UserSession.getUserSession();
-        if(!user.getNom().equals(""))
+        if(user!=null && !user.getNom().equals(""))
         {   
             btnConnexion.setVisible(false);
             btnInscription.setVisible(false);
