@@ -106,7 +106,7 @@ public class AccueilEventController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         eventData.addAll(eda.findAll());
         User user=UserSession.getUserSession();
-        if(!user.getNom().equals(""))
+        if(user!=null && !user.getNom().equals(""))
         {   
             btnConnexion.setVisible(false);
             btnInscription.setVisible(false);
@@ -214,6 +214,17 @@ void validUser(ActionEvent event) throws IOException {
     @FXML
     private void showEvent(ActionEvent event) throws BackingStoreException, IOException {
                 Parent home_page_parent = FXMLLoader.load(getClass().getResource("CreteEVT.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+    }
+
+    
+     @FXML
+    private void showReclamation(ActionEvent event) throws Exception{
+                 Parent home_page_parent = FXMLLoader.load(getClass().getResource("BlockEvent.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.hide();
@@ -340,7 +351,6 @@ void validUser(ActionEvent event) throws IOException {
     public void setDureeColumn(TableColumn<Event, Integer> DureeColumn) {
         this.DureeColumn = DureeColumn;
     }
-
     
     
 }

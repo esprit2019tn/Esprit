@@ -19,6 +19,7 @@ public class ReclamationDao implements IDao<Reclamation> {
     public void insert(Reclamation reclamation) {
         // TODO Auto-generated method stub
         try {
+            System.out.println("Dao.ReclamationDao.insert()"+reclamation);
             Statement stmt = cnx.createStatement();
             stmt.executeUpdate("insert into reclamation  (textReclam,sujetReclam,idEvent,idUser) "
                     + "values ('"

@@ -68,7 +68,7 @@ public class ValidationUserController implements Initializable {
 
     @FXML
     private Label emailLabel;
-    
+   
     @FXML
     private JFXListView<Label> listview;
     ////////////////////////////////////////////////////////////
@@ -225,6 +225,14 @@ void validUser(ActionEvent event) throws IOException {
                 app_stage.setScene(home_page_scene);
                 app_stage.show(); 
 
+    }
+
+    public Label getLabel() {
+        return label;
+    }
+
+    public void setLabel(Label label) {
+        this.label = label;
     }
 
 

@@ -98,7 +98,7 @@
                   <Image url="@../Resources/team.png" />
                </image>
             </ImageView>
-            <JFXButton layoutY="148.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="180.0" text="Gérer réclamation" textAlignment="CENTER" textFill="#1d76ba">
+            <JFXButton layoutY="148.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#showReclamation" prefHeight="37.0" prefWidth="180.0" text="Gérer réclamation" textAlignment="CENTER" textFill="#1d76ba">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

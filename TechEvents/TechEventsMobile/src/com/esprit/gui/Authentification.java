@@ -5,6 +5,10 @@
  */
 package com.esprit.gui;
 
+import com.esprit.Entity.User;
+import com.esprit.Metier.UserSession;
+import com.esprit.Service.ServiceUser;
+
 /**
  * GUI builder created Form
  *
@@ -109,6 +113,12 @@ public class Authentification extends com.codename1.ui.Form {
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
     public void onconnexionActionEvent(com.codename1.ui.events.ActionEvent ev) {
+        ServiceUser serviceUser =new ServiceUser();
+        User user =serviceUser.getUser(gui_email.getText(), gui_motDePasse.getText());
+        if (user!=null)
+            UserSession.createUserSession(user);
+        AccueilEvent accueilEvent = new AccueilEvent();
+        accueilEvent.show();
     }
 
     public void oninscriptionActionEvent(com.codename1.ui.events.ActionEvent ev) {

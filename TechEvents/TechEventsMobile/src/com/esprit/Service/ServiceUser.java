@@ -53,7 +53,7 @@ public class ServiceUser {
 
     public static ArrayList<User> parseListTaskJson(String json) {
 
-        ArrayList<User> listTasks = new ArrayList<>();
+        ArrayList<User> listUsers = new ArrayList<>();
 
         try {
             JSONParser j = new JSONParser();// Instanciation d'un objet JSONParser permettant le parsing du résultat json
@@ -82,19 +82,22 @@ public class ServiceUser {
             //Parcourir la liste des tâches Json
             for (Map<String, Object> obj : list) {
                 //Création des tâches et récupération de leurs données
-                User e = new User();
-
-                float id = Float.parseFloat(obj.get("id").toString());
-
-                e.setId((int) id);
-                //e.setEtat(obj.get("nom").toString());
-                //e.setNom(obj.get("etat").toString());
-                System.out.println(e);
-                
-                listTasks.add(e);
-
+                User u = new User();                
+                u.setId(Integer.valueOf(obj.get("idUser").toString()));
+                u.setNom(obj.get("nom").toString());
+                u.setPrenom(obj.get("prenom").toString());
+                //u.setDateNaiss(Date.parse(u.setDateNaiss(Date.parse())));
+                u.setSexe(obj.get("sexe").toString());
+                u.setAdresse(obj.get("adresse").toString());
+                u.setEmail(obj.get("email").toString());
+                u.setPassword(obj.get("password").toString());
+                u.setRole(RoleUser.valueOf(obj.get("role").toString()));        
+                u.setConfirmationCode(obj.get("confirmationCode").toString());
+                u.setConfirmation(obj.get("confirmation").toString().equals("0")?false:true);
+                u.setActive(obj.get("active").toString().equals("0")?false:true);
+                System.out.println(u);               
+                listUsers.add(u);
             }
-
         } catch (IOException ex) {
         }
         
@@ -103,26 +106,26 @@ public class ServiceUser {
         de la base de données à travers un service web
         
         */
-        System.out.println(listTasks);
-        return listTasks;
+        return listUsers;
 
     }
     
-    
-    ArrayList<User> listTasks = new ArrayList<>();
-    
-    public  ArrayList<User> getList2(){       
+    ArrayList<User> lstUser = new ArrayList<>();
+    public User getUser(String email,String motDePass){ 
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/Servers/php/tasksApp/getTasks.php");  
+        con.setUrl("http://localhost/Servers/user/getUser.php");  
+        con.addArgument("email", email);
+        con.addArgument("motDePass", motDePass);      
         con.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                ServiceUser ser = new ServiceUser();
-                listTasks = ser.parseListTaskJson(new String(con.getResponseData()));
-            }
-        });
+           @Override
+           public void actionPerformed(NetworkEvent e) {
+               String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+               System.out.println(str);//Affichage de la réponse serveur sur la console
+               lstUser = parseListTaskJson(str);
+           }
+       });
         NetworkManager.getInstance().addToQueueAndWait(con);
-        return listTasks;
+        return lstUser.get(0);
     }
 
 }
