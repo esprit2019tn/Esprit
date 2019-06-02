@@ -134,13 +134,13 @@ public class SponsorDao implements IDao<Sponsor> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void createEvt(Sponsor spr){
+    public void createSpr(Sponsor spr){
          try {
 
             Statement stmt = cnx.createStatement();
             stmt.executeUpdate("insert into sponsor (nom,matricule,fondateur,origine,domaine,responsable) "
-                    + "values ('" + spr.getName() + "'," + spr.getMatricule() + ","+spr.getFondateur()+
-                    ",'"+spr.getOrigine()+"','"+spr.getDomaine()+"','"+spr.getResponsable()+"')");
+                    + "values ('" + spr.getName() + "'," + spr.getMatricule() + ",'"+spr.getFondateur()+
+                    "','"+spr.getOrigine()+"','"+spr.getDomaine()+"','"+spr.getResponsable()+"')");
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

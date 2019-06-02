@@ -6,6 +6,7 @@
 package View;
 
 import Dao.EventDao;
+import Dao.SponsorDao;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -189,8 +190,6 @@ public class CreteEVTController implements Initializable {
     @FXML
     private Button Connecter;
     @FXML
-    private JFXButton consultEVT1;
-    @FXML
     private JFXTextArea autre;
     @FXML
     private JFXTextField sprfondateur;
@@ -206,6 +205,10 @@ public class CreteEVTController implements Initializable {
     private JFXTextField sprdomaine;
     @FXML
     private JFXTextField srch;
+    @FXML
+    private JFXButton btnaddsponsor;
+    @FXML
+    private JFXButton btninitsponsor;
 
     /**
      * Initializes the controller class.
@@ -755,6 +758,29 @@ public class CreteEVTController implements Initializable {
 
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
+    }
+
+    @FXML
+    private void addsponsor(ActionEvent event) {
+        SponsorDao spd = new SponsorDao();
+        Sponsor spr = new Sponsor();
+        spr.setMatricule(Integer.parseInt(sprmat.getText()));
+        spr.setDesc(autre.getText());
+        spr.setDomaine(sprdomaine.getText());
+        spr.setFondateur(sprfondateur.getText());
+        spr.setName(sprname.getText());
+        spr.setOrigine(sprorigine.getText());
+        spr.setResponsable(sprresp.getText());
+        
+        spd.createSpr(spr);
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Sponsor");
+        alert.setHeaderText("Sponsor a été créer avec succées");
+        alert.setContentText("Le sponsor " + sprname.getText() + " à été crée ");
+
+        alert.showAndWait();
+        
     }
 
     

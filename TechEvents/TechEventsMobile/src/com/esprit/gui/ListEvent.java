@@ -41,11 +41,11 @@ public class ListEvent {
     public ListEvent() {
         f = new Form("List des événements", BoxLayout.y());
         es = new ServiceEvent();
-        f.getToolbar().addCommandToOverflowMenu("Ajouter événement", null, new ActionListener() {
+        f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-             //   AddEvent ad = new AddEvent();
-              //  ad.getF().show();
+                AddEvt ad = new AddEvt();
+                ad.getF().show();
             }
         });
 
@@ -103,8 +103,8 @@ public class ListEvent {
                         @Override
                         public void actionPerformed(ActionEvent evt) {
                             evtStatic = p;
-                           // EditEvent edt = new EditEvent();
-                           // edt.getF().show();
+                            EditEvent edt = new EditEvent();
+                            edt.getF().show();
                         }
                     });
                     element.setLeadComponent(b);

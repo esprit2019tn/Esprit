@@ -104,8 +104,8 @@
                               <JFXTextField fx:id="sprorigine" layoutX="395.0" layoutY="87.0" promptText="Origine" />
                               <JFXTextField fx:id="sprmat" layoutX="147.0" layoutY="27.0" promptText="Matricule" />
                               <JFXTextField fx:id="sprdomaine" layoutX="648.0" layoutY="87.0" promptText="Domaine" />
-                              <JFXButton fx:id="consultEVT1" buttonType="RAISED" layoutX="364.0" layoutY="318.0" onAction="#consultEVT" text="Ajouter" textFill="#5ae868" />
-                              <JFXButton buttonType="RAISED" layoutX="511.0" layoutY="318.0" onAction="#delete" ripplerFill="#d06969" text="Annuler" textFill="RED" />
+                              <JFXButton fx:id="btnaddsponsor" buttonType="RAISED" layoutX="364.0" layoutY="318.0" onAction="#addsponsor" text="Ajouter" textFill="#5ae868" />
+                              <JFXButton fx:id="btninitsponsor" buttonType="RAISED" layoutX="511.0" layoutY="318.0" ripplerFill="#d06969" text="Annuler" textFill="RED" />
                            </children>
                         </AnchorPane>
                      </content>
