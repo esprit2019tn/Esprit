@@ -187,7 +187,7 @@ public class User {
 
     @Override
     public String toString() {
-        return nom;
+        return nom+" "+prenom;
     }
         
         
