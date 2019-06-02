@@ -7,14 +7,12 @@ package com.esprit.gui;
 
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
-import com.codename1.ui.Image;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
 import com.esprit.Entity.User;
 import com.esprit.Metier.UserSession;
-import com.codename1.ui.util.Resources;
 
 /**
  *

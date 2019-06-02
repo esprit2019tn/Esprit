@@ -41,14 +41,20 @@ public class BlockEventController implements Initializable {
  
     @FXML
     private Label userName;
+   
     @FXML
-    private TableView<Reclamation> personTable;
+    private TableView<Reclamation> reclamationTable;
+    
+    //private TableColumn<Reclamation, String> lastNameColumn;
+   // private TableColumn<Reclamation, String> firstNameColumn;
+    //private TableColumn<Reclamation, String> emailColumn;
+    
     @FXML
-    private TableColumn<Reclamation, String> lastNameColumn;
+     private TableColumn<Reclamation, User> nomUtilisateur;
     @FXML
-    private TableColumn<Reclamation, String> firstNameColumn;
+    private TableColumn<Reclamation, String> sujet;
     @FXML
-    private TableColumn<Reclamation, String> emailColumn;
+    private TableColumn<Reclamation, Event> Evenement;
     @FXML
     private Label prenomLabel;
     @FXML
@@ -79,30 +85,36 @@ public class BlockEventController implements Initializable {
          try {
             if(UserSession.verifUserSession())
                 userName.setText(UserSession.getUserSession().getNom()+" "+UserSession.getUserSession().getPrenom());
-                setTable();
+               // setTable();
         } catch (BackingStoreException ex) {
             Logger.getLogger(ValidationUserController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        ReclamationDao recDao = new ReclamationDao();
         
+         ReclamationData.addAll(recDao.findAll());
+         nomUtilisateur.setCellValueFactory(new PropertyValueFactory<Reclamation, User>("user"));
+        sujet.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("sujetReclam"));
+        Evenement.setCellValueFactory(new PropertyValueFactory<Reclamation, Event>("event"));
+
+        reclamationTable.setItems(ReclamationData);
         // TODO
     }    
 
     public void setTable(){
                // Initialize the person table with the two columns.
-        firstNameColumn.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("firstNameColumn"));
-        lastNameColumn.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("lastNameColumn"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("emailNameColumn"));
+        nomUtilisateur.setCellValueFactory(new PropertyValueFactory<Reclamation, User>("user"));
+        sujet.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("sujetReclam"));
+        Evenement.setCellValueFactory(new PropertyValueFactory<Reclamation, Event>("event"));
 
         getPersonData();
-        personTable.getItems().clear();
-        personTable.setItems(ReclamationData);
+        reclamationTable.getItems().clear();
+        reclamationTable.setItems(ReclamationData);
         
         
         
         
     }
-        
-        
+
     @FXML
     private void splitMenu(ActionEvent event) {
     }
@@ -130,5 +142,6 @@ public class BlockEventController implements Initializable {
     @FXML
     private void btnGrRec(ActionEvent event) {
     }
-    
+        
+        
 }

@@ -312,6 +312,24 @@ public class EventDao implements IDao<Event> {
         return event;
     }
 
+    public Event findById(int id) {
+		Event evt = null;
+		try {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs=stmt.executeQuery("SELECT * FROM evenement WHERE "
+                                + "idEvent="+id+"");  
+			while (rs.next()){
+                           evt= new Event(rs.getString(2), rs.getString(3));
+			}
+			//cnx.close();  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return evt;
+    }
+    
+    
     @Override
     public Event findUser(String email, String password) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
