@@ -20,6 +20,7 @@ public class Event {
     private ImageView image ;
     public Long duree;
     private Localisation localisation;
+    private String photoPath ;
 
     
     public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree, Localisation localisation) {
@@ -199,6 +200,14 @@ public class Event {
     @Override
     public String toString() {
         return ""+titre + "";
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     

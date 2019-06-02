@@ -1,10 +1,8 @@
 package com.esprit.Entity;
 
 import java.util.*;
-import javafx.scene.image.ImageView;
+import com.codename1.components.ImageViewer;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 
 public class Event {
@@ -17,38 +15,25 @@ public class Event {
     private Long capaciteMax;
     private Long capaciteMin;
     private String dateEvent;
-    private ImageView image ;
+    private Date date ;
+    private ImageViewer image ;
     public Long duree;
-    private Localisation localisation;
+    private int cpt ;
+    private String pathphoto ;
 
     
-    public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree, Localisation localisation) {
-        this.idEvent = idEvent;
-        this.titre = titre;
-        this.desc = desc;
-        this.capaciteMax = capaciteMax;
-        this.capaciteMin = capaciteMin;
-        this.dateEvent = dateEvent;
-        this.duree = duree;
-        this.localisation = localisation;
-    }
+    
 
     public Event(int idEvent, String titre) {
         this.idEvent = idEvent;
         this.titre = titre;
     }
     
-    
-
-    public Event(String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree, Localisation localisation) {
+    public Event(String idEvent, String titre) {
+        this.desc = idEvent;
         this.titre = titre;
-        this.desc = desc;
-        this.capaciteMax = capaciteMax;
-        this.capaciteMin = capaciteMin;
-        this.dateEvent = dateEvent;
-        this.duree = duree;
-        this.localisation = localisation;
     }
+
 
     public Event(String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent) {
         this.titre = titre;
@@ -58,24 +43,38 @@ public class Event {
         this.dateEvent = dateEvent;
     }
     
-    public Event(String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent,ImageView img) {
+    
+    
+     public Event(String titre, String desc, Long capaciteMax, Long capaciteMin,Long duree) {
         this.titre = titre;
         this.desc = desc;
         this.capaciteMax = capaciteMax;
         this.capaciteMin = capaciteMin;
-        this.dateEvent = dateEvent;
-        this.image = img;
+        this.duree = duree ;
+    }
+     
+      public Event(String titre, String desc, Long capaciteMax, Long capaciteMin,Long duree,String pathfile) {
+        this.titre = titre;
+        this.desc = desc;
+        this.capaciteMax = capaciteMax;
+        this.capaciteMin = capaciteMin;
+        this.duree = duree ;
+        this.pathphoto = pathfile ;
+    }
+     
+     
+     public Event(String titre, String desc, Long capaciteMax, Long capaciteMin, Date dateEvent,Long duree,ImageViewer im) {
+        this.titre = titre;
+        this.desc = desc;
+        this.capaciteMax = capaciteMax;
+        this.capaciteMin = capaciteMin;
+        this.date = dateEvent;
+        this.duree = duree ;
+        this.image = im ;
     }
     
-     public Event(String titre, String desc,Long duree, Long capaciteMax, Long capaciteMin, String dateEvent,ImageView img) {
-        this.titre = titre;
-        this.desc = desc;
-        this.capaciteMax = capaciteMax;
-        this.capaciteMin = capaciteMin;
-        this.dateEvent = dateEvent;
-        this.duree = duree ;
-        this.image = img;
-    }
+  
+    
 
     public Event(int id, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent) {
         this.idEvent = id;
@@ -95,22 +94,9 @@ public class Event {
         this.dateEvent = dateEvent;
         this.duree = duree;
     }
-    
-     public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree,ImageView imv) {
-        this.idEvent = idEvent;
-        this.titre = titre;
-        this.desc = desc;
-        this.capaciteMax = capaciteMax;
-        this.capaciteMin = capaciteMin;
-        this.dateEvent = dateEvent;
-        this.duree = duree;
-        this.image = imv ;
-    }
 
-
-    public Event(String titre, String desc) {
-        this.titre = titre;
-        this.desc = desc;
+    public Event(Long cpt) {
+        this.capaciteMax = cpt;
     }
 
     public int getIdEvent() {
@@ -169,38 +155,42 @@ public class Event {
         this.duree = duree;
     }
 
-    public Localisation getLocalisation() {
-        return localisation;
+
+
+    public Date getDate() {
+        return date;
     }
 
-    public void setLocalisation(Localisation localisation) {
-        this.localisation = localisation;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    
-    public StringProperty titreProperty() {
-        return new SimpleStringProperty(titre);
-    }
-    
-     public StringProperty descProperty() {
-        return new SimpleStringProperty(desc);
-    }
-        
-        
-
-    public ImageView getImage() {
+    public ImageViewer getImage() {
         return image;
     }
 
-    public void setImage(ImageView image) {
+    public void setImage(ImageViewer image) {
         this.image = image;
     }
 
-    @Override
-    public String toString() {
-        return ""+titre + "";
+    public int getCpt() {
+        return cpt;
     }
 
+    public void setCpt(int cpt) {
+        this.cpt = cpt;
+    }
+
+    public String getPathphoto() {
+        return pathphoto;
+    }
+
+    public void setPathphoto(String pathphoto) {
+        this.pathphoto = pathphoto;
+    }
+
+    
+   
     
     
 }

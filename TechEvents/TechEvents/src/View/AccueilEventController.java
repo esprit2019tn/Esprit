@@ -220,6 +220,7 @@ void validUser(ActionEvent event) throws IOException {
                 app_stage.setScene(home_page_scene);
                 app_stage.show(); 
     }
+
     
      @FXML
     private void showReclamation(ActionEvent event) throws Exception{
@@ -350,9 +351,6 @@ void validUser(ActionEvent event) throws IOException {
     public void setDureeColumn(TableColumn<Event, Integer> DureeColumn) {
         this.DureeColumn = DureeColumn;
     }
-
-   
-
     
     
 }

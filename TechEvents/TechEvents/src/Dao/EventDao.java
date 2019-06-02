@@ -85,7 +85,7 @@ public class EventDao implements IDao<Event> {
             // InputStream input = imgfile.geti
             // Image image = new Image(input);
             // ImageView imageView = new ImageView(image);
-            PreparedStatement pre = cnx.prepareStatement("insert into  evenement (titre,description,capacitemax,capacitemin,photoEvent,dateevent,duree,idsponsor,idloc) values(?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pre = cnx.prepareStatement("insert into  evenement (titre,description,capacitemax,capacitemin,photoEvent,dateevent,duree,photoPath,idsponsor,idloc) values(?,?,?,?,?,?,?,?,?,?)");
 
             pre.setString(1, evt.getTitre());
             pre.setString(2, evt.getDesc());
@@ -94,8 +94,9 @@ public class EventDao implements IDao<Event> {
             pre.setBinaryStream(5, (InputStream) input, (int) fl.length());
             pre.setString(6, evt.getDateEvent());
             pre.setLong(7, evt.getDuree());
-            pre.setInt(8, 1);
+            pre.setString(8, evt.getPhotoPath());
             pre.setInt(9, 1);
+            pre.setInt(10, 1);
 
             // pre.setBinaryStream(2, input);
             pre.executeUpdate();
@@ -175,6 +176,33 @@ public class EventDao implements IDao<Event> {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void modifierIMG(int id){
+        try {
+           PreparedStatement pre = cnx.prepareStatement("update evenement set photoEvent=? where idEvent="+id);
+           File fl = new File("C:\\wamp\\www\\image\\img3.jpg");
+           FileInputStream input = new FileInputStream(fl);
+           pre.setBinaryStream(1, (InputStream) input, (int) fl.length());
+           pre.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+    }
+    
+    public void updateImage() {
+        try {
+            Statement pst = cnx.prepareStatement("select * from evenement");
+            ResultSet rs = pst.executeQuery("select * from evenement");
+            while (rs.next()) {
+                if (rs.getBinaryStream("photoEvent") == null) {
+                    modifierIMG(rs.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

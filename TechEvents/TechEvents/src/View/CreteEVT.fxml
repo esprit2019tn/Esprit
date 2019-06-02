@@ -23,11 +23,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="524.0" prefWidth="939.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CreteEVTController">
    <children>
-      <Pane prefHeight="98.0" prefWidth="939.0" style="-fx-background-color: #1d76ba;">
+      <Pane prefHeight="100.0" prefWidth="939.0" style="-fx-background-color: #1d76ba;">
          <children>
             <JFXHamburger fx:id="humburger" layoutX="857.0" layoutY="31.0" prefHeight="33.0" prefWidth="30.0" />
-            <JFXButton fx:id="Annuler1" buttonType="RAISED" layoutX="696.0" layoutY="19.0" ripplerFill="#507483" style="-fx-background-color: #00BCD4;" text="Connect" />
-            <JFXButton fx:id="Annuler11" buttonType="RAISED" layoutX="553.0" layoutY="19.0" ripplerFill="#507483" style="-fx-background-color: #00BCD4;" text="disconnect" />
             <ImageView fitHeight="33.0" fitWidth="43.0" layoutX="38.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/user.png" />
@@ -38,19 +36,29 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="54.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Menu" textFill="#3d9bc3">
+            <Button fx:id="showmenu" layoutX="14.0" layoutY="54.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="25.0" prefWidth="180.0" text="Menu" textFill="#3d9bc3">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </Button>
-            <JFXTextField focusColor="WHITE" layoutX="607.0" layoutY="64.0" promptText="Search" unFocusColor="#f8f0f0" />
+            <JFXTextField fx:id="srch" focusColor="WHITE" layoutX="607.0" layoutY="64.0" onKeyReleased="#search" promptText="Search" unFocusColor="#f8f0f0" />
+            <Button fx:id="Deconnecter" layoutX="712.0" layoutY="17.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="30.0" prefWidth="124.0" text="Déconnecter" textFill="#3d9bc3">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="Connecter" layoutX="573.0" layoutY="16.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="30.0" prefWidth="124.0" text="Connecter" textFill="#3d9bc3">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
       <ScrollPane layoutY="98.0" prefHeight="427.0" prefWidth="939.0">
          <content>
             <JFXTabPane prefHeight="902.0" prefWidth="939.0">
                <tabs>
-                  <Tab text="Créer">
+                  <Tab text="Créer événement">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="708.0">
                            <children>
@@ -81,6 +89,23 @@
                                  </font>
                               </Label>
                               <JFXButton fx:id="btnfile" buttonType="RAISED" layoutX="380.0" layoutY="196.0" onAction="#choosefile" prefHeight="31.0" prefWidth="205.0" ripplerFill="#20b4ee" style="-fx-background-color: #00BCD4;" text="choisir une image de couverture" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Ajouter sponsor">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="708.0">
+                           <children>
+                              <JFXTextArea fx:id="autre" layoutX="252.0" layoutY="187.0" maxWidth="448.0" minWidth="448.0" prefHeight="91.0" prefWidth="448.0" promptText="Autres informations" />
+                              <JFXTextField fx:id="sprfondateur" layoutX="147.0" layoutY="87.0" promptText="Fondateur" />
+                              <JFXTextField fx:id="sprname" layoutX="395.0" layoutY="27.0" promptText="Nom" />
+                              <JFXTextField fx:id="sprresp" layoutX="648.0" layoutY="27.0" promptText="Responsable" />
+                              <JFXTextField fx:id="sprorigine" layoutX="395.0" layoutY="87.0" promptText="Origine" />
+                              <JFXTextField fx:id="sprmat" layoutX="147.0" layoutY="27.0" promptText="Matricule" />
+                              <JFXTextField fx:id="sprdomaine" layoutX="648.0" layoutY="87.0" promptText="Domaine" />
+                              <JFXButton fx:id="consultEVT1" buttonType="RAISED" layoutX="364.0" layoutY="318.0" onAction="#consultEVT" text="Ajouter" textFill="#5ae868" />
+                              <JFXButton buttonType="RAISED" layoutX="511.0" layoutY="318.0" onAction="#delete" ripplerFill="#d06969" text="Annuler" textFill="RED" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -136,5 +161,59 @@
             </JFXTabPane>
          </content>
       </ScrollPane>
+      <Pane fx:id="menu" layoutY="98.0" prefHeight="413.0" prefWidth="160.0" style="-fx-background-color: #f2f2f2;" visible="false">
+         <children>
+            <JFXButton buttonType="RAISED" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="   Home" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" graphicTextGap="5.0" layoutY="37.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="160.0" ripplerFill="#15d755" style="-fx-background-color: #ffffff;" text="Gérer utilisateur" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" graphicTextGap="5.0" layoutY="74.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#showEvent" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="Gérer événement" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutY="111.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="Gérer publication" textAlignment="CENTER" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutY="148.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="Gérer réclamation" textAlignment="CENTER" textFill="#1d76ba">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <ImageView layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/homebtn.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="9.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/stat.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="9.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/task.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="9.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/team.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="9.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/task.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

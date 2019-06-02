@@ -34,6 +34,7 @@ import Entity.Sponsor;
 import Entity.User;
 import Metier.UserSession;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -63,6 +64,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
@@ -75,7 +77,9 @@ import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -139,10 +143,6 @@ public class CreteEVTController implements Initializable {
     @FXML
     private TableColumn<Event, String> clndescri;
 
-    @FXML
-    private JFXButton Annuler1;
-    @FXML
-    private JFXButton Annuler11;
 
     private boolean nav = false;
     EventDao uda = new EventDao();
@@ -178,6 +178,34 @@ public class CreteEVTController implements Initializable {
     private TableColumn<Event, String> clndescri1;
     @FXML
     private TableColumn<Event, ImageView> photo1;
+    @FXML
+    private Pane menu;
+    @FXML
+    private Button showmenu;
+    
+    private String photoPath ;
+    @FXML
+    private Button Deconnecter;
+    @FXML
+    private Button Connecter;
+    @FXML
+    private JFXButton consultEVT1;
+    @FXML
+    private JFXTextArea autre;
+    @FXML
+    private JFXTextField sprfondateur;
+    @FXML
+    private JFXTextField sprname;
+    @FXML
+    private JFXTextField sprresp;
+    @FXML
+    private JFXTextField sprorigine;
+    @FXML
+    private JFXTextField sprmat;
+    @FXML
+    private JFXTextField sprdomaine;
+    @FXML
+    private JFXTextField srch;
 
     /**
      * Initializes the controller class.
@@ -279,6 +307,7 @@ public class CreteEVTController implements Initializable {
     public void list() {
         Event e = table.getSelectionModel().getSelectedItem();
         EventDao uda = new EventDao();
+        uda.updateImage();
         if (list.isEmpty()) {
             list.addAll(uda.findAll());
         }
@@ -470,6 +499,7 @@ public class CreteEVTController implements Initializable {
 //             Date fs = formatter.parse(h);
             System.out.println("---_______i_______-------_" + remove(new Date()));
             // uda.insert(evt);
+            evt.setPhotoPath(photoPath);
             uda.inserer(evt, fl);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Evenement");
@@ -522,7 +552,11 @@ public class CreteEVTController implements Initializable {
         try {
             BufferedImage bufferedImage = ImageIO.read(fl);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-            myimg.setImage(image);
+            myimg.setImage(image);   System.out.println(fl.toString());
+            int lastindex = fl.toString().lastIndexOf("\\");
+            int firstindex = fl.toString().length();
+            System.out.println(fl.toString().substring(lastindex+1, firstindex));
+            photoPath = fl.toString().substring(lastindex+1, firstindex);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -597,7 +631,7 @@ public class CreteEVTController implements Initializable {
     public void setTitre(JFXTextField titre) {
         this.titre = titre;
     }
-
+ 
     public ComboBox<String> getLstsponsor() {
         ObservableList<String> options
                 = FXCollections.observableArrayList(
@@ -692,5 +726,41 @@ public class CreteEVTController implements Initializable {
     public void setA(int a) {
         this.a = a;
     }
+
+  
+
+    @FXML
+    private void splitMenu(ActionEvent event) {
+        if (menu.isVisible()) {
+            menu.setVisible(false);
+        } else {
+            menu.setVisible(true);
+        }
+    }
+
+    @FXML
+    private void showEvent(ActionEvent event) {
+        System.out.println("View.CreteEVTController.splitMenu()");
+
+    }
+    
+    @FXML
+    private void search(KeyEvent event) {
+        System.out.println("View.CreteEVTController.search()"+srch.getText());
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    
+
+    
+    
+    
 
 }
