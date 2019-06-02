@@ -12,8 +12,8 @@ public class ReclamationDao implements IDao<Reclamation> {
 
     //Connection cnx = ConnectionProperties.connect();
     Connection cnx = ConnectionProperties.getConnectionProperties().getCnx();
-
-    
+    UserDao du = new UserDao();
+    EventDao ev = new EventDao();
 
     @Override
     public void insert(Reclamation reclamation) {
@@ -69,9 +69,9 @@ public class ReclamationDao implements IDao<Reclamation> {
             Statement stmt = cnx.createStatement();
             ResultSet rs = stmt.executeQuery("select * from reclamation");
             while (rs.next()) {
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
-                //Reclamation reclamation = new Reclamation(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6),rs.getLong(7));
-                //lstreclamation.add(reclamation);
+                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3)+ du.findById(rs.getInt(5)) +ev.findById(rs.getInt(4)));
+            Reclamation reclamation = new Reclamation(rs.getInt(1),rs.getString(2), rs.getString(3) , du.findById(rs.getInt(5)) ,ev.findById(rs.getInt(4)) );
+                lstreclamation.add(reclamation);
             }
             // cnx.close();
         } catch (SQLException e) {
@@ -80,6 +80,8 @@ public class ReclamationDao implements IDao<Reclamation> {
         }
         return lstreclamation;
     }
+    
+  
 
     @Override
     public Reclamation findById(String id) {

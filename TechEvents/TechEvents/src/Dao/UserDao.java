@@ -110,7 +110,7 @@ public class UserDao implements IDaoClient {
 		try {
 			Statement stmt = cnx.createStatement();
 			ResultSet rs=stmt.executeQuery("SELECT * FROM user WHERE "
-                                + "idUser='"+id+"'");  
+                                + "idUser="+id+"");  
 			while (rs.next()){
 			 user = new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getDate(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),RoleUser.valueOf(rs.getString(9)), rs.getString(10),rs.getBoolean(11),rs.getBoolean(12));
 			}
