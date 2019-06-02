@@ -23,12 +23,14 @@ import java.util.prefs.BackingStoreException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 /**
@@ -55,12 +57,6 @@ public class BlockEventController implements Initializable {
     private TableColumn<Reclamation, String> sujet;
     @FXML
     private TableColumn<Reclamation, Event> Evenement;
-    @FXML
-    private Label prenomLabel;
-    @FXML
-    private Label nomLabel;
-    @FXML
-    private Label sujetLabel;
     @FXML
     private Label explicationLabel;
     @FXML
@@ -92,12 +88,22 @@ public class BlockEventController implements Initializable {
         ReclamationDao recDao = new ReclamationDao();
         
          ReclamationData.addAll(recDao.findAll());
-         nomUtilisateur.setCellValueFactory(new PropertyValueFactory<Reclamation, User>("user"));
+        nomUtilisateur.setCellValueFactory(new PropertyValueFactory<Reclamation, User>("user"));
         sujet.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("sujetReclam"));
         Evenement.setCellValueFactory(new PropertyValueFactory<Reclamation, Event>("event"));
 
         reclamationTable.setItems(ReclamationData);
         // TODO
+                reclamationTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println(".handle()" + reclamationTable.getSelectionModel().getSelectedItem().getTextReclam());
+           Reclamation r = reclamationTable.getSelectionModel().getSelectedItem();
+                explicationLabel.setText(r.getTextReclam());
+
+            }
+
+        });
     }    
 
     public void setTable(){
@@ -111,10 +117,13 @@ public class BlockEventController implements Initializable {
         reclamationTable.setItems(ReclamationData);
         
         
+       
         
-        
+
     }
 
+     
+    
     @FXML
     private void splitMenu(ActionEvent event) {
     }
@@ -142,6 +151,8 @@ public class BlockEventController implements Initializable {
     @FXML
     private void btnGrRec(ActionEvent event) {
     }
+
+   
         
         
 }
