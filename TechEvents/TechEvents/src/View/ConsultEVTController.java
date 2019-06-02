@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +38,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.stage.Stage;
@@ -81,6 +83,8 @@ public class ConsultEVTController implements Initializable {
     private JFXListView<Sponsor> LstSprEvent;
     @FXML
     private JFXButton reclambtn;
+    @FXML
+    private JFXButton btnAnnulerEvt;
 
     /**
      * Initializes the controller class.
@@ -95,6 +99,7 @@ public class ConsultEVTController implements Initializable {
         cptmin.setText(CreteEVTController.getevt().getCapaciteMin().toString());
         desc.setText(CreteEVTController.getevt().getDesc());
         duree.setText(CreteEVTController.getevt().getDuree().toString());
+        etat.setText(CreteEVTController.getevt().getStatut());
         User user = UserSession.getUserSession();
         try {
             if (UserSession.verifUserSession()) {
@@ -137,8 +142,8 @@ public class ConsultEVTController implements Initializable {
         }));
         sponsorlst.setItems(lstspr);
     }
-    
-    public void getlstsponsor(){
+
+    public void getlstsponsor() {
         lstspr.addAll(sdo.findByEvent(CreteEVTController.getevt()));
         LstSprEvent.setItems(lstspr);
     }
@@ -171,20 +176,39 @@ public class ConsultEVTController implements Initializable {
     }
 
     @FXML
-    private void reclamer(ActionEvent event) throws IOException {        
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("Reclamation.fxml"));
+    private void reclamer(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Reclamation.fxml"));
         Parent home_page_parent = (Parent) loader.load();
 
-        ReclamationController reclamationController=loader.getController();
- //       Reclamation reclamation=new Reclamation();
- //       reclamation.setEvent(CreteEVTController.getevt());
+        ReclamationController reclamationController = loader.getController();
+        //       Reclamation reclamation=new Reclamation();
+        //       reclamation.setEvent(CreteEVTController.getevt());
         reclamationController.setIdEvent(CreteEVTController.getevt().getIdEvent());
 
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                app_stage.hide();
-                app_stage.setScene(home_page_scene);
-                app_stage.show(); 
+        app_stage.hide();
+        app_stage.setScene(home_page_scene);
+        app_stage.show();
+    }
+
+    @FXML
+    private void AnnulerEvt(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Annuler l'événement");
+        alert.setHeaderText("Annuler l'événement");
+        alert.setResizable(false);
+        alert.setContentText("Vous étes sûr d'annuler l'événement");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            EventDao eda = new EventDao();
+            Event evt = CreteEVTController.getevt();
+            evt.setStatut("Annulé");
+            eda.update(evt);
+            
+        }
+        
+     //oke button is pressed
     }
 
 }

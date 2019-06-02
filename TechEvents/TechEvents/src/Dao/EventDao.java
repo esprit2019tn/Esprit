@@ -85,7 +85,7 @@ public class EventDao implements IDao<Event> {
             // InputStream input = imgfile.geti
             // Image image = new Image(input);
             // ImageView imageView = new ImageView(image);
-            PreparedStatement pre = cnx.prepareStatement("insert into  evenement (titre,description,capacitemax,capacitemin,photoEvent,dateevent,duree,photoPath,idsponsor,idloc) values(?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pre = cnx.prepareStatement("insert into  evenement (titre,description,capacitemax,capacitemin,photoEvent,dateevent,duree,photoPath,statut,idsponsor,idloc) values(?,?,?,?,?,?,?,?,?,?,?)");
 
             pre.setString(1, evt.getTitre());
             pre.setString(2, evt.getDesc());
@@ -95,8 +95,9 @@ public class EventDao implements IDao<Event> {
             pre.setString(6, evt.getDateEvent());
             pre.setLong(7, evt.getDuree());
             pre.setString(8, evt.getPhotoPath());
-            pre.setInt(9, 1);
+            pre.setString(9, "Disponible");
             pre.setInt(10, 1);
+            pre.setInt(11, 1);
 
             // pre.setBinaryStream(2, input);
             pre.executeUpdate();
@@ -135,6 +136,7 @@ public class EventDao implements IDao<Event> {
                     + "description = '" + obj.getDesc() + "' ,"
                     + "capaciteMax = " + obj.getCapaciteMax() + ", "
                     + "capaciteMin = " + obj.getCapaciteMin() + ", "
+                    + "statut = '" + obj.getStatut() + "', "
                     + "dateEvent = '" + obj.getDateEvent() + "' "
                     + "where idEvent = " + obj.getIdEvent() + "");
             System.out.println("Event " + obj.getTitre() + " a été modifié");
@@ -235,7 +237,7 @@ public class EventDao implements IDao<Event> {
                 imv.setPreserveRatio(true);
 
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7), imv);
+                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13) ,imv);
                 lstevent.add(event);
             }
             // cnx.close();
@@ -279,7 +281,7 @@ public class EventDao implements IDao<Event> {
                 imv.setPreserveRatio(true);
 
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7), imv);
+                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13)  ,imv);
                 lstevent.add(event);
             }
             // cnx.close();

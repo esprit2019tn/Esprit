@@ -180,6 +180,8 @@ public class CreteEVTController implements Initializable {
     @FXML
     private TableColumn<Event, ImageView> photo1;
     @FXML
+    private TableColumn<Event, String> clnstatut;
+    @FXML
     private Pane menu;
     @FXML
     private Button showmenu;
@@ -209,6 +211,7 @@ public class CreteEVTController implements Initializable {
     private JFXButton btnaddsponsor;
     @FXML
     private JFXButton btninitsponsor;
+
 
     /**
      * Initializes the controller class.
@@ -319,7 +322,7 @@ public class CreteEVTController implements Initializable {
         clndate.setCellValueFactory(new PropertyValueFactory<Event, String>("dateEvent"));
         clnduree.setCellValueFactory(new PropertyValueFactory<Event, Integer>("duree"));
         cptmax.setCellValueFactory(new PropertyValueFactory<>("capaciteMax"));
-
+        clnstatut.setCellValueFactory(new PropertyValueFactory<Event, String>("statut"));
         cptmin.setCellValueFactory(new PropertyValueFactory<>("capaciteMin"));
         clndescri.setCellValueFactory(new PropertyValueFactory<Event, String>("desc"));
         photo.setCellValueFactory(new PropertyValueFactory<Event, ImageView>("image"));

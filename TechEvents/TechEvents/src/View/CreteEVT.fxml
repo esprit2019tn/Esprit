@@ -123,7 +123,8 @@
                                     <TableColumn fx:id="cptmax" onEditCommit="#changecptmax" prefWidth="133.0" text="Capacite max" />
                                     <TableColumn fx:id="cptmin" onEditCommit="#changecptmin" prefWidth="149.0" text="Capacite min" />
                                     <TableColumn fx:id="clndescri" prefWidth="102.0" text="Description" />
-                                    <TableColumn fx:id="photo" prefWidth="241.0" style="-fx-alignement: CENTER;" text="Photo" />
+                                    <TableColumn fx:id="photo" prefWidth="183.0" style="-fx-alignement: CENTER;" text="Photo" />
+                                    <TableColumn fx:id="clnstatut" prefWidth="102.0" text="Statut" />
                                  </columns>
                               </TableView>
                               <JFXButton fx:id="consultEVT" buttonType="RAISED" layoutX="237.0" layoutY="323.0" onAction="#consultEVT" text="Consulter" textFill="#5ae868" />
