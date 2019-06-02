@@ -19,7 +19,7 @@ import com.codename1.ui.layouts.BoxLayout;
 public class TechEvents {
 
     private Form current;
-    private Resources theme;
+    private static Resources theme;
 
     private Form home;
 
@@ -72,4 +72,14 @@ public class TechEvents {
     public void destroy() {
     }
 
+    public static Resources getTheme() {
+        return theme;
+    }
+
+    public static void setTheme(Resources theme) {
+        TechEvents.theme = theme;
+    }
+
+    
+    
 }

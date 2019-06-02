@@ -39,6 +39,22 @@ public class Menu {
         });
         Style s = UIManager.getInstance().getComponentStyle("Label");
 
+        forme.getToolbar().addCommandToLeftSideMenu("Authentification", null, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                  Authentification authentification = new Authentification();
+                  authentification.show();
+            }
+        });
+        
+        forme.getToolbar().addCommandToLeftSideMenu("Gérer événement", null, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                  AddEvt adv = new AddEvt();
+                  adv.getF().show();
+            }
+        });
+        
         if(!UserSession.verifUserSession()){
             forme.getToolbar().addCommandToLeftSideMenu("Inscription",FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
                 @Override
