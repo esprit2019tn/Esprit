@@ -76,6 +76,16 @@ public class AddEvt {
                     tse.getF().show();
                 }
             });
+            
+            f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    Form home = new Form();
+                    home.setTitle("Accueil");
+                    Menu.getMenu(home);
+                    home.show();
+                }
+            });
 
             btnaff.addActionListener((e) -> {
                 Event evt = new Event(Long.parseLong(capaciteMax.getText()));
@@ -177,20 +187,20 @@ public class AddEvt {
                 fo.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        img = new ImageViewer(TechEvents.getTheme().getImage(pathimg).scaledWidth(Math.round(Display.getInstance().getDisplayWidth() / 2)));
-                        System.out.println(".actionPerformed()" + pathimg);
-                        f.removeAll();
-
-                        f.add(titre);
-                        f.add(dateEvt);
-                        f.add(duree);
-                        f.add(capaciteMin);
-                        f.add(capaciteMax);
-                        f.add(img);
-                        f.add(tedesctat);
-                        f.add(btnajout);
-                        f.add(btnaff);
-                        f.add(btnaddimg);
+//                        img = new ImageViewer(TechEvents.getTheme().getImage(pathimg).scaledWidth(Math.round(Display.getInstance().getDisplayWidth() / 2)));
+//                        System.out.println(".actionPerformed()" + pathimg);
+//                        f.removeAll();
+//
+//                        f.add(titre);
+//                        f.add(dateEvt);
+//                        f.add(duree);
+//                        f.add(capaciteMin);
+//                        f.add(capaciteMax);
+//                        f.add(img);
+//                        f.add(tedesctat);
+//                        f.add(btnajout);
+//                        f.add(btnaff);
+//                        f.add(btnaddimg);
                         f.showBack();
                     }
                 });

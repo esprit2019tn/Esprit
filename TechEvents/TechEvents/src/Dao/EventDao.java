@@ -85,7 +85,7 @@ public class EventDao implements IDao<Event> {
             // InputStream input = imgfile.geti
             // Image image = new Image(input);
             // ImageView imageView = new ImageView(image);
-            PreparedStatement pre = cnx.prepareStatement("insert into  evenement (titre,description,capacitemax,capacitemin,photoEvent,dateevent,duree,photoPath,idsponsor,idloc) values(?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pre = cnx.prepareStatement("insert into  evenement (titre,description,capacitemax,capacitemin,photoEvent,dateevent,duree,photoPath,statut,idsponsor,idloc) values(?,?,?,?,?,?,?,?,?,?,?)");
 
             pre.setString(1, evt.getTitre());
             pre.setString(2, evt.getDesc());
@@ -95,8 +95,9 @@ public class EventDao implements IDao<Event> {
             pre.setString(6, evt.getDateEvent());
             pre.setLong(7, evt.getDuree());
             pre.setString(8, evt.getPhotoPath());
-            pre.setInt(9, 1);
+            pre.setString(9, "Disponible");
             pre.setInt(10, 1);
+            pre.setInt(11, 1);
 
             // pre.setBinaryStream(2, input);
             pre.executeUpdate();
@@ -135,6 +136,8 @@ public class EventDao implements IDao<Event> {
                     + "description = '" + obj.getDesc() + "' ,"
                     + "capaciteMax = " + obj.getCapaciteMax() + ", "
                     + "capaciteMin = " + obj.getCapaciteMin() + ", "
+                    + "duree = " + obj.getDuree() + ", "
+                    + "statut = '" + obj.getStatut() + "', "
                     + "dateEvent = '" + obj.getDateEvent() + "' "
                     + "where idEvent = " + obj.getIdEvent() + "");
             System.out.println("Event " + obj.getTitre() + " a été modifié");
@@ -191,6 +194,20 @@ public class EventDao implements IDao<Event> {
         }
     }
     
+    public int getnbrres(Event et){
+        int nbr= 0;
+        try {
+            Statement pst = cnx.prepareStatement("select * from evenement");
+            ResultSet rs = pst.executeQuery("select count(*) from reservation where idEvent="+et.getIdEvent());
+            while (rs.next()) {
+                nbr = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return nbr ;
+    }
+    
     public void updateImage() {
         try {
             Statement pst = cnx.prepareStatement("select * from evenement");
@@ -235,7 +252,101 @@ public class EventDao implements IDao<Event> {
                 imv.setPreserveRatio(true);
 
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7), imv);
+                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13) ,imv);
+                lstevent.add(event);
+            }
+            // cnx.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lstevent;
+    }
+    
+    public List<Event> findAllEvent(String word) {
+        // TODO Auto-generated method stub
+        List<Event> lstevent = new ArrayList<Event>();
+        try {
+            // Statement stmt = cnx.createStatement();
+            //ResultSet rs = stmt.executeQuery("select * from evenement");
+
+            Statement pst = cnx.prepareStatement("select * from evenement");
+            ResultSet rs = pst.executeQuery("select * from evenement where titre like '%"+word+"%'"
+                    + "or statut like '%"+word+"%' or capaciteMax like '%"+word+"%'"
+                    + "or capaciteMin like '%"+word+"%' or duree like '%"+word+"%'"
+                    + "or dateEvent like '%"+word+"%'");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                InputStream is = rs.getBinaryStream("photoEvent");
+                OutputStream os = new FileOutputStream(new File("img.jpg"));
+                byte[] content = new byte[1024];
+                int size = 0;
+
+                while ((size = is.read(content)) != -1) {
+                    os.write(content, 0, size);
+                }
+                os.close();
+                is.close();
+                Image img = new Image("file:img.jpg", 111, 111, true, true);
+                ImageView imv = new ImageView(img);
+                imv.setFitWidth(111);
+                imv.setFitHeight(111);
+                imv.setPreserveRatio(true);
+
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13) ,imv);
+                lstevent.add(event);
+            }
+            // cnx.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lstevent;
+    }
+    
+    public List<Event> searchReservationByUser(User usr, String word) {
+        // TODO Auto-generated method stub
+        List<Event> lstevent = new ArrayList<Event>();
+        try {
+            // Statement stmt = cnx.createStatement();
+            //ResultSet rs = stmt.executeQuery("select * from evenement");
+
+            Statement pst = cnx.prepareStatement("select * from evenement , reservation , user where reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent");
+            ResultSet rs = pst.executeQuery("select * from evenement , reservation , user where reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent and (titre like '%"+word+"%'"
+                    + "or statut like '%"+word+"%' or capaciteMax like '%"+word+"%'"
+                    + "or capaciteMin like '%"+word+"%' or duree like '%"+word+"%'"
+                    + "or dateEvent like '%"+word+"%')");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                InputStream is = rs.getBinaryStream("photoEvent");
+                OutputStream os = new FileOutputStream(new File("img.jpg"));
+                byte[] content = new byte[1024];
+                int size = 0;
+
+                while ((size = is.read(content)) != -1) {
+                    os.write(content, 0, size);
+                }
+                os.close();
+                is.close();
+                Image img = new Image("file:img.jpg", 111, 111, true, true);
+                ImageView imv = new ImageView(img);
+                imv.setFitWidth(111);
+                imv.setFitHeight(111);
+                imv.setPreserveRatio(true);
+
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13)  ,imv);
                 lstevent.add(event);
             }
             // cnx.close();
@@ -279,7 +390,7 @@ public class EventDao implements IDao<Event> {
                 imv.setPreserveRatio(true);
 
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7), imv);
+                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13)  ,imv);
                 lstevent.add(event);
             }
             // cnx.close();
@@ -312,6 +423,24 @@ public class EventDao implements IDao<Event> {
         return event;
     }
 
+    public Event findById(int id) {
+		Event evt = null;
+		try {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs=stmt.executeQuery("SELECT * FROM evenement WHERE "
+                                + "idEvent="+id+"");  
+			while (rs.next()){
+                           evt= new Event(rs.getString(2), rs.getString(3));
+			}
+			//cnx.close();  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return evt;
+    }
+    
+    
     @Override
     public Event findUser(String email, String password) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

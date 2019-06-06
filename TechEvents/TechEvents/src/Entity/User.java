@@ -184,6 +184,11 @@ public class User {
         public StringProperty emailProperty() {
              return new SimpleStringProperty(email);
     }
+
+    @Override
+    public String toString() {
+        return nom+" "+prenom;
+    }
         
         
         
