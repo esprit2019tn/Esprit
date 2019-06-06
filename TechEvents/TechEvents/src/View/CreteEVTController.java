@@ -144,16 +144,14 @@ public class CreteEVTController implements Initializable {
     @FXML
     private TableColumn<Event, String> clndescri;
 
-
     private boolean nav = false;
     EventDao uda = new EventDao();
     int id;
     int a = 0;
     @FXML
     private TableColumn<Event, ImageView> photo;
-    @FXML
-    private ListView<Sponsor> sponsorlst;
-    Sponsor s = new Sponsor("aaa","bbb");
+
+    Sponsor s = new Sponsor("aaa", "bbb");
     public ObservableList<Sponsor> lstspr = FXCollections.observableArrayList(s);
     @FXML
     private Label username;
@@ -185,8 +183,8 @@ public class CreteEVTController implements Initializable {
     private Pane menu;
     @FXML
     private Button showmenu;
-    
-    private String photoPath ;
+
+    private String photoPath;
     @FXML
     private Button Deconnecter;
     @FXML
@@ -211,7 +209,10 @@ public class CreteEVTController implements Initializable {
     private JFXButton btnaddsponsor;
     @FXML
     private JFXButton btninitsponsor;
-
+    @FXML
+    private JFXTextField rechercheReservation;
+    @FXML
+    private TableColumn<Event, String> clnstatut1;
 
     /**
      * Initializes the controller class.
@@ -257,26 +258,7 @@ public class CreteEVTController implements Initializable {
                 }
             }
         });
-        
-        sponsorlst.setCellFactory(CheckBoxListCell.forListView(new Callback<Sponsor, ObservableValue<Boolean>>() {
-            @Override
-            public ObservableValue<Boolean> call(Sponsor param) {
-                BooleanProperty observable = new SimpleBooleanProperty();
-                observable.addListener((obs, wasSelected, isNowSelected)
-                        -> {
-                    System.out.println("Check box for " + param + " changed from " + wasSelected + " to " + isNowSelected + " zzz " + obs);
-                    if(isNowSelected)
-                        System.out.println("add"+param);
-                    else
-                        System.out.println("remove"+param);
-                }
-                );
-                return observable;
-            }
 
-        }));
-        sponsorlst.setItems(lstspr);
-        sponsorlst.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         User user = UserSession.getUserSession();
         try {
             if (UserSession.verifUserSession()) {
@@ -332,6 +314,7 @@ public class CreteEVTController implements Initializable {
         cptmax.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
         cptmin.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
 
+        setStyleColumn();
 //        Callback<TableColumn<Event, Number>, TableCell<Event, Number>> txtCellFactory
 //                = (TableColumn<Event, Number> p) -> {
 //                    System.out.println(".handlellll()");
@@ -347,7 +330,8 @@ public class CreteEVTController implements Initializable {
         //   cptmin.setCellFactory(TextFieldTableCell.forTableColumn());
         table.setEditable(true);
         table.setItems(list);
-
+        rechercheReservation.setVisible(false);
+        srch.setVisible(true);
     }
 
     @FXML
@@ -355,6 +339,32 @@ public class CreteEVTController implements Initializable {
         listReservation.clear();
         if (listReservation.isEmpty()) {
             listReservation.addAll(uda.findReservationByEvent(UserSession.getUserSession()));
+        }
+        clnid1.setCellValueFactory(new PropertyValueFactory<Event, Integer>("idEvent"));
+        clntitre1.setCellValueFactory(new PropertyValueFactory<Event, String>("titre"));
+        clndate1.setCellValueFactory(new PropertyValueFactory<Event, String>("dateEvent"));
+        clnduree1.setCellValueFactory(new PropertyValueFactory<Event, Integer>("duree"));
+        cptmax1.setCellValueFactory(new PropertyValueFactory<>("capaciteMax"));
+        clnstatut1.setCellValueFactory(new PropertyValueFactory<Event, String>("statut"));
+        cptmin1.setCellValueFactory(new PropertyValueFactory<>("capaciteMin"));
+        clndescri1.setCellValueFactory(new PropertyValueFactory<Event, String>("desc"));
+        photo1.setCellValueFactory(new PropertyValueFactory<Event, ImageView>("image"));
+        //  edittable();
+        clntitre1.setCellFactory(TextFieldTableCell.forTableColumn());
+        //  cptmax.setCellFactory(col -> new IntegerEditingCell());
+        cptmax1.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        cptmin1.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        tableReservation.setItems(listReservation);
+        rechercheReservation.setVisible(true);
+        srch.setVisible(false);
+
+    }
+
+    @FXML
+    private void searchReservation(KeyEvent event) {
+        listReservation.clear();
+        if (listReservation.isEmpty()) {
+            listReservation.addAll(uda.searchReservationByUser(UserSession.getUserSession(), rechercheReservation.getText()));
         }
         clnid1.setCellValueFactory(new PropertyValueFactory<Event, Integer>("idEvent"));
         clntitre1.setCellValueFactory(new PropertyValueFactory<Event, String>("titre"));
@@ -439,6 +449,8 @@ public class CreteEVTController implements Initializable {
         Event evt = new Event(clnid.getCellObservableValue(row).getValue(), cv.getNewValue().toString(), clndescri.getCellObservableValue(row).getValue().toString(),
                 Long.parseLong(String.valueOf(cptmax.getCellObservableValue(row).getValue())), Long.parseLong(String.valueOf(cptmin.getCellObservableValue(row).getValue())),
                 clndate.getCellObservableValue(row).getValue().toString());
+        evt.setStatut(clnstatut.getCellObservableValue(row).getValue().toString());
+        evt.setDuree(Long.parseLong(String.valueOf(clnduree.getCellObservableValue(row).getValue())));
         System.out.println("View.CreteEVTController.changename()" + cptmax.getCellObservableValue(row).getValue());
         uda.update(evt);
         list.clear();
@@ -454,6 +466,9 @@ public class CreteEVTController implements Initializable {
         Event evt = new Event(clnid.getCellObservableValue(row).getValue(), clntitre.getCellObservableValue(row).getValue().toString(), clndescri.getCellObservableValue(row).getValue().toString(),
                 Long.parseLong(cv.getNewValue().toString()), Long.parseLong(String.valueOf(cptmin.getCellObservableValue(row).getValue())),
                 clndate.getCellObservableValue(row).getValue().toString());
+        evt.setStatut(clnstatut.getCellObservableValue(row).getValue().toString());
+        evt.setDuree(Long.parseLong(String.valueOf(clnduree.getCellObservableValue(row).getValue())));
+
         System.out.println("View.CreteEVTController.changename()" + cptmax.getCellObservableValue(row).getValue());
         uda.update(evt);
         list.clear();
@@ -469,7 +484,10 @@ public class CreteEVTController implements Initializable {
         Event evt = new Event(clnid.getCellObservableValue(row).getValue(), clntitre.getCellObservableValue(row).getValue().toString(), clndescri.getCellObservableValue(row).getValue().toString(),
                 Long.parseLong(String.valueOf(cptmax.getCellObservableValue(row).getValue())), Long.parseLong(String.valueOf(cv.getNewValue().toString())),
                 clndate.getCellObservableValue(row).getValue().toString());
+        evt.setDuree(Long.parseLong(String.valueOf(clnduree.getCellObservableValue(row).getValue())));
+
         System.out.println("View.CreteEVTController.changename()" + cptmax.getCellObservableValue(row).getValue());
+        evt.setStatut(clnstatut.getCellObservableValue(row).getValue().toString());
         uda.update(evt);
         list.clear();
         list();
@@ -478,7 +496,7 @@ public class CreteEVTController implements Initializable {
     public void editable(CellEditEvent ce) {
         Event e = table.getSelectionModel().getSelectedItem();
         e.setTitre(ce.getNewValue().toString());
-        //  clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
+        clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
 //            clntitre.setOnEditCommit(e -> {
 //                e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitre(e.getNewValue());
 //            });        
@@ -558,11 +576,12 @@ public class CreteEVTController implements Initializable {
         try {
             BufferedImage bufferedImage = ImageIO.read(fl);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-            myimg.setImage(image);   System.out.println(fl.toString());
+            myimg.setImage(image);
+            System.out.println(fl.toString());
             int lastindex = fl.toString().lastIndexOf("\\");
             int firstindex = fl.toString().length();
-            System.out.println(fl.toString().substring(lastindex+1, firstindex));
-            photoPath = fl.toString().substring(lastindex+1, firstindex);
+            System.out.println(fl.toString().substring(lastindex + 1, firstindex));
+            photoPath = fl.toString().substring(lastindex + 1, firstindex);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -637,7 +656,7 @@ public class CreteEVTController implements Initializable {
     public void setTitre(JFXTextField titre) {
         this.titre = titre;
     }
- 
+
     public ComboBox<String> getLstsponsor() {
         ObservableList<String> options
                 = FXCollections.observableArrayList(
@@ -733,8 +752,6 @@ public class CreteEVTController implements Initializable {
         this.a = a;
     }
 
-  
-
     @FXML
     private void splitMenu(ActionEvent event) {
         if (menu.isVisible()) {
@@ -749,10 +766,33 @@ public class CreteEVTController implements Initializable {
         System.out.println("View.CreteEVTController.splitMenu()");
 
     }
-    
+
     @FXML
     private void search(KeyEvent event) {
-        System.out.println("View.CreteEVTController.search()"+srch.getText());
+        System.out.println("View.CreteEVTController.search()" + srch.getText());
+        list.clear();
+        if (list.isEmpty()) {
+            list.addAll(uda.findAllEvent(srch.getText()));
+        }
+        clnid.setCellValueFactory(new PropertyValueFactory<Event, Integer>("idEvent"));
+        clntitre.setCellValueFactory(new PropertyValueFactory<Event, String>("titre"));
+        clndate.setCellValueFactory(new PropertyValueFactory<Event, String>("dateEvent"));
+        clnduree.setCellValueFactory(new PropertyValueFactory<Event, Integer>("duree"));
+        cptmax.setCellValueFactory(new PropertyValueFactory<>("capaciteMax"));
+        clnstatut.setCellValueFactory(new PropertyValueFactory<Event, String>("statut"));
+        cptmin.setCellValueFactory(new PropertyValueFactory<>("capaciteMin"));
+        clndescri.setCellValueFactory(new PropertyValueFactory<Event, String>("desc"));
+        photo.setCellValueFactory(new PropertyValueFactory<Event, ImageView>("image"));
+        //  edittable();
+        clntitre.setCellFactory(TextFieldTableCell.forTableColumn());
+        //  cptmax.setCellFactory(col -> new IntegerEditingCell());
+        cptmax.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        cptmin.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+
+        setStyleColumn();
+        table.setEditable(true);
+        table.setItems(list);
+
     }
 
     public String getPhotoPath() {
@@ -774,22 +814,105 @@ public class CreteEVTController implements Initializable {
         spr.setName(sprname.getText());
         spr.setOrigine(sprorigine.getText());
         spr.setResponsable(sprresp.getText());
-        
+
         spd.createSpr(spr);
-        
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Sponsor");
         alert.setHeaderText("Sponsor a été créer avec succées");
         alert.setContentText("Le sponsor " + sprname.getText() + " à été crée ");
 
         alert.showAndWait();
-        
+
     }
 
-    
+    public void setStyleColumn() {
+//        clntitre.setCellFactory(v -> new TableCell<Event, String>() {
+//            @Override
+//            public void updateItem(String item, boolean empty) {
+//                // Always invoke super constructor.
+//                super.updateItem(item, empty);
+//
+//                if (item == null || empty) {
+//                    setText(null);
+//                } else {
+//                    setText(item);
+//
+//                    this.setStyle("-fx-text-fill: blue;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+//                }
+//            }
+//        });
 
-    
-    
-    
+        clnstatut.setCellFactory(v -> new TableCell<Event, String>() {
+            @Override
+            public void updateItem(String item, boolean empty) {
+                // Always invoke super constructor.
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item);
+
+                    if (item.equals("Annulé")) {
+                        this.setStyle("-fx-text-fill: red;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                    } else if (item.equals("Disponible")) {
+                        this.setStyle("-fx-text-fill: green;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                    } else if (item.equals("Reporté")) {
+                        this.setStyle("-fx-text-fill: yellow;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                    } else if (item.equals("Terminé")) {
+                        this.setStyle("-fx-text-fill: blue;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                    }
+
+                }
+            }
+        });
+        clntitre.setStyle("-fx-text-fill: blue;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        cptmin.setStyle("-fx-text-fill: #808080	;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        cptmax.setStyle("-fx-text-fill: #808080	;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        clnduree.setStyle("-fx-text-fill: #808080;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        clndate.setStyle("-fx-text-fill: #808080;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        photo.setStyle(" -fx-alignment: center ;");
+
+        clnstatut1.setCellFactory(v -> new TableCell<Event, String>() {
+            @Override
+            public void updateItem(String item, boolean empty) {
+                // Always invoke super constructor.
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item);
+
+                    if (item.equals("Annulé")) {
+                        this.setStyle("-fx-text-fill: red;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                    } else if (item.equals("Disponible")) {
+                        this.setStyle("-fx-text-fill: green;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                    } else if (item.equals("Reporté")) {
+                        this.setStyle("-fx-text-fill: yellow;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                    } else if (item.equals("Terminé")) {
+                        this.setStyle("-fx-text-fill: blue;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                    }
+
+                }
+            }
+        });
+
+        clntitre1.setStyle("-fx-text-fill: blue;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        cptmin1.setStyle("-fx-text-fill: #808080	;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        cptmax1.setStyle("-fx-text-fill: #808080	;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        clnduree1.setStyle("-fx-text-fill: #808080;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        clndate1.setStyle("-fx-text-fill: #808080;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        photo1.setStyle(" -fx-alignment: center ;");
+
+    }
+
+    @FXML
+    private void refresh(MouseEvent event) {
+        list.clear();
+        this.list();
+        reservationlst();
+    }
 
 }

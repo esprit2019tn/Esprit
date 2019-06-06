@@ -22,6 +22,7 @@ public class Event {
     private Localisation localisation;
     private String photoPath ;
     private String statut ;
+    private int nbrreservation ;
 
     
     public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree, Localisation localisation) {
@@ -218,6 +219,14 @@ public class Event {
 
     public void setStatut(String statut) {
         this.statut = statut;
+    }
+
+    public int getNbrreservation() {
+        return nbrreservation;
+    }
+
+    public void setNbrreservation(int nbrreservation) {
+        this.nbrreservation = nbrreservation;
     }
 
     

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -12,9 +13,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ConsultEVTController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ConsultEVTController">
    <children>
-      <Pane prefHeight="101.0" prefWidth="600.0" style="-fx-background-color: #1d76ba;">
+      <Pane prefHeight="101.0" prefWidth="799.0" style="-fx-background-color: #1d76ba;">
          <children>
             <Button layoutX="14.0" layoutY="62.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Menu" textFill="#3d9bc3">
                <font>
@@ -34,23 +35,34 @@
             <JFXTextField layoutX="425.0" layoutY="59.0" promptText="Search" />
          </children>
       </Pane>
-      <JFXTextField fx:id="titre" layoutX="47.0" layoutY="125.0" promptText="Titre" />
-      <JFXTextField fx:id="date" layoutX="242.0" layoutY="125.0" promptText="Date" />
-      <JFXTextField fx:id="cptmax" layoutX="47.0" layoutY="185.0" promptText="Capacité max" />
-      <JFXTextField fx:id="cptmin" layoutX="242.0" layoutY="185.0" promptText="Capacité min" />
-      <JFXTextArea fx:id="desc" layoutX="47.0" layoutY="254.0" maxWidth="319.0" minWidth="319.0" prefHeight="135.0" prefWidth="319.0" />
-      <JFXButton fx:id="reserver" buttonType="RAISED" layoutX="16.0" layoutY="411.0" onAction="#reserver" ripplerFill="#3313d3" text="Réserver" textFill="#3d2fb9" wrapText="true" />
-      <JFXButton fx:id="updatebtn" layoutX="89.0" layoutY="411.0" onAction="#addsponsor" ripplerFill="RED" text="Mettre à jour" textFill="RED" />
-      <JFXButton fx:id="btnAnnulerEvt" layoutX="277.0" layoutY="411.0" onAction="#AnnulerEvt" ripplerFill="#29a437" text="Annuler l'événement" textFill="#337231" />
-      <JFXTextField fx:id="duree" layoutX="423.0" layoutY="125.0" promptText="Durée" />
-      <JFXTextField fx:id="etat" layoutX="423.0" layoutY="185.0" promptText="Etat" />
-      <JFXListView fx:id="sponsorlst" layoutX="423.0" layoutY="254.0" prefHeight="194.0" prefWidth="149.0" />
-      <JFXListView fx:id="LstSprEvent" layoutX="423.0" layoutY="254.0" prefHeight="194.0" prefWidth="149.0" />
-      <Label layoutX="421.0" layoutY="233.0" text="Sponseurs de cet événement">
+      <JFXTextField fx:id="titre" layoutX="64.0" layoutY="125.0" promptText="Titre" />
+      <JFXTextField fx:id="date" layoutX="242.0" layoutY="125.0" promptText="Date" visible="false" />
+      <JFXTextField fx:id="cptmax" layoutX="64.0" layoutY="185.0" promptText="Capacité max" />
+      <JFXTextField fx:id="cptmin" layoutX="315.0" layoutY="185.0" promptText="Capacité min" />
+      <JFXTextArea fx:id="desc" layoutX="133.0" layoutY="264.0" maxWidth="370.0" minWidth="185.0" prefHeight="88.0" prefWidth="239.0" />
+      <JFXButton fx:id="reserver" buttonType="RAISED" layoutX="43.0" layoutY="377.0" onAction="#reserver" ripplerFill="#3313d3" text="Réserver" textFill="#3d2fb9" wrapText="true" />
+      <JFXButton fx:id="updatebtn" buttonType="RAISED" layoutX="189.0" layoutY="377.0" onAction="#addsponsor" ripplerFill="RED" text="Mettre à jour" textFill="RED" />
+      <JFXButton fx:id="btnAnnulerEvt" buttonType="RAISED" layoutX="113.0" layoutY="425.0" onAction="#AnnulerEvt" ripplerFill="#29a437" text="Annuler" textFill="#337231" />
+      <JFXTextField fx:id="duree" layoutX="604.0" layoutY="125.0" promptText="Durée" />
+      <JFXTextField fx:id="etat" disable="true" layoutX="604.0" layoutY="185.0" promptText="Etat" />
+      <JFXListView fx:id="sponsorlst" layoutX="617.0" layoutY="271.0" prefHeight="194.0" prefWidth="149.0" />
+      <JFXListView fx:id="LstSprEvent" layoutX="617.0" layoutY="271.0" prefHeight="194.0" prefWidth="149.0" />
+      <Label layoutX="615.0" layoutY="250.0" text="Sponseurs de cet événement">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <JFXButton fx:id="reclambtn" layoutX="196.0" layoutY="411.0" onAction="#reclamer" ripplerFill="#1a00ff" text="Réclamer" textFill="#2f33ff" />
+      <JFXButton fx:id="reclambtn" buttonType="RAISED" layoutX="336.0" layoutY="377.0" onAction="#reclamer" ripplerFill="#1a00ff" text="Réclamer" textFill="#2f33ff" />
+      <JFXDatePicker fx:id="picker" layoutX="309.0" layoutY="125.0" />
+      <Label layoutX="528.0" layoutY="131.0" text="Durée" />
+      <Label layoutX="246.0" layoutY="130.0" text="Date" />
+      <Label layoutX="13.0" layoutY="131.0" text="Titre" />
+      <Label layoutX="14.0" layoutY="190.0" text="Max" />
+      <Label layoutX="249.0" layoutY="191.0" text="Min" />
+      <Label layoutX="528.0" layoutY="191.0" text="Statut" />
+      <Label layoutX="14.0" layoutY="264.0" text="Description" />
+      <Label layoutX="417.0" layoutY="264.0" text="Nombre de réservations" />
+      <Label fx:id="nbrres" layoutX="486.0" layoutY="308.0" text="nbr" />
+      <JFXButton fx:id="btntermine" buttonType="RAISED" layoutX="283.0" layoutY="425.0" onAction="#ternimerEvt" ripplerFill="#7c6a6a" text="Terminer" textFill="#796666" />
    </children>
 </AnchorPane>

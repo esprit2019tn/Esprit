@@ -13,12 +13,16 @@ import Entity.Sponsor;
 import Entity.User;
 import Metier.UserSession;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -85,6 +89,12 @@ public class ConsultEVTController implements Initializable {
     private JFXButton reclambtn;
     @FXML
     private JFXButton btnAnnulerEvt;
+    @FXML
+    private JFXDatePicker picker;
+    @FXML
+    private Label nbrres;
+    @FXML
+    private JFXButton btntermine;
 
     /**
      * Initializes the controller class.
@@ -92,14 +102,26 @@ public class ConsultEVTController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        EventDao eda = new EventDao();
 
         titre.setText(CreteEVTController.getevt().getTitre());
-        date.setText(CreteEVTController.getevt().getDateEvent());
+        //  date.setText(CreteEVTController.getevt().getDateEvent());
         cptmax.setText(CreteEVTController.getevt().getCapaciteMax().toString());
         cptmin.setText(CreteEVTController.getevt().getCapaciteMin().toString());
         desc.setText(CreteEVTController.getevt().getDesc());
         duree.setText(CreteEVTController.getevt().getDuree().toString());
         etat.setText(CreteEVTController.getevt().getStatut());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        picker.setValue(LocalDate.parse(CreteEVTController.getevt().getDateEvent(), formatter));
+        nbrres.setText(String.valueOf(eda.getnbrres(CreteEVTController.getevt())));
+        nbrres.setStyle("-fx-text-fill: red;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; ");
+       
+        switch (etat.getText()){
+            case "Annulé" :  etat.setStyle("-fx-text-fill: red;");break;
+            case "Terminé" :  etat.setStyle("-fx-text-fill: bleu;");break;
+            case "Disponible" :  etat.setStyle("-fx-text-fill: green;");break;
+            case "Reporté" :  etat.setStyle("-fx-text-fill: yellow; ");break;
+        }
         User user = UserSession.getUserSession();
         try {
             if (UserSession.verifUserSession()) {
@@ -173,6 +195,25 @@ public class ConsultEVTController implements Initializable {
         for (Sponsor l : lstsponsor) {
             System.out.println("-------------ID---------------" + l.getIdSponsor());
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ld = LocalDate.parse(CreteEVTController.getevt().getDateEvent(), formatter);
+        System.out.println("update" + picker.getValue().compareTo(ld));
+        EventDao eda = new EventDao();
+        Event evt = new Event();System.out.println("View.ConsultEVTController.addsponsor()"+titre.getText());
+        evt.setIdEvent(CreteEVTController.getevt().getIdEvent());
+        evt.setTitre(titre.getText());
+        evt.setDuree(Long.parseLong(duree.getText()));
+        evt.setCapaciteMax(Long.parseLong(cptmax.getText()));
+        evt.setCapaciteMin(Long.parseLong(cptmin.getText()));
+        evt.setStatut(etat.getText());
+        evt.setDesc(desc.getText());
+        evt.setDateEvent(picker.getValue().toString());
+        if (picker.getValue().compareTo(ld) > 0) {
+            evt.setStatut("Reporté");
+            evt.setDateEvent(picker.getValue().toString());
+        }
+        eda.update(evt);
+
     }
 
     @FXML
@@ -205,10 +246,29 @@ public class ConsultEVTController implements Initializable {
             Event evt = CreteEVTController.getevt();
             evt.setStatut("Annulé");
             eda.update(evt);
-            
+
         }
-        
-     //oke button is pressed
+
+        //oke button is pressed
+    }
+
+    @FXML
+    private void ternimerEvt(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Evénement Terminé");
+        alert.setHeaderText("Terminer l'événement");
+        alert.setResizable(false);
+        alert.setContentText("Vous étes sûr de terminer l'événement");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            EventDao eda = new EventDao();
+            Event evt = CreteEVTController.getevt();
+            evt.setStatut("Terminé");
+            eda.update(evt);
+
+        }
+
+        //oke button is pressed
     }
 
 }
