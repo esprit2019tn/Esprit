@@ -7,6 +7,7 @@ package com.esprit.gui;
 
 import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
+import com.esprit.Metier.EmailSend;
 import com.esprit.Service.ServiceUser;
 import java.util.Date;
 import java.util.Random;
@@ -93,7 +94,7 @@ public class Inscription extends com.codename1.ui.Form {
         gui_Picker.setText("...");
                 gui_Picker.setInlineStylesTheme(resourceObjectInstance);
         gui_Picker.setName("Picker");
-        gui_Picker.setType(4);
+        gui_Picker.setType(1);
         gui_Box_Layout_X.setScrollableX(false);
                 gui_Box_Layout_X.setInlineStylesTheme(resourceObjectInstance);
         gui_Box_Layout_X.setInlineAllStyles("alignment:center;");
@@ -149,13 +150,15 @@ public class Inscription extends com.codename1.ui.Form {
         Random rand = new Random();
         int randomNum = rand.nextInt((999999 - 100000) + 1) + 100000;
         String confirmationCode=String.valueOf(randomNum);
-        User user=new User(gui_nom.getText(),gui_prenom.getText(),/*java.sql.Date.valueOf(gui_.getValue())*/new Date(),sexe,gui_adresse.getText(),gui_email.getText(),gui_motDePasse.getText(),RoleUser.SimpleUser,confirmationCode);        
+        User user=new User(gui_nom.getText(),gui_prenom.getText(),gui_Picker.getDate(),sexe,gui_adresse.getText(),gui_email.getText(),gui_motDePasse.getText(),RoleUser.SimpleUser,confirmationCode);        
         ServiceUser.ajoutUser(user);
-//        EmailSend.sendConfirmation(gui_email.getText(),confirmationCode);
+        EmailSend.sendConfirmation(gui_email.getText(),confirmationCode);
+
         
     }
-
     
+
+
     
 
 }
