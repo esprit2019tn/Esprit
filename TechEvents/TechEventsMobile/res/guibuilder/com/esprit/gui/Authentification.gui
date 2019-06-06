@@ -7,7 +7,9 @@
     </component>
     <component type="TextField" hint="Mot de passe" constraint="65536" name="motDePasse">
     </component>
-    <component type="Label" text="Mot de passe oublier ?" name="motDePasseOublier">
+    <component type="Button" uiid="" text="Mot de passe oublier ?" name="Button" actionEvent="true">
+    </component>
+    <component type="Label" styles="fgColor:f01501; alignment:center;" name="Errors">
     </component>
     <component type="Button" text="Connexion" name="connexion" actionEvent="true">
     </component>
