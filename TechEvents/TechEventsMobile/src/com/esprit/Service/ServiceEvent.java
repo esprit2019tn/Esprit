@@ -28,7 +28,7 @@ public class ServiceEvent {
 //        String Url = "http://41.226.11.252:1130/tasks/" + evt.getTitre() + "/" + evt.getDesc() +
 //                     "/"+evt.getCapaciteMax()+"/"+evt.getCapaciteMin()+"/"+evt.getDateEvent()+
 //                      "/"+evt.getDuree();// création de l'URL
-        String Url = "http://localhost/CodeNameOne/addEvent.php?titre=" + evt.getTitre()
+        String Url = "http://localhost/Servers/Event/addEvent.php?titre=" + evt.getTitre()
                 + "&description=" + evt.getDesc() + "&capacitemax=" + evt.getCapaciteMax()
                 + "&capacitemin=" + evt.getCapaciteMin() + "&dateevent='"+evt.getDateEvent()+"'"//"+evt.getDateEvent()+"
                 + "&duree=" + evt.getDuree() + "&photoPath='"+evt.getPathphoto()+"'";//+"&img="+evt.getImage();
@@ -47,7 +47,7 @@ public class ServiceEvent {
 //        String Url = "http://41.226.11.252:1130/tasks/" + evt.getTitre() + "/" + evt.getDesc() +
 //                     "/"+evt.getCapaciteMax()+"/"+evt.getCapaciteMin()+"/"+evt.getDateEvent()+
 //                      "/"+evt.getDuree();// création de l'URL
-        String Url = "http://localhost/CodeNameOne/updateEvent.php?idEvent="+evt.getIdEvent()+"&titre=" + evt.getTitre()
+        String Url = "http://localhost/Servers/Event/updateEvent.php?idEvent="+evt.getIdEvent()+"&titre=" + evt.getTitre()
                 + "&description=" + evt.getDesc() + "&capacitemax=" + evt.getCapaciteMax()
                 + "&capacitemin=" + evt.getCapaciteMin() + "&duree=" + evt.getDuree();//+"&img="+evt.getImage();
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
@@ -109,7 +109,7 @@ public class ServiceEvent {
 
     public ArrayList<Event> getList2() {
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/CodeNameOne/getEvent.php");
+        con.setUrl("http://localhost/Servers/Event/getEvent.php");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {

@@ -867,7 +867,7 @@ public class CreteEVTController implements Initializable {
                 }
             }
         });
-        clntitre.setStyle("-fx-text-fill: blue;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        clntitre.setStyle("-fx-text-fill: blue;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
         cptmin.setStyle("-fx-text-fill: #808080	;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
         cptmax.setStyle("-fx-text-fill: #808080	;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
         clnduree.setStyle("-fx-text-fill: #808080;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
@@ -886,20 +886,20 @@ public class CreteEVTController implements Initializable {
                     setText(item);
 
                     if (item.equals("Annulé")) {
-                        this.setStyle("-fx-text-fill: red;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                        this.setStyle("-fx-text-fill: red;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
                     } else if (item.equals("Disponible")) {
-                        this.setStyle("-fx-text-fill: green;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                        this.setStyle("-fx-text-fill: green;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
                     } else if (item.equals("Reporté")) {
-                        this.setStyle("-fx-text-fill: yellow;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                        this.setStyle("-fx-text-fill: yellow;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
                     } else if (item.equals("Terminé")) {
-                        this.setStyle("-fx-text-fill: blue;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+                        this.setStyle("-fx-text-fill: blue;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
                     }
 
                 }
             }
         });
 
-        clntitre1.setStyle("-fx-text-fill: blue;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        clntitre1.setStyle("-fx-text-fill: blue;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
         cptmin1.setStyle("-fx-text-fill: #808080	;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
         cptmax1.setStyle("-fx-text-fill: #808080	;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
         clnduree1.setStyle("-fx-text-fill: #808080;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
