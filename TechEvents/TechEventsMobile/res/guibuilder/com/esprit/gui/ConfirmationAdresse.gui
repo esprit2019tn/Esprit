@@ -13,7 +13,7 @@
   <component type="Button" text="Confirmer" preferredSize="53.968254mm inherit" name="confirmer" actionEvent="true">
     <layoutConstraint insets="15.0% auto auto auto" referenceComponents="2 1 -1 0 " referencePositions="1.0 0.0 0.0 0.0" />
   </component>
-  <component type="Label" text="" styles="fgColor:fe2617; alignment:center;" preferredSize="53.968254mm inherit" name="msgErreur">
+  <component type="Label" styles="fgColor:fe2617; alignment:center;" preferredSize="53.968254mm inherit" name="msgErreur">
     <layoutConstraint insets="auto 0.0mm 7.671959mm 55.0%" referenceComponents="2 0 3 -1" referencePositions="0.0 0.0 0.0 0.0" />
   </component>
 </component>
