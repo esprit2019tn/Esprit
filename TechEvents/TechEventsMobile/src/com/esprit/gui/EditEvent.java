@@ -45,7 +45,7 @@ public class EditEvent {
     TextField duree;
     TextArea description;
     Picker dateEvt;
-    Button btnajout, btninit;
+    Button btnajout, btninit , btnajoutrec;
 
     public EditEvent() {
         f = new Form(ListEvent.evtStatic.getTitre(), BoxLayout.y());
@@ -77,6 +77,7 @@ public class EditEvent {
         btnajout = new Button("Enregistrer");
 //        btnajout.setAlignment(CENTER);
         btninit = new Button("Annuler");
+        btnajoutrec = new Button("Ajouter Réclamation");
 //        btninit.setAlignment(CENTER);
         f.add(titre);
         f.add(dateEvt);
@@ -86,9 +87,15 @@ public class EditEvent {
         f.add(description);
         line1.add(btnajout);
         line1.add(btninit);
+        line1.add(btnajoutrec);
         f.add(line1);
         //  f.add(flowLayout);
 
+         btnajoutrec.addActionListener((e) -> {
+             addReclam adr = new addReclam();
+             adr.show();
+         });
+        
         btnajout.addActionListener((e) -> {
             ServiceEvent ser = new ServiceEvent();
             Event updatedEvt = new Event();

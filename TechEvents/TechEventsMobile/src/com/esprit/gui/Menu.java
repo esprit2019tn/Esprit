@@ -55,6 +55,14 @@ public class Menu {
             }
         });
         
+        forme.getToolbar().addCommandToLeftSideMenu("Gérer réclamation", null, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                  ListReclamation lst = new ListReclamation();
+                  lst.getF().show();
+            }
+        });
+        
         if(!UserSession.verifUserSession()){
             forme.getToolbar().addCommandToLeftSideMenu("Inscription",FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
                 @Override
