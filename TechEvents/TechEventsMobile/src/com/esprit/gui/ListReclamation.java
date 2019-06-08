@@ -81,6 +81,8 @@ public class ListReclamation {
                     
                     Label titre = new Label(p.getSujetReclam());
                     Label event = new Label(""+p.getEvent().getTitre());
+                    Label dateLabel = new Label(p.getDateReclam());
+                    
                     titre.getAllStyles().setFgColor(ColorUtil.rgb(0, 0, 255));
                    // System.out.println(".fetchComponents()" + p.getDuree());
                     //Label date = new Label(p.getDateEvent().toString());
@@ -88,6 +90,8 @@ public class ListReclamation {
 
                     line1.add(titre);
                     line1.add(event);
+                    line1.add(dateLabel);
+  
 
                     //line1.add(cptmax);
                     //element.add(photo);

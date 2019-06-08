@@ -35,7 +35,8 @@ public class ServiceReclamation {
         String Url = "http://localhost/Servers/Reclamation/addreclamation.php?sujet="+rec.getSujetReclam()+""
                 + "&text="+rec.getTextReclam()+""
                 + "&iduser="+UserSession.getUserSession().getId()+""
-                + "&idevent="+ListEvent.getEvtStatic().getIdEvent()+"";//+"&img="+evt.getImage();
+                + "&idevent="+ListEvent.getEvtStatic().getIdEvent()+"";
+                //+"&img="+evt.getImage();
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
 
         con.addResponseListener((e) -> {
@@ -92,7 +93,8 @@ public class ServiceReclamation {
                 int idEvent = Integer.parseInt(obj.get("idEvent").toString());
                 evt.setIdEvent(Integer.parseInt(obj.get("idEvent").toString()));
                 e.setEvent(sev.getEventById(idEvent));
-                System.out.println(e);
+                e.setDateReclam(obj.get("dateReclamation").toString());
+                System.out.println(e.getDateReclam());
 
                 listReclamation.add(e);
 
