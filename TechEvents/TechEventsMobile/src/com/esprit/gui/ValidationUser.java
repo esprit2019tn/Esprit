@@ -5,12 +5,21 @@
  */
 package com.esprit.gui;
 
+import com.codename1.components.InteractionDialog;
+import com.codename1.ui.Button;
+import com.codename1.ui.Command;
 import com.codename1.ui.Component;
+import static com.codename1.ui.Component.CENTER;
+import com.codename1.ui.ComponentGroup;
+import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
+import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.table.DefaultTableModel;
 import com.codename1.ui.table.Table;
@@ -65,7 +74,39 @@ public class ValidationUser extends com.codename1.ui.Form {
         cell.addPointerPressedListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-             Dialog.show("Dialog Title", "Nom :"+model.getValueAt(row, 2), "OK", "Cancel");
+             //Dialog.show("Dialog Title", "Nom :"+model.getValueAt(row, 2), "ok", "Cancel"){};
+             ServiceUser su=new ServiceUser();
+             User user=su.findUserByEmail(model.getValueAt(row, 2).toString());
+               Dialog dlg = new Dialog("Detail Utilisateur");
+               dlg.setLayout(new BorderLayout(CENTER));
+               Container conLab = new Container(BoxLayout.y());         
+               conLab.add(new Label(user.getNom()));
+               conLab.add(new Label(user.getPrenom()));
+               conLab.add(new Label(user.getDateNaiss().toString()));
+               conLab.add(new Label(user.getSexe()));
+               conLab.add(new Label(user.getAdresse()));
+               conLab.add(new Label(user.getEmail()));
+
+               Button valider = new Button("Valider");
+               Button close = new Button("Close");
+               close.addActionListener((ee) -> dlg.dispose());
+               valider.addActionListener(new ActionListener() {
+                 @Override
+                 public void actionPerformed(ActionEvent evt) {
+                   ServiceUser.setValidationUser(user.getEmail()); 
+                   dlg.dispose();
+                   ValidationUser validationUser=new ValidationUser();
+                   validationUser.show();
+                 }
+             });
+               
+               
+                Container com = new Container(BoxLayout.x());         
+               com.add(valider);
+               com.add(close);
+                 dlg.addComponent(BorderLayout.NORTH, conLab);
+               dlg.addComponent(BorderLayout.SOUTH, com);
+               dlg.show();
             }
         });
         

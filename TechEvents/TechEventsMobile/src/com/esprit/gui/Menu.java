@@ -11,6 +11,7 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
+import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
 import com.esprit.Metier.UserSession;
 
@@ -19,8 +20,10 @@ import com.esprit.Metier.UserSession;
  * @author AYMEN
  */
 public class Menu {
+  
+    
     public static void getMenu(Form forme){
-               forme.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
+        forme.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
         forme.showBack();
@@ -93,7 +96,8 @@ public class Menu {
             
         }
         
-                forme.getToolbar().addCommandToLeftSideMenu("validerUSer", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
+        if(UserSession.verifUserSession() && UserSession.getUserSession().getRole().equals(RoleUser.Admin) ){ 
+                forme.getToolbar().addCommandToLeftSideMenu("valider utilisateur", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
                        UserSession.destroyUserSession();
@@ -101,6 +105,7 @@ public class Menu {
                       validationUser.show();
                 }
             });
+        }
     }
     
 }

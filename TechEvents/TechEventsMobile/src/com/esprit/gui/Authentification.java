@@ -5,22 +5,10 @@
  */
 package com.esprit.gui;
 
-import com.codename1.io.Log;
-import com.codename1.io.Storage;
-import com.codename1.io.Util;
-import com.codename1.ui.Dialog;
 import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
-import com.esprit.Metier.EmailSend;
 import com.esprit.Metier.UserSession;
 import com.esprit.Service.ServiceUser;
-import java.io.IOException;
-import java.io.InputStream;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 /**
  * GUI builder created Form
@@ -111,6 +99,7 @@ public class Authentification extends com.codename1.ui.Form {
         gui_Button.setUIID("");
                 gui_Button.setInlineStylesTheme(resourceObjectInstance);
         gui_Button.setName("Button");
+        gui_Errors.setText("    ");
                 gui_Errors.setInlineStylesTheme(resourceObjectInstance);
         gui_Errors.setInlineAllStyles("fgColor:f01501; alignment:center;");
         gui_Errors.setName("Errors");
@@ -145,19 +134,20 @@ public class Authentification extends com.codename1.ui.Form {
         }
         else{
             UserSession.createUserSession(user);
-            if(!user.getConfirmation()){
-                       ConfirmationAdresse confirmationAdresse = new ConfirmationAdresse();
-                 confirmationAdresse.gui_email.setText(gui_email.getText());
-                 confirmationAdresse.show();
-            }
-            else if(!user.getActive()){
+//            if(!user.getConfirmation()){
+//                       ConfirmationAdresse confirmationAdresse = new ConfirmationAdresse();
+//                 confirmationAdresse.gui_email.setText(gui_email.getText());
+//                 confirmationAdresse.show();
+//            }
+             if(!user.getActive()){
                 gui_Errors.setText("Votre inscription est en cours de validation");
+                gui_motDePasse.setText("");
             }
-            else if(user.getRole().equals(RoleUser.Admin)){
-//                 ValidationUser validationUser = new ValidationUser();
-//                 validationUser.show();     
-            }
-            else if(user.getRole().equals(RoleUser.SimpleUser)){
+//            else if(user.getRole().equals(RoleUser.Admin)){
+////                 ValidationUser validationUser = new ValidationUser();
+////                 validationUser.show();     
+//            }
+            else {//if(user.getRole().equals(RoleUser.SimpleUser)){
                  AccueilEvent accueilEvent = new AccueilEvent();
                  accueilEvent.show();     
             }
@@ -167,7 +157,6 @@ public class Authentification extends com.codename1.ui.Form {
     public void oninscriptionActionEvent(com.codename1.ui.events.ActionEvent ev) {
                 Inscription inscription = new Inscription();
                  inscription.show();
-
     }
 
     public void onButtonActionEvent(com.codename1.ui.events.ActionEvent ev) {

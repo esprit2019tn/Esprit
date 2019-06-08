@@ -7,9 +7,7 @@ package com.esprit.gui;
 
 import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
-import com.esprit.Metier.EmailSend;
 import com.esprit.Service.ServiceUser;
-import java.util.Date;
 import java.util.Random;
 
 /**
@@ -152,9 +150,9 @@ public class Inscription extends com.codename1.ui.Form {
         String confirmationCode=String.valueOf(randomNum);
         User user=new User(gui_nom.getText(),gui_prenom.getText(),gui_Picker.getDate(),sexe,gui_adresse.getText(),gui_email.getText(),gui_motDePasse.getText(),RoleUser.SimpleUser,confirmationCode);        
         ServiceUser.ajoutUser(user);
-        EmailSend.sendConfirmation(gui_email.getText(),confirmationCode);
-
-        
+        //EmailSend.sendConfirmation(gui_email.getText(),confirmationCode);
+        Authentification authentification =new Authentification();
+        authentification.show();    
     }
     
 
