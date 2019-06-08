@@ -92,6 +92,15 @@ public class Menu {
             });
             
         }
+        
+                forme.getToolbar().addCommandToLeftSideMenu("validerUSer", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                       UserSession.destroyUserSession();
+                      ValidationUser validationUser = new ValidationUser();
+                      validationUser.show();
+                }
+            });
     }
     
 }
