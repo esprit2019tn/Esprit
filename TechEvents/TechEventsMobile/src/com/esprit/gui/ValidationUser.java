@@ -43,7 +43,7 @@ public class ValidationUser extends com.codename1.ui.Form {
             model.setValueAt(i, 0, lst.get(i).getNom());
             model.setValueAt(i, 1, lst.get(i).getPrenom());
             model.setValueAt(i, 2, lst.get(i).getEmail());
-
+            
         }
 
     
@@ -65,7 +65,7 @@ public class ValidationUser extends com.codename1.ui.Form {
         cell.addPointerPressedListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-             Dialog.show("Dialog Title", "Nom :"+cell.getName(), "OK", "Cancel");
+             Dialog.show("Dialog Title", "Nom :"+model.getValueAt(row, 2), "OK", "Cancel");
             }
         });
         

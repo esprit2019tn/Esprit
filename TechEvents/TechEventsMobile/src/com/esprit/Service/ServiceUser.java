@@ -190,6 +190,26 @@ public class ServiceUser {
 
     }
     
+          
+        public User getUserById(int idUser){ 
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/Servers/user/getUserById.php");  
+        con.addArgument("idUser", String.valueOf(idUser));
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+           @Override
+           public void actionPerformed(NetworkEvent e) {
+               String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+               System.out.println(str);//Affichage de la réponse serveur sur la console
+               try {
+                   lstUser = parseListTaskJson(str);
+               } catch (ParseException ex) {
+                   System.err.println(ex.getMessage());
+               }
+           }
+       });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return lstUser.get(0);
+    }
 
     
 
