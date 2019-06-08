@@ -11,6 +11,7 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
+import com.esprit.Entity.Actualite;
 import com.esprit.Entity.User;
 import com.esprit.Metier.UserSession;
 
@@ -54,6 +55,15 @@ public class Menu {
                   adv.getF().show();
             }
         });
+        
+        forme.getToolbar().addCommandToLeftSideMenu("Actualite", null, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                   // Actualite a=new Actualite();
+                   ActualiteForm a = new ActualiteForm();
+                    a.showList(forme);
+                }
+            });
         
         if(!UserSession.verifUserSession()){
             forme.getToolbar().addCommandToLeftSideMenu("Inscription",FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
