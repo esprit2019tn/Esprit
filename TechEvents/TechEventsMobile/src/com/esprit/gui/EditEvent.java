@@ -171,6 +171,7 @@ public class EditEvent {
         btnreclam = new Button("Reclamer");
         btnterminer = new Button("Terminer");
         btnsavespr = new Button("Enregistrer");
+
 //        btninit.setAlignment(CENTER);
         btnaddSponsor = new Button("Ajouter sponsor");
         f.add(nameLabel);
@@ -344,6 +345,17 @@ public class EditEvent {
             sponsorform.show();
         });
 
+      //  line1.add(btnajout);
+       // line1.add(btninit);
+     //   line1.add(btnajoutrec);
+//        f.add(line1);
+        //  f.add(flowLayout);
+
+//         btnajoutrec.addActionListener((e) -> {
+//             addReclam adr = new addReclam();
+//             adr.show();
+//         });
+        
         btnajout.addActionListener((e) -> {
             try {
                 ServiceEvent ser = new ServiceEvent();

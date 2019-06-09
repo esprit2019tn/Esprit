@@ -10,14 +10,16 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.l10n.ParseException;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 
 
 
@@ -34,7 +36,7 @@ public class ServiceUser {
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
         con.addArgument("nom",user.getNom());
         con.addArgument("prenom", user.getPrenom());
-        con.addArgument("dateNaiss", user.getDateNaiss().toString() );
+        con.addArgument("dateNaiss",new SimpleDateFormat("yyyy-MM-dd").format(user.getDateNaiss()));
         con.addArgument("sexe",user.getSexe());
         con.addArgument("adresse", user.getAdresse());
         con.addArgument("email", user.getEmail());
@@ -50,8 +52,40 @@ public class ServiceUser {
 
    
     }
+        public static void setConfirmationEmail(String email) {
+           ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
+        String Url = "http://localhost/Servers/user/setConfirmationEmail.php";// création de l'URL
+        con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
+        con.addArgument("email", email);
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+            System.out.println(str);//Affichage de la réponse serveur sur la console
 
-    public static ArrayList<User> parseListTaskJson(String json) {
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
+
+   
+    }
+        
+        public static void setValidationUser(String email) {
+           ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
+        String Url = "http://localhost/Servers/user/setValidationUser.php";// création de l'URL
+        con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
+        con.addArgument("email", email);
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+            System.out.println(str);//Affichage de la réponse serveur sur la console
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
+
+   
+    }
+        
+        
+    
+
+    public static ArrayList<User> parseListTaskJson(String json) throws ParseException {
 
         ArrayList<User> listUsers = new ArrayList<>();
 
@@ -86,7 +120,7 @@ public class ServiceUser {
                 u.setId(Integer.valueOf(obj.get("idUser").toString()));
                 u.setNom(obj.get("nom").toString());
                 u.setPrenom(obj.get("prenom").toString());
-                //u.setDateNaiss(Date.parse(u.setDateNaiss(Date.parse())));
+                u.setDateNaiss(new SimpleDateFormat("yyyy-MM-dd").parse(obj.get("dateNaiss").toString()));
                 u.setSexe(obj.get("sexe").toString());
                 u.setAdresse(obj.get("adresse").toString());
                 u.setEmail(obj.get("email").toString());
@@ -99,6 +133,7 @@ public class ServiceUser {
                 listUsers.add(u);
             }
         } catch (IOException ex) {
+                System.err.println(ex.getMessage());
         }
         
         /*
@@ -121,11 +156,78 @@ public class ServiceUser {
            public void actionPerformed(NetworkEvent e) {
                String str = new String(con.getResponseData());//Récupération de la réponse du serveur
                System.out.println(str);//Affichage de la réponse serveur sur la console
-               lstUser = parseListTaskJson(str);
+               try {
+                   lstUser = parseListTaskJson(str);
+               } catch (ParseException ex) {
+                   System.err.println(ex.getMessage());
+               }
            }
        });
         NetworkManager.getInstance().addToQueueAndWait(con);
         return lstUser.get(0);
     }
+    
+      public User findUserByEmail(String email){ 
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/Servers/user/getUserByEmail.php");  
+        con.addArgument("email", email);
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+           @Override
+           public void actionPerformed(NetworkEvent e) {
+               String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+               System.out.println(str);//Affichage de la réponse serveur sur la console
+               try {
+                   lstUser = parseListTaskJson(str);
+               } catch (ParseException ex) {
+                   System.err.println(ex.getMessage());
+               }
+           }
+       });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return lstUser.get(0);
+    }
+      
+          public List<User> findUserToValid() {
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/Servers/user/getUserToValid.php");  
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+           @Override
+           public void actionPerformed(NetworkEvent e) {
+               String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+               System.out.println(str);//Affichage de la réponse serveur sur la console
+               try {
+                   lstUser = parseListTaskJson(str);
+               } catch (ParseException ex) {
+                   System.err.println(ex.getMessage());
+               }
+           }
+       });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return lstUser;
+
+    }
+    
+          
+        public User getUserById(int idUser){ 
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/Servers/user/getUserById.php");  
+        con.addArgument("idUser", String.valueOf(idUser));
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+           @Override
+           public void actionPerformed(NetworkEvent e) {
+               String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+               System.out.println(str);//Affichage de la réponse serveur sur la console
+               try {
+                   lstUser = parseListTaskJson(str);
+               } catch (ParseException ex) {
+                   System.err.println(ex.getMessage());
+               }
+           }
+       });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return lstUser.get(0);
+    }
+
+    
 
 }

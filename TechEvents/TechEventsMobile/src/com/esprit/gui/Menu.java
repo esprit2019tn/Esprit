@@ -11,6 +11,7 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
+import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
 import com.esprit.Metier.UserSession;
 
@@ -19,9 +20,9 @@ import com.esprit.Metier.UserSession;
  * @author AYMEN
  */
 public class Menu {
-
-    public static void getMenu(Form forme) {
-
+ 
+    
+    public static void getMenu(Form forme){
         forme.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -66,9 +67,16 @@ public class Menu {
 
             }
         });
-
-        if (!UserSession.verifUserSession()) {
-            forme.getToolbar().addCommandToLeftSideMenu("Inscription", FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
+        forme.getToolbar().addCommandToLeftSideMenu("Gérer réclamation", null, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                  ListReclamation lst = new ListReclamation();
+                  lst.getF().show();
+            }
+        });
+        
+        if(!UserSession.verifUserSession()){
+            forme.getToolbar().addCommandToLeftSideMenu("Inscription",FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
                     Inscription inscription = new Inscription();
@@ -95,6 +103,18 @@ public class Menu {
             });
 
         }
+        
+        if(UserSession.verifUserSession() && UserSession.getUserSession().getRole().equals(RoleUser.Admin) ){ 
+                forme.getToolbar().addCommandToLeftSideMenu("valider utilisateur", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                       UserSession.destroyUserSession();
+                      ValidationUser validationUser = new ValidationUser();
+                      validationUser.show();
+                }
+            });
+        }
     }
 
-}
+
+    }

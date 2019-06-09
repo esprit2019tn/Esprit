@@ -7,7 +7,7 @@
     </component>
     <component type="TextField" hint="Prenom" name="prenom">
     </component>
-    <component type="Picker" text="..." pickerType="4" name="Picker">
+    <component type="Picker" text="..." pickerType="1" name="Picker">
     </component>
     <component type="Container" layout="BoxLayout" boxLayoutAxis="X"  styles="alignment:center;" scrollableX="false" name="Box_Layout_X">
       <component type="RadioButton" text="Homme" group="sexe" name="homme">

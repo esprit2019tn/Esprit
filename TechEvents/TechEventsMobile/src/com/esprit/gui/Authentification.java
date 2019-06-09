@@ -5,6 +5,7 @@
  */
 package com.esprit.gui;
 
+import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
 import com.esprit.Metier.UserSession;
 import com.esprit.Service.ServiceUser;
@@ -29,7 +30,8 @@ public class Authentification extends com.codename1.ui.Form {
     protected com.codename1.ui.Container gui_Box_Layout_Y = new com.codename1.ui.Container(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
     protected com.codename1.ui.TextField gui_email = new com.codename1.ui.TextField();
     protected com.codename1.ui.TextField gui_motDePasse = new com.codename1.ui.TextField();
-    protected com.codename1.ui.Label gui_motDePasseOublier = new com.codename1.ui.Label();
+    protected com.codename1.ui.Button gui_Button = new com.codename1.ui.Button();
+    protected com.codename1.ui.Label gui_Errors = new com.codename1.ui.Label();
     protected com.codename1.ui.Button gui_connexion = new com.codename1.ui.Button();
     protected com.codename1.ui.Label gui_Label = new com.codename1.ui.Label();
     protected com.codename1.ui.Button gui_inscription = new com.codename1.ui.Button();
@@ -38,6 +40,7 @@ public class Authentification extends com.codename1.ui.Form {
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void guiBuilderBindComponentListeners() {
         EventCallbackClass callback = new EventCallbackClass();
+        gui_Button.addActionListener(callback);
         gui_connexion.addActionListener(callback);
         gui_inscription.addActionListener(callback);
     }
@@ -58,6 +61,9 @@ public class Authentification extends com.codename1.ui.Form {
                 sourceComponent = sourceComponent.getParent().getLeadParent();
             }
 
+            if(sourceComponent == gui_Button) {
+                onButtonActionEvent(ev);
+            }
             if(sourceComponent == gui_connexion) {
                 onconnexionActionEvent(ev);
             }
@@ -89,9 +95,14 @@ public class Authentification extends com.codename1.ui.Form {
                 gui_motDePasse.setInlineStylesTheme(resourceObjectInstance);
         gui_motDePasse.setName("motDePasse");
         gui_motDePasse.setConstraint(com.codename1.ui.TextArea.PASSWORD);
-        gui_motDePasseOublier.setText("Mot de passe oublier ?");
-                gui_motDePasseOublier.setInlineStylesTheme(resourceObjectInstance);
-        gui_motDePasseOublier.setName("motDePasseOublier");
+        gui_Button.setText("Mot de passe oublier ?");
+        gui_Button.setUIID("");
+                gui_Button.setInlineStylesTheme(resourceObjectInstance);
+        gui_Button.setName("Button");
+        gui_Errors.setText("    ");
+                gui_Errors.setInlineStylesTheme(resourceObjectInstance);
+        gui_Errors.setInlineAllStyles("fgColor:f01501; alignment:center;");
+        gui_Errors.setName("Errors");
         gui_connexion.setText("Connexion");
                 gui_connexion.setInlineStylesTheme(resourceObjectInstance);
         gui_connexion.setName("connexion");
@@ -104,7 +115,8 @@ public class Authentification extends com.codename1.ui.Form {
         gui_inscription.setName("inscription");
         gui_Box_Layout_Y.addComponent(gui_email);
         gui_Box_Layout_Y.addComponent(gui_motDePasse);
-        gui_Box_Layout_Y.addComponent(gui_motDePasseOublier);
+        gui_Box_Layout_Y.addComponent(gui_Button);
+        gui_Box_Layout_Y.addComponent(gui_Errors);
         gui_Box_Layout_Y.addComponent(gui_connexion);
         gui_Box_Layout_Y.addComponent(gui_Label);
         gui_Box_Layout_Y.addComponent(gui_inscription);
@@ -115,13 +127,41 @@ public class Authentification extends com.codename1.ui.Form {
     public void onconnexionActionEvent(com.codename1.ui.events.ActionEvent ev) {
         ServiceUser serviceUser =new ServiceUser();
         User user =serviceUser.getUser(gui_email.getText(), gui_motDePasse.getText());
-        if (user!=null)
+                
+ 
+        if(user==null){
+             gui_Errors.setText("Email ou mot de passe incorrect");
+        }
+        else{
             UserSession.createUserSession(user);
-        AccueilEvent accueilEvent = new AccueilEvent();
-        accueilEvent.show();
+//            if(!user.getConfirmation()){
+//                       ConfirmationAdresse confirmationAdresse = new ConfirmationAdresse();
+//                 confirmationAdresse.gui_email.setText(gui_email.getText());
+//                 confirmationAdresse.show();
+//            }
+             if(!user.getActive()){
+                gui_Errors.setText("Votre inscription est en cours de validation");
+                gui_motDePasse.setText("");
+            }
+//            else if(user.getRole().equals(RoleUser.Admin)){
+////                 ValidationUser validationUser = new ValidationUser();
+////                 validationUser.show();     
+//            }
+            else {//if(user.getRole().equals(RoleUser.SimpleUser)){
+                 AccueilEvent accueilEvent = new AccueilEvent();
+                 accueilEvent.show();     
+            }
+        }    
     }
 
     public void oninscriptionActionEvent(com.codename1.ui.events.ActionEvent ev) {
+                Inscription inscription = new Inscription();
+                 inscription.show();
+    }
+
+    public void onButtonActionEvent(com.codename1.ui.events.ActionEvent ev) {
+                 RecupererPassword recupererPassword = new RecupererPassword();
+                 recupererPassword.show(); 
     }
 
 }
