@@ -24,6 +24,8 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.esprit.Entity.Event;
+import com.esprit.Entity.User;
+import com.esprit.Metier.UserSession;
 import com.esprit.Service.ServiceEvent;
 import com.esprit.TechEvents.TechEvents;
 import java.util.ArrayList;
@@ -32,19 +34,22 @@ import java.util.ArrayList;
  *
  * @author Lenovo
  */
-public class ListEvent {
+public class ListReservation {
 
     Form f;
     ServiceEvent es;
     ArrayList<Event> lstEvt = new ArrayList<>();
     static Event evtStatic;
     CheckBox cb ;
-
-    public ListEvent() {
-        f = new Form("List des événements", BoxLayout.y());
+    User u ;
+    public ListReservation() {
+        f = new Form("List de mes réservations", BoxLayout.y());
         es = new ServiceEvent();
         cb = new CheckBox();
-         
+        u = new User();
+         if(UserSession.verifUserSession()){
+              u=UserSession.getUserSession();
+        } 
         
         f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
@@ -58,7 +63,7 @@ public class ListEvent {
             @Override
             public Component[] fetchComponents(int index, int amount) {
                 if (index == 0) {
-                    lstEvt = es.getList2();
+                    lstEvt = es.getListRservation(u.getId());
                 }
                 if (index + amount > lstEvt.size()) {
                     amount = lstEvt.size() - index;
@@ -181,7 +186,7 @@ public class ListEvent {
     }
 
     public static void setEvtStatic(Event evtStatic) {
-        ListEvent.evtStatic = evtStatic;
+        ListReservation.evtStatic = evtStatic;
     }
 
 }

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <component type="Form" layout="LayeredLayout" layeredLayoutPreferredWidthMM="0.0" layeredLayoutPreferredHeightMM="0.0"  autolayout="true" title="Evènement réclamée" scrollableY="true" name="BlockReclamation">
-  <component type="Label" text="LabelEvt" preferredSize="187.30159mm 8.201058mm" name="LabelEvt">
+  <component type="Label" text="LabelEvt" styles="fgColor:b300b3;" preferredSize="187.30159mm 8.201058mm" name="LabelEvt">
     <layoutConstraint insets="2.1164021mm 0.0mm auto 1.0582047mm" referenceComponents="-1 -1 -1 -1" referencePositions="0.0 0.0 0.0 0.0" />
   </component>
-  <component type="Label" text="LabelNomUser" preferredSize="185.97884mm 10.05291mm" name="LabelNomUser">
+  <component type="Label" text="LabelNomUser" styles="fgColor:b300b3;" preferredSize="185.97884mm 10.05291mm" name="LabelNomUser">
     <layoutConstraint insets="0.0mm auto auto 0.0mm" referenceComponents="0 0 -1 0 " referencePositions="1.0 0.0 0.0 0.0" />
   </component>
-  <component type="Label" text="LabelSuejt" preferredSize="188.35979mm inherit" name="LabelSujet">
+  <component type="Label" text="LabelSuejt" styles="fgColor:b300b3;" preferredSize="188.35979mm inherit" name="LabelSujet">
     <layoutConstraint insets="0.0mm auto auto 0.0mm" referenceComponents="1 -1 -1 0 " referencePositions="1.0 0.0 0.0 0.0" />
   </component>
-  <component type="Label" text="LabelText" preferredSize="188.35979mm 30.42328mm" name="LabelText">
+  <component type="Label" text="LabelText" styles="fgColor:b300b3;" preferredSize="188.35979mm 30.42328mm" name="LabelText">
     <layoutConstraint insets="0.0mm auto auto 0.0mm" referenceComponents="4 0 -1 0 " referencePositions="1.0 0.0 0.0 0.0" />
   </component>
-  <component type="Label" text="LabelDate" preferredSize="187.30159mm inherit" name="LabelDate">
+  <component type="Label" text="LabelDate" styles="fgColor:b300b3;" preferredSize="187.30159mm inherit" name="LabelDate">
     <layoutConstraint insets="22.243345% 0.0mm auto 3.5762787E-6mm" referenceComponents="-1 -1 -1 0 " referencePositions="0.0 0.0 0.0 0.0" />
   </component>
   <component type="Button" text="Bloquer cette évènement" preferredSize="187.30159mm inherit" name="Blockervt">

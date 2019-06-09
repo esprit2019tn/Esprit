@@ -67,6 +67,8 @@ public class ServiceReclamation {
 
     public ArrayList<Reclamation> parseListTaskJson(String json) {
         ServiceEvent sev = new ServiceEvent();
+        ServiceUser su = new ServiceUser();
+
         ArrayList<Reclamation> listReclamation = new ArrayList<>();
 
         try {
@@ -86,13 +88,22 @@ public class ServiceReclamation {
                 e.setIdReclam(Integer.parseInt(obj.get("idReclam").toString()));
                 e.setTextReclam(obj.get("textReclam").toString());
                 e.setSujetReclam(obj.get("sujetReclam").toString());
-                User usr = new User();
-                usr.setId(Integer.parseInt(obj.get("idUser").toString()));
-                e.setUser(usr);
+                
+                
+               
+                int idUser  = Integer.parseInt(obj.get("idUser").toString());
+               
+                e.setUser(su.getUserById(idUser));
+                
+                
+                
+                
                 Event evt = new Event();
                 int idEvent = Integer.parseInt(obj.get("idEvent").toString());
                 evt.setIdEvent(Integer.parseInt(obj.get("idEvent").toString()));
                 e.setEvent(sev.getEventById(idEvent));
+                
+                
                 e.setDateReclam(obj.get("dateReclamation").toString());
                 System.out.println(e.getDateReclam());
 

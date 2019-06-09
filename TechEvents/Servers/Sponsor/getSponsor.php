@@ -1,7 +1,7 @@
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <?php 
-require_once('connect.php'); 
-      $query_search = "SELECT idEvent,titre,description,capaciteMax,capaciteMin,dateEvent,duree,photoPath,statut FROM `evenement`";  
+require_once('..\connect.php'); 
+      $query_search = "SELECT * FROM `sponsor`";  
       $jsontext = "[";
       $stmt1 = $pdo->query($query_search, PDO::FETCH_OBJ);
 			foreach($stmt1->fetchAll() as $row) {

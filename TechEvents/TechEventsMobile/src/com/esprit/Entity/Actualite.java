@@ -9,22 +9,28 @@ public class Actualite {
         
 	private int numActu;
 	private Date dateActu;
-	private String titre;
-	private String descActu;
-        private int idEvent;
+	private String img;
+	private String desc;
+        private int eventId;
 
-    public Actualite(String descActu, int idEvent) {
-        this.descActu = descActu;
-        this.idEvent = idEvent;
-    }
-
-    public Actualite(String titre,Date dateActu,  String descActu) {
+    public Actualite(Date dateActu, String desc, int eventId) {
         this.dateActu = dateActu;
-        this.titre = titre;
-        this.descActu = descActu;
+        this.desc = desc;
+        this.eventId = eventId;
     }
-     
-        
+
+    @Override
+    public String toString() {
+        return "Actualite{" + "numActu=" + numActu + ", dateActu=" + dateActu + ", img=" + img + ", desc=" + desc + ", eventName=" + eventId + '}';
+    }
+
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventID(int eventName) {
+        this.eventId = eventName;
+    }
 
     public int getNumActu() {
         return numActu;
@@ -42,39 +48,21 @@ public class Actualite {
         this.dateActu = dateActu;
     }
 
-    public String getTitre() {
-        return titre;
+    public String getImg() {
+        return img;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setImg(String img) {
+        this.img = img;
     }
 
-   
-
-    public String getDescActu() {
-        return descActu;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescActu(String descActu) {
-        this.descActu = descActu;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
-
-    public int getIdEvent() {
-        return idEvent;
-    }
-
-    public void setIdEvent(int idEvent) {
-        this.idEvent = idEvent;
-    }
-
-    public Actualite(int numActu, Date dateActu, String descActu, int idEvent) {
-        this.numActu = numActu;
-        this.dateActu = dateActu;
-        this.descActu = descActu;
-        this.idEvent = idEvent;
-    }
-
         
         
 
