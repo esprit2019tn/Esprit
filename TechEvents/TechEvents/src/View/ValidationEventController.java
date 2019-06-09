@@ -76,6 +76,8 @@ public class ValidationEventController implements Initializable {
 
     @FXML
     private Pane menu;
+    
+    int idEvent;
 
 
     /**
@@ -89,7 +91,7 @@ public class ValidationEventController implements Initializable {
     public void getPersonData() {
         EventDao eventDao=new EventDao();
 
-        for (Event event : eventDao.findAll()) 
+        for (Event event : eventDao.findEventNonActive()) 
         { 
            eventData.add(event);
         } 
@@ -132,6 +134,7 @@ public class ValidationEventController implements Initializable {
         private void showPersonDetails(Event event) {
         if (event != null) {
             // Fill the labels with info from the person object.
+            idEvent=event.getIdEvent();
             titreLabel.setText(event.getTitre());
             descriptionLabel.setText(event.getDesc());
             capaciteMaxLabel.setText(event.getCapaciteMax().toString());
@@ -152,14 +155,14 @@ public class ValidationEventController implements Initializable {
         
 @FXML
 void validUser(ActionEvent event) throws IOException {
-   /* UserDao userDao=new UserDao();
-    userDao.setValidationUser(emailLabel.getText());
-    Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationUser.fxml"));
+    EventDao eventDao=new EventDao();
+    eventDao.setValidationEvent(idEvent);
+    Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationEvent.fxml"));
     Scene home_page_scene = new Scene(home_page_parent);
     Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.hide();
                 app_stage.setScene(home_page_scene);
-                app_stage.show();  */
+                app_stage.show();  
     }
 
 

@@ -46,17 +46,16 @@ public class NavigationController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         int i=0;
-       try {
-        JFXButton button_g_reclamation = new JFXButton("Gérer réclamation");
-        
-        //button validation
+       try {        
+        //button validation  user
         JFXButton button_validation = new JFXButton("Valider utilisateur");
+        button_validation.setMaxSize(1000, 20);
         button_validation.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Parent home_page_parent;
                 try {
-                home_page_parent = FXMLLoader.load(getClass().getResource("Authentification.fxml"));
+                home_page_parent = FXMLLoader.load(getClass().getResource("ValidationUser.fxml"));
                 Scene home_page_scene = new Scene(home_page_parent);
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.hide();
@@ -88,13 +87,78 @@ public class NavigationController implements Initializable {
                 }
             }
         });
-
+        //****************************************************************************
+        // btn validation événement 
+        JFXButton button_valid_event = new JFXButton("validation événement");
+        button_valid_event.setMaxSize(1000, 20);
+        button_valid_event.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Parent home_page_parent;
+                try {
+                home_page_parent = FXMLLoader.load(getClass().getResource("ValidationEvent.fxml"));
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();  
+                } catch (IOException ex) {
+                    Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        //***************************************************************************
+        
+        //button Gérer reclamation        
+        JFXButton button_g_reclam = new JFXButton("Gérer reclamation");
+        button_g_reclam.setMaxSize(1000, 20);
+        button_g_reclam.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Parent home_page_parent;
+                try {
+                home_page_parent = FXMLLoader.load(getClass().getResource("BlockEvent.fxml"));
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();  
+                } catch (IOException ex) {
+                    Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        //****************************************************************************
+        
+        //button Gérer Actualité        
+        JFXButton button_g_Actu = new JFXButton("Gérer Actualité");
+        button_g_Actu.setMaxSize(1000, 20);
+        button_g_Actu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Parent home_page_parent;
+                try {
+                home_page_parent = FXMLLoader.load(getClass().getResource("Publication.fxml"));
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();  
+                } catch (IOException ex) {
+                    Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        //****************************************************************************
 
         menu.addRow(i++, button_g_event);
-        menu.addRow(i++, button_g_reclamation);
+        menu.addRow(i++, button_g_Actu);   
         
-            if((UserSession.verifUserSession()) && (UserSession.getUserSession().getRole().equals(RoleUser.Admin)))
+            if((UserSession.verifUserSession()) && (UserSession.getUserSession().getRole().equals(RoleUser.Admin))){
                 menu.addRow(i++, button_validation);
+                menu.addRow(i++, button_valid_event);
+                menu.addRow(i++, button_g_reclam);
+       }
             
             
             

@@ -267,6 +267,58 @@ public class EventDao implements IDao<Event> {
         return lstevent;
     }
     
+    
+    
+    
+    
+        public List<Event> findEventNonActive() {
+        // TODO Auto-generated method stub
+        List<Event> lstevent = new ArrayList<Event>();
+        try {
+            // Statement stmt = cnx.createStatement();
+            //ResultSet rs = stmt.executeQuery("select * from evenement");
+
+            Statement pst = cnx.prepareStatement("select * from evenement");
+            ResultSet rs = pst.executeQuery("select * from evenement where active= 0");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                InputStream is = rs.getBinaryStream("photoEvent");
+                OutputStream os = new FileOutputStream(new File("img.jpg"));
+                byte[] content = new byte[1024];
+                int size = 0;
+
+                while ((size = is.read(content)) != -1) {
+                    os.write(content, 0, size);
+                }
+                os.close();
+                is.close();
+                Image img = new Image("file:img.jpg", 111, 111, true, true);
+                ImageView imv = new ImageView(img);
+                imv.setFitWidth(111);
+                imv.setFitHeight(111);
+                imv.setPreserveRatio(true);
+
+                //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13) ,imv);
+                lstevent.add(event);
+            }
+            // cnx.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EventDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lstevent;
+    }
+    
+    
+    
+    
+    
     public List<Event> findAllEvent(String word) {
         // TODO Auto-generated method stub
         List<Event> lstevent = new ArrayList<Event>();
@@ -465,5 +517,22 @@ public class EventDao implements IDao<Event> {
             e.printStackTrace();
         }
         return lstEvent;
+    }
+    
+    
+    public  Boolean setValidationEvent(int idEvent) {
+            Boolean rs=false;
+		try {
+			Statement stmt = cnx.createStatement();
+                        rs=stmt.execute(
+                         "UPDATE evenement SET active =1 "+
+                         " where idEvent="+idEvent+""
+                        );
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return rs;
     }
 }
