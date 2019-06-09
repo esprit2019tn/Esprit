@@ -8,11 +8,6 @@ package com.esprit.gui;
 import com.esprit.Entity.User;
 import com.esprit.Metier.EmailSend;
 import com.esprit.Service.ServiceUser;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 /**
  * GUI builder created Form
