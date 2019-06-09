@@ -153,6 +153,7 @@ public class NavigationController implements Initializable {
 
         menu.addRow(i++, button_g_event);
         menu.addRow(i++, button_g_Actu);   
+
         
             if((UserSession.verifUserSession()) && (UserSession.getUserSession().getRole().equals(RoleUser.Admin))){
                 menu.addRow(i++, button_validation);

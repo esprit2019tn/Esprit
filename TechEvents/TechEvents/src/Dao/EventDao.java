@@ -528,7 +528,27 @@ public class EventDao implements IDao<Event> {
                          "UPDATE evenement SET active =1 "+
                          " where idEvent="+idEvent+""
                         );
-
+ 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+                return rs;
+    }
+    
+    
+    
+        public  Boolean blockEvent(int idEvent) {
+            Boolean rs=false;
+		try {
+			Statement stmt = cnx.createStatement();
+			/* rs=stmt.execute("UPDATE user "
+                                +"SET confirmation ="+Boolean.TRUE
+                                +"where email='"+email+"'");     */
+                        rs=stmt.execute(
+                         "UPDATE evenement SET active =0 "+
+                         " where idEvent="+idEvent);
+                         
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
