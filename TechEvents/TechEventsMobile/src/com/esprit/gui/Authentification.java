@@ -134,12 +134,12 @@ public class Authentification extends com.codename1.ui.Form {
         }
         else{
             UserSession.createUserSession(user);
-//            if(!user.getConfirmation()){
-//                       ConfirmationAdresse confirmationAdresse = new ConfirmationAdresse();
-//                 confirmationAdresse.gui_email.setText(gui_email.getText());
-//                 confirmationAdresse.show();
-//            }
-             if(!user.getActive()){
+            if(!user.getConfirmation()){
+                 ConfirmationAdresse confirmationAdresse = new ConfirmationAdresse();
+                 confirmationAdresse.gui_email.setText(gui_email.getText());
+                 confirmationAdresse.show();
+            }
+            else if(!user.getActive()){
                 gui_Errors.setText("Votre inscription est en cours de validation");
                 gui_motDePasse.setText("");
             }

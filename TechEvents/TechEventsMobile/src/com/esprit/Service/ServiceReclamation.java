@@ -74,6 +74,7 @@ public class ServiceReclamation {
         try {
             JSONParser j = new JSONParser();// Instanciation d'un objet JSONParser permettant le parsing du résultat json
 
+          if(!json.equals("\n]")){
             Map<String, Object> tasks = j.parseJSON(new CharArrayReader(json.toCharArray()));
 
             List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
@@ -110,7 +111,7 @@ public class ServiceReclamation {
                 listReclamation.add(e);
 
             }
-
+          }
         } catch (IOException ex) {
         }
 

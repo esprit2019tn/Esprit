@@ -8,7 +8,6 @@ package com.esprit.Metier;
 import com.esprit.Entity.User;
 import com.esprit.Service.ServiceUser;
 import com.codename1.io.Preferences;
-import com.codename1.properties.PreferencesObject;
 
 /**
  *

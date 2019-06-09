@@ -27,8 +27,8 @@ public class ConfirmationAdresse extends com.codename1.ui.Form {
     protected com.codename1.ui.Label gui_Label = new com.codename1.ui.Label();
     protected com.codename1.ui.TextField gui_email = new com.codename1.ui.TextField();
     protected com.codename1.ui.TextField gui_confirmationCode = new com.codename1.ui.TextField();
-    protected com.codename1.ui.Button gui_confirmer = new com.codename1.ui.Button();
     protected com.codename1.ui.Label gui_msgErreur = new com.codename1.ui.Label();
+    protected com.codename1.ui.Button gui_confirmer = new com.codename1.ui.Button();
 
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
@@ -81,30 +81,30 @@ public class ConfirmationAdresse extends com.codename1.ui.Form {
         gui_confirmationCode.setHint("Code de confirmation");
                 gui_confirmationCode.setInlineStylesTheme(resourceObjectInstance);
         gui_confirmationCode.setName("confirmationCode");
-        gui_confirmer.setPreferredSizeStr("53.968254mm inherit");
-        gui_confirmer.setText("Confirmer");
-                gui_confirmer.setInlineStylesTheme(resourceObjectInstance);
-        gui_confirmer.setName("confirmer");
-        gui_msgErreur.setPreferredSizeStr("53.968254mm inherit");
+        gui_msgErreur.setPreferredSizeStr("53.968254mm 8.730159mm");
                 gui_msgErreur.setInlineStylesTheme(resourceObjectInstance);
         gui_msgErreur.setInlineAllStyles("fgColor:fe2617; alignment:center;");
         gui_msgErreur.setName("msgErreur");
+        gui_confirmer.setPreferredSizeStr("54.232803mm inherit");
+        gui_confirmer.setText("Confirmer");
+                gui_confirmer.setInlineStylesTheme(resourceObjectInstance);
+        gui_confirmer.setName("confirmer");
         addComponent(gui_Label);
         addComponent(gui_email);
         addComponent(gui_confirmationCode);
-        addComponent(gui_confirmer);
         addComponent(gui_msgErreur);
+        addComponent(gui_confirmer);
         ((com.codename1.ui.layouts.LayeredLayout)gui_Label.getParent().getLayout()).setInsets(gui_Label, "23.574144% auto auto 35.19553%").setReferenceComponents(gui_Label, "-1 -1 -1 -1").setReferencePositions(gui_Label, "0.0 0.0 0.0 0.0");
         ((com.codename1.ui.layouts.LayeredLayout)gui_email.getParent().getLayout()).setInsets(gui_email, "15.0% auto auto auto").setReferenceComponents(gui_email, "0 -1 -1 -1").setReferencePositions(gui_email, "1.0 0.0 0.0 0.0");
         ((com.codename1.ui.layouts.LayeredLayout)gui_confirmationCode.getParent().getLayout()).setInsets(gui_confirmationCode, "15.0% auto auto auto").setReferenceComponents(gui_confirmationCode, "1 -1 -1 -1").setReferencePositions(gui_confirmationCode, "1.0 0.0 0.0 0.0");
-        ((com.codename1.ui.layouts.LayeredLayout)gui_confirmer.getParent().getLayout()).setInsets(gui_confirmer, "15.0% auto auto auto").setReferenceComponents(gui_confirmer, "2 1 -1 0 ").setReferencePositions(gui_confirmer, "1.0 0.0 0.0 0.0");
-        ((com.codename1.ui.layouts.LayeredLayout)gui_msgErreur.getParent().getLayout()).setInsets(gui_msgErreur, "auto 0.0mm 7.671959mm 55.0%").setReferenceComponents(gui_msgErreur, "2 0 3 -1").setReferencePositions(gui_msgErreur, "0.0 0.0 0.0 0.0");
+        ((com.codename1.ui.layouts.LayeredLayout)gui_msgErreur.getParent().getLayout()).setInsets(gui_msgErreur, "auto auto 5.291008mm auto").setReferenceComponents(gui_msgErreur, "2 -1 4 -1").setReferencePositions(gui_msgErreur, "1.0 0.0 1.0 0.0");
+        ((com.codename1.ui.layouts.LayeredLayout)gui_confirmer.getParent().getLayout()).setInsets(gui_confirmer, "37.037037% auto auto auto").setReferenceComponents(gui_confirmer, "3 -1 3 -1").setReferencePositions(gui_confirmer, "0.0 0.0 0.0 0.0");
     }// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
-    public void onButtonActionEvent(com.codename1.ui.events.ActionEvent ev) {
-        
-        ServiceUser serviceUser =new ServiceUser();
+
+    public void onconfirmerActionEvent(com.codename1.ui.events.ActionEvent ev) {
+                ServiceUser serviceUser =new ServiceUser();
         User user =serviceUser.findUserByEmail(gui_email.getText());
         
         String confCode=user.getConfirmationCode();
@@ -122,8 +122,4 @@ public class ConfirmationAdresse extends com.codename1.ui.Form {
                 gui_msgErreur.setText("Email incorrecte");
         }
     }
-
-    public void onconfirmerActionEvent(com.codename1.ui.events.ActionEvent ev) {
-    }
-
 }

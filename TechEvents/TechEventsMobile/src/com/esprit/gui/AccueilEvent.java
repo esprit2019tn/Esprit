@@ -5,6 +5,8 @@
  */
 package com.esprit.gui;
 
+import com.esprit.Metier.UserSession;
+
 /**
  * GUI builder created Form
  *
