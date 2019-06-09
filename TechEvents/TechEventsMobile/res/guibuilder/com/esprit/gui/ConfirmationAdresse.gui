@@ -10,10 +10,10 @@
   <component type="TextField" preferredSize="inherit 6.6137567mm" hint="Code de confirmation" name="confirmationCode">
     <layoutConstraint insets="15.0% auto auto auto" referenceComponents="1 -1 -1 -1" referencePositions="1.0 0.0 0.0 0.0" />
   </component>
-  <component type="Button" text="Confirmer" preferredSize="53.968254mm inherit" name="confirmer" actionEvent="true">
-    <layoutConstraint insets="15.0% auto auto auto" referenceComponents="2 1 -1 0 " referencePositions="1.0 0.0 0.0 0.0" />
+  <component type="Label" styles="fgColor:fe2617; alignment:center;" preferredSize="53.968254mm 8.730159mm" name="msgErreur">
+    <layoutConstraint insets="auto auto 5.291008mm auto" referenceComponents="2 -1 4 -1" referencePositions="1.0 0.0 1.0 0.0" />
   </component>
-  <component type="Label" styles="fgColor:fe2617; alignment:center;" preferredSize="53.968254mm inherit" name="msgErreur">
-    <layoutConstraint insets="auto 0.0mm 7.671959mm 55.0%" referenceComponents="2 0 3 -1" referencePositions="0.0 0.0 0.0 0.0" />
+  <component type="Button" text="Confirmer" preferredSize="54.232803mm inherit" name="confirmer" actionEvent="true">
+    <layoutConstraint insets="37.037037% auto auto auto" referenceComponents="3 -1 3 -1" referencePositions="0.0 0.0 0.0 0.0" />
   </component>
 </component>

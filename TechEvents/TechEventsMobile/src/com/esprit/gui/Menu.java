@@ -11,6 +11,7 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
+import com.esprit.Entity.Actualite;
 import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
 import com.esprit.Metier.UserSession;
@@ -23,6 +24,7 @@ public class Menu {
  
     
     public static void getMenu(Form forme){
+       // UserSession.destroyUserSession();
         forme.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -78,6 +80,16 @@ public class Menu {
                 }
             });
         
+   
+        forme.getToolbar().addMaterialCommandToLeftSideMenu("Actualite", FontImage.MATERIAL_NOTIFICATIONS , new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                   // Actualite a=new Actualite();
+                   ActualiteForm a = new ActualiteForm();
+                    a.showList(forme);
+                }
+            });
+       
         forme.getToolbar().addMaterialCommandToLeftSideMenu("Gérer réclamation", FontImage.MATERIAL_FLAG , new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -112,7 +124,15 @@ public class Menu {
                     authentification.show();
                 }
             });
-        } else {
+        }
+        else{
+            forme.getToolbar().addCommandToLeftSideMenu("Utilisateur", FontImage.createMaterial(FontImage.MATERIAL_PERSON, s).toImage(), new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                      UserInfo userInfo = new UserInfo();
+                      userInfo.show();
+                }
+            });     
             forme.getToolbar().addCommandToLeftSideMenu("Déconnexion", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {

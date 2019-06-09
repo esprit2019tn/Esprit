@@ -22,6 +22,7 @@ import com.esprit.Service.ServiceEvent;
 import com.esprit.TechEvents.TechEvents;
 import static com.esprit.gui.ListEvent.evtStatic;
 import java.util.ArrayList;
+import com.esprit.Metier.UserSession;
 
 /**
  * GUI builder created Form
