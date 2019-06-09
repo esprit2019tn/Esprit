@@ -98,6 +98,7 @@ public class ServiceActualite {
             En fait c'est la clé de l'objet qui englobe la totalité des objets 
                     c'est la clé définissant le tableau de tâches.
             */
+             if(!json.equals("\n]")){
             Map<String, Object> events = j.parseJSON(new CharArrayReader(json.toCharArray()));
                        
             
@@ -121,7 +122,7 @@ public class ServiceActualite {
                 listTasks.add(e);
 
             }
-
+          }
         } catch (IOException ex) {
         }
         
