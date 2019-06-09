@@ -11,6 +11,7 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
+import com.esprit.Entity.Actualite;
 import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
 import com.esprit.Metier.UserSession;
@@ -20,21 +21,21 @@ import com.esprit.Metier.UserSession;
  * @author AYMEN
  */
 public class Menu {
-  
+ 
     
     public static void getMenu(Form forme){
        // UserSession.destroyUserSession();
         forme.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-        forme.showBack();
+                forme.showBack();
             }
         });
-        String msg="Bienvenue";
-        if(UserSession.verifUserSession()){
-             User u=UserSession.getUserSession();
-            msg=msg+" "+u.getNom()+" "+u.getPrenom();
-        }       
+        String msg = "Bienvenue";
+        if (UserSession.verifUserSession()) {
+            User u = UserSession.getUserSession();
+            msg = msg + " " + u.getNom() + " " + u.getPrenom();
+        }
         forme.getToolbar().addMaterialCommandToLeftSideMenu(msg, FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -46,19 +47,37 @@ public class Menu {
         forme.getToolbar().addCommandToLeftSideMenu("Authentification", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                  Authentification authentification = new Authentification();
-                  authentification.show();
+                Authentification authentification = new Authentification();
+                authentification.show();
             }
         });
-        
+
         forme.getToolbar().addCommandToLeftSideMenu("Gérer événement", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                  AddEvt adv = new AddEvt();
-                  adv.getF().show();
+                if (UserSession.verifUserSession()) {
+                    User user = UserSession.getUserSession();
+                    if (user.getRole().equals(user.getRole().Admin)) {
+                        AddEvt adv = new AddEvt();
+                        adv.getF().show();
+                    }
+                    else {
+                        ListEvent lse = new ListEvent();
+                        lse.getF().show();
+                    }
+                }
+
             }
-        });
-        
+        });        
+        forme.getToolbar().addCommandToLeftSideMenu("Actualite", null, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                   // Actualite a=new Actualite();
+                   ActualiteForm a = new ActualiteForm();
+                    a.showList(forme);
+                }
+            });
+       
         forme.getToolbar().addCommandToLeftSideMenu("Gérer réclamation", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -71,17 +90,17 @@ public class Menu {
             forme.getToolbar().addCommandToLeftSideMenu("Inscription",FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                      Inscription inscription = new Inscription();
+                    Inscription inscription = new Inscription();
 
-                      inscription.show();
+                    inscription.show();
                 }
             });
 
             forme.getToolbar().addCommandToLeftSideMenu("Authentification", FontImage.createMaterial(FontImage.MATERIAL_OPEN_IN_NEW, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                      Authentification authentification = new Authentification();
-                      authentification.show();
+                    Authentification authentification = new Authentification();
+                    authentification.show();
                 }
             });
         }
@@ -93,16 +112,15 @@ public class Menu {
                       userInfo.show();
                 }
             });     
-            
-                forme.getToolbar().addCommandToLeftSideMenu("Déconnexion", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
+            forme.getToolbar().addCommandToLeftSideMenu("Déconnexion", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                       UserSession.destroyUserSession();
-                      AccueilEvent accueilEvent = new AccueilEvent();
-                      accueilEvent.show();
+                    UserSession.destroyUserSession();
+                    AccueilEvent accueilEvent = new AccueilEvent();
+                    accueilEvent.show();
                 }
             });
-            
+
         }
         
         if(UserSession.verifUserSession() && UserSession.getUserSession().getRole().equals(RoleUser.Admin) ){ 
@@ -116,5 +134,6 @@ public class Menu {
             });
         }
     }
-    
-}
+
+
+    }
