@@ -1,5 +1,7 @@
 package com.esprit.Entity;
 
+import java.util.Date;
+
 
 public class Reclamation {
 
@@ -12,6 +14,7 @@ public class Reclamation {
         private String sujetReclam;
 	private User user;
 	private Event event;
+        private String dateReclam ;
 
     public Reclamation(int idReclam, String textReclam, String sujetReclam, User user, Event event) {
         this.idReclam = idReclam;
@@ -25,6 +28,15 @@ public class Reclamation {
         this.idReclam = idReclam;
         this.textReclam = textReclam;
         this.sujetReclam = sujetReclam;
+    }
+
+    public Reclamation(int idReclam, String textReclam, String sujetReclam, User user, Event event, String dateReclam) {
+        this.idReclam = idReclam;
+        this.textReclam = textReclam;
+        this.sujetReclam = sujetReclam;
+        this.user = user;
+        this.event = event;
+        this.dateReclam = dateReclam;
     }
 
     public int getIdReclam() {
@@ -66,6 +78,16 @@ public class Reclamation {
     public void setEvent(Event event) {
         this.event = event;
     }
+
+    public String getDateReclam() {
+        return dateReclam;
+    }
+
+    public void setDateReclam(String dateReclam) {
+        this.dateReclam = dateReclam;
+    }
+
+
 
 
 

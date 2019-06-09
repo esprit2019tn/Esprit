@@ -132,6 +132,11 @@ public class AccueilEventController implements Initializable {
         DureeColumn.setCellValueFactory(new PropertyValueFactory<Event, Integer>("duree"));
         photoColumn.setCellValueFactory(new PropertyValueFactory<Event, ImageView>("image"));
         
+        titreColumn.setStyle("-fx-text-fill: blue;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        DureeColumn.setStyle("-fx-text-fill: #808080;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        DateColumn.setStyle("-fx-text-fill: #808080;-fx-font-weight: bold;-fx-font-style: italic; -fx-alignment: center ; ");
+        photoColumn.setStyle(" -fx-alignment: center ;");
+        
         eventTable.setItems(eventData);
     }   
     

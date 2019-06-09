@@ -23,7 +23,9 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.esprit.Entity.Event;
+import com.esprit.Entity.Reclamation;
 import com.esprit.Service.ServiceEvent;
+import com.esprit.Service.ServiceReclamation;
 import com.esprit.TechEvents.TechEvents;
 import java.util.ArrayList;
 
@@ -31,16 +33,16 @@ import java.util.ArrayList;
  *
  * @author Lenovo
  */
-public class ListEvent {
+public class ListReclamation {
 
     Form f;
-    ServiceEvent es;
-    ArrayList<Event> lstEvt = new ArrayList<>();
-    static Event evtStatic;
+    ServiceReclamation es;
+    ArrayList<Reclamation> lstEvt = new ArrayList<>();
+    static Reclamation recStatic;
 
-    public ListEvent() {
-        f = new Form("List des événements", BoxLayout.y());
-        es = new ServiceEvent();
+    public ListReclamation() {
+        f = new Form("List des réclamation", BoxLayout.y());
+        es = new ServiceReclamation();
         f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -53,7 +55,7 @@ public class ListEvent {
             @Override
             public Component[] fetchComponents(int index, int amount) {
                 if (index == 0) {
-                    lstEvt = es.getList2();
+                    lstEvt = es.getListReclamation();
                 }
                 if (index + amount > lstEvt.size()) {
                     amount = lstEvt.size() - index;
@@ -65,33 +67,32 @@ public class ListEvent {
 
                 int i = 0;
                 int j = 1;
-                for (Event p : lstEvt) {
-                    Label ps = new Label("            --------" + j + "--------");
+                for (Reclamation p : lstEvt) {
+                    Label ps = new Label("                  --------" + j + "--------");
                     ps.getAllStyles().set3DText(true, true);
                     ps.getAllStyles().setFgColor(ColorUtil.rgb(255, 0, 0));
                     //Creating custom container
                     Container element = new Container(BoxLayout.y());
                     Container line1 = new Container(BoxLayout.x());
-                    
-                    EncodedImage placeholder = EncodedImage.createFromImage(TechEvents.getTheme().getImage("img1.jpg"), true);
-                                     URLImage uRLImage = URLImage.createToStorage(placeholder,
-                                     p.getPathphoto(),"http://127.0.0.1/image/"+p.getPathphoto());
-                                     ImageViewer yimg = new ImageViewer(uRLImage);
+
                     
                     //ImageViewer photo = new ImageViewer(MyApplication.getTheme().getImage(p.getPathphoto()));
                     
                     
-                    Label titre = new Label(p.getTitre());
+                    Label titre = new Label(p.getSujetReclam());
+                    Label event = new Label(""+p.getEvent().getTitre());
+                    Label dateLabel = new Label(p.getDateReclam());
+                    
                     titre.getAllStyles().setFgColor(ColorUtil.rgb(0, 0, 255));
-                    System.out.println(".fetchComponents()" + p.getDuree());
-                    Label date = new Label(p.getDateEvent().toString());
-                    Label duree = new Label(p.getDuree().toString() + "J");
-                    Label cptmax = new Label(p.getCapaciteMax().toString() + "Max");
+                   // System.out.println(".fetchComponents()" + p.getDuree());
+                    //Label date = new Label(p.getDateEvent().toString());
 
-                    line1.add(yimg);
+
                     line1.add(titre);
-                    line1.add(duree);
-                    line1.add(date);
+                    line1.add(event);
+                    line1.add(dateLabel);
+  
+
                     //line1.add(cptmax);
                     //element.add(photo);
                     element.add(line1);
@@ -102,9 +103,10 @@ public class ListEvent {
                     b.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent evt) {
-                            evtStatic = p;
-                            EditEvent edt = new EditEvent();
-                            edt.getF().show();
+                            recStatic = p;
+                            BlockReclamation blck = new BlockReclamation();
+                            blck.show();
+                              
                         }
                     });
                     element.setLeadComponent(b);
@@ -135,28 +137,18 @@ public class ListEvent {
         this.f = f;
     }
 
-    public ServiceEvent getEs() {
-        return es;
+    public static Reclamation getRecStatic() {
+        return recStatic;
     }
 
-    public void setEs(ServiceEvent es) {
-        this.es = es;
+    public static void setRecStatic(Reclamation recStatic) {
+        ListReclamation.recStatic = recStatic;
     }
 
-    public ArrayList<Event> getLstEvt() {
-        return lstEvt;
-    }
+    
 
-    public void setLstEvt(ArrayList<Event> lstEvt) {
-        this.lstEvt = lstEvt;
-    }
+    
 
-    public static Event getEvtStatic() {
-        return evtStatic;
-    }
-
-    public static void setEvtStatic(Event evtStatic) {
-        ListEvent.evtStatic = evtStatic;
-    }
+   
 
 }

@@ -21,6 +21,8 @@ public class Event {
     public Long duree;
     private Localisation localisation;
     private String photoPath ;
+    private String statut ;
+    private int nbrreservation ;
 
     
     public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree, Localisation localisation) {
@@ -97,7 +99,7 @@ public class Event {
         this.duree = duree;
     }
     
-     public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree,ImageView imv) {
+     public Event(int idEvent, String titre, String desc, Long capaciteMax, Long capaciteMin, String dateEvent, Long duree,String statut,ImageView imv) {
         this.idEvent = idEvent;
         this.titre = titre;
         this.desc = desc;
@@ -106,6 +108,7 @@ public class Event {
         this.dateEvent = dateEvent;
         this.duree = duree;
         this.image = imv ;
+        this.statut = statut ;
     }
 
 
@@ -208,6 +211,22 @@ public class Event {
 
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
+    }
+
+    public int getNbrreservation() {
+        return nbrreservation;
+    }
+
+    public void setNbrreservation(int nbrreservation) {
+        this.nbrreservation = nbrreservation;
     }
 
     

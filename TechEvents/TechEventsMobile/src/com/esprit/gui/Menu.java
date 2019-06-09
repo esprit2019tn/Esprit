@@ -64,6 +64,14 @@ public class Menu {
                     a.showList(forme);
                 }
             });
+       
+        forme.getToolbar().addCommandToLeftSideMenu("Gérer réclamation", null, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                  ListReclamation lst = new ListReclamation();
+                  lst.getF().show();
+            }
+        });
         
         if(!UserSession.verifUserSession()){
             forme.getToolbar().addCommandToLeftSideMenu("Inscription",FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
@@ -94,6 +102,15 @@ public class Menu {
             });
             
         }
+        
+                forme.getToolbar().addCommandToLeftSideMenu("validerUSer", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                       UserSession.destroyUserSession();
+                      ValidationUser validationUser = new ValidationUser();
+                      validationUser.show();
+                }
+            });
     }
     
 }
