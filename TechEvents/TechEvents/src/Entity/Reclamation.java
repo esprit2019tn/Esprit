@@ -12,6 +12,7 @@ public class Reclamation {
         private String sujetReclam;
 	private User user;
 	private Event event;
+        private String date;
 
     public Reclamation(int idReclam, String textReclam, String sujetReclam, User user, Event event) {
         this.idReclam = idReclam;
@@ -25,6 +26,15 @@ public class Reclamation {
         this.idReclam = idReclam;
         this.textReclam = textReclam;
         this.sujetReclam = sujetReclam;
+    }
+
+    public Reclamation(int idReclam, String textReclam, String sujetReclam, User user, Event event, String date) {
+        this.idReclam = idReclam;
+        this.textReclam = textReclam;
+        this.sujetReclam = sujetReclam;
+        this.user = user;
+        this.event = event;
+        this.date = date;
     }
 
     public int getIdReclam() {
@@ -67,10 +77,24 @@ public class Reclamation {
         this.event = event;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
-        return "Reclamation{" + "idReclam=" + idReclam + ", textReclam=" + textReclam + ", sujetReclam=" + sujetReclam + ", user=" + user + ", event=" + event + '}';
+        return "Reclamation{" + "date=" + date + '}';
     }
+
+    
+
+    
+    
+    
 
 
 

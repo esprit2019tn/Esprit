@@ -9,7 +9,7 @@
     </component>
     <component type="Button" uiid="" text="Mot de passe oublier ?" name="Button" actionEvent="true">
     </component>
-    <component type="Label" styles="fgColor:f01501; alignment:center;" name="Errors">
+    <component type="Label" text="    " styles="fgColor:f01501; alignment:center;" name="Errors">
     </component>
     <component type="Button" text="Connexion" name="connexion" actionEvent="true">
     </component>

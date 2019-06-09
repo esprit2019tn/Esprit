@@ -62,8 +62,6 @@ public class AccueilEventController implements Initializable {
     private JFXButton btnDeconnexion;
 
 
-    @FXML
-    private Pane menu;
     
     private JFXComboBox<Event> comboEvent;
 
@@ -80,6 +78,8 @@ public class AccueilEventController implements Initializable {
     private TableColumn<Event, String> DateColumn;
     @FXML
     private TableColumn<Event, Integer> DureeColumn;
+    @FXML
+    private Pane menuPane;
 
 
     
@@ -175,10 +175,11 @@ void validUser(ActionEvent event) throws IOException {
 
     @FXML
   public  void splitMenu(ActionEvent event) {
-        if(menu.isVisible())
-            menu.setVisible(false);
+              if(menuPane.isVisible())
+            menuPane.setVisible(false);
         else
-            menu.setVisible(true);
+            menuPane.setVisible(true);
+
     }
     
     
@@ -216,7 +217,6 @@ void validUser(ActionEvent event) throws IOException {
 
     }
 
-    @FXML
     private void showEvent(ActionEvent event) throws BackingStoreException, IOException {
                 Parent home_page_parent = FXMLLoader.load(getClass().getResource("CreteEVT.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
@@ -227,7 +227,6 @@ void validUser(ActionEvent event) throws IOException {
     }
 
     
-     @FXML
     private void showReclamation(ActionEvent event) throws Exception{
                  Parent home_page_parent = FXMLLoader.load(getClass().getResource("BlockEvent.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
@@ -285,13 +284,7 @@ void validUser(ActionEvent event) throws IOException {
         this.btnDeconnexion = btnDeconnexion;
     }
 
-    public Pane getMenu() {
-        return menu;
-    }
 
-    public void setMenu(Pane menu) {
-        this.menu = menu;
-    }
 
     public JFXComboBox<Event> getComboEvent() {
         return comboEvent;

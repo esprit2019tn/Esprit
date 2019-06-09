@@ -5,6 +5,7 @@
  */
 package com.esprit.gui;
 
+import com.codename1.ui.Dialog;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.esprit.Entity.Reclamation;
@@ -118,6 +119,7 @@ public class addReclam extends com.codename1.ui.Form {
         rcl.setUser(UserSession.getUserSession());
         rcl.setEvent(ListEvent.getEvtStatic());
         src.ajoutReclamation(rcl);
-    }
+        
+                                
 
-}
+}}

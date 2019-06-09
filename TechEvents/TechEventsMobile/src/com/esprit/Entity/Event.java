@@ -20,7 +20,7 @@ public class Event {
     public Long duree;
     private int cpt ;
     private String pathphoto ;
-
+    private String statut ;
     
     
 
@@ -187,6 +187,14 @@ public class Event {
 
     public void setPathphoto(String pathphoto) {
         this.pathphoto = pathphoto;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
     }
 
     

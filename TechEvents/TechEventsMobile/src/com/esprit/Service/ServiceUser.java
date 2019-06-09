@@ -66,6 +66,23 @@ public class ServiceUser {
 
    
     }
+        
+        public static void setValidationUser(String email) {
+           ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
+        String Url = "http://localhost/Servers/user/setValidationUser.php";// création de l'URL
+        con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
+        con.addArgument("email", email);
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+            System.out.println(str);//Affichage de la réponse serveur sur la console
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
+
+   
+    }
+        
+        
     
 
     public static ArrayList<User> parseListTaskJson(String json) throws ParseException {
