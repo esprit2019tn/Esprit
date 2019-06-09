@@ -30,10 +30,11 @@ public class BlockReclamation extends com.codename1.ui.Form {
         });
         initGuiBuilderComponents(resourceObjectInstance);
         gui_LabelEvt.setText("Réclamation de l'événement : "+ListReclamation.getRecStatic().getEvent().getTitre());
-        gui_LabelNomUser.setText("Utilisateur : " +ListReclamation.recStatic.getUser().getNom());
+        gui_LabelNomUser.setText("Utilisateur : " +ListReclamation.recStatic.getUser().getNom()+ " " + ListReclamation.recStatic.getUser().getPrenom());
         gui_LabelSujet.setText("Sujet de la Réclamation : " +ListReclamation.recStatic.getSujetReclam());
         gui_LabelText.setText("Explication : " +ListReclamation.recStatic.getTextReclam());
-        gui_LabelDate.setText("Date : " +ListReclamation.recStatic.getDateReclam());
+        gui_LabelDate.setText("Date de réclamation : " +ListReclamation.recStatic.getDateReclam());
+        
     }
 
 //-- DON'T EDIT BELOW THIS LINE!!!
@@ -56,22 +57,27 @@ public class BlockReclamation extends com.codename1.ui.Form {
         gui_LabelEvt.setPreferredSizeStr("187.30159mm 8.201058mm");
         gui_LabelEvt.setText("LabelEvt");
                 gui_LabelEvt.setInlineStylesTheme(resourceObjectInstance);
+        gui_LabelEvt.setInlineAllStyles("fgColor:b300b3;");
         gui_LabelEvt.setName("LabelEvt");
         gui_LabelNomUser.setPreferredSizeStr("185.97884mm 10.05291mm");
         gui_LabelNomUser.setText("LabelNomUser");
                 gui_LabelNomUser.setInlineStylesTheme(resourceObjectInstance);
+        gui_LabelNomUser.setInlineAllStyles("fgColor:b300b3;");
         gui_LabelNomUser.setName("LabelNomUser");
         gui_LabelSujet.setPreferredSizeStr("188.35979mm inherit");
         gui_LabelSujet.setText("LabelSuejt");
                 gui_LabelSujet.setInlineStylesTheme(resourceObjectInstance);
+        gui_LabelSujet.setInlineAllStyles("fgColor:b300b3;");
         gui_LabelSujet.setName("LabelSujet");
         gui_LabelText.setPreferredSizeStr("188.35979mm 30.42328mm");
         gui_LabelText.setText("LabelText");
                 gui_LabelText.setInlineStylesTheme(resourceObjectInstance);
+        gui_LabelText.setInlineAllStyles("fgColor:b300b3;");
         gui_LabelText.setName("LabelText");
         gui_LabelDate.setPreferredSizeStr("187.30159mm inherit");
         gui_LabelDate.setText("LabelDate");
                 gui_LabelDate.setInlineStylesTheme(resourceObjectInstance);
+        gui_LabelDate.setInlineAllStyles("fgColor:b300b3;");
         gui_LabelDate.setName("LabelDate");
         gui_Blockervt.setPreferredSizeStr("187.30159mm inherit");
         gui_Blockervt.setText("Bloquer cette \u00E9v\u00E8nement");

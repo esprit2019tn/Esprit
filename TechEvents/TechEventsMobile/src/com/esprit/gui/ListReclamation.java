@@ -41,7 +41,7 @@ public class ListReclamation {
     static Reclamation recStatic;
 
     public ListReclamation() {
-        f = new Form("List des réclamation", BoxLayout.y());
+        f = new Form("Boite de réception des réclamations", BoxLayout.y());
         es = new ServiceReclamation();
         f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
@@ -68,7 +68,7 @@ public class ListReclamation {
                 int i = 0;
                 int j = 1;
                 for (Reclamation p : lstEvt) {
-                    Label ps = new Label("                  --------" + j + "--------");
+                    Label ps = new Label(" Réclamation numéro : " + j );
                     ps.getAllStyles().set3DText(true, true);
                     ps.getAllStyles().setFgColor(ColorUtil.rgb(255, 0, 0));
                     //Creating custom container
