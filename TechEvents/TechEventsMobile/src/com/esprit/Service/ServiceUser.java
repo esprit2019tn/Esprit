@@ -40,7 +40,7 @@ public class ServiceUser {
         con.addArgument("sexe",user.getSexe());
         con.addArgument("adresse", user.getAdresse());
         con.addArgument("email", user.getEmail());
-        con.addArgument("password", user.getPassword());
+        con.addArgument("motDePasse", user.getPassword());
         con.addArgument("role", RoleUser.SimpleUser.toString());
         con.addArgument("confirmationCode",user.getConfirmationCode());
         con.addResponseListener((e) -> {
@@ -49,10 +49,30 @@ public class ServiceUser {
 
         });
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
-
-   
     }
-        public static void setConfirmationEmail(String email) {
+    
+        public static void modifierUser(User user) {
+           ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
+        String Url = "http://localhost/Servers/user/modifUser.php";// création de l'URL
+        con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
+        
+        con.addArgument("idUser",String.valueOf(user.getId()));
+        con.addArgument("nom",user.getNom());
+        con.addArgument("prenom", user.getPrenom());
+        con.addArgument("dateNaiss",new SimpleDateFormat("yyyy-MM-dd").format(user.getDateNaiss()));
+        con.addArgument("sexe",user.getSexe());
+        con.addArgument("adresse", user.getAdresse());
+        con.addArgument("email", user.getEmail());
+        con.addArgument("motDePasse", user.getPassword());
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+            System.out.println(str);//Affichage de la réponse serveur sur la console
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
+    }
+        
+    public static void setConfirmationEmail(String email) {
            ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
         String Url = "http://localhost/Servers/user/setConfirmationEmail.php";// création de l'URL
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
@@ -81,6 +101,7 @@ public class ServiceUser {
 
    
     }
+
         
         
     
@@ -105,6 +126,7 @@ public class ServiceUser {
             En fait c'est la clé de l'objet qui englobe la totalité des objets 
                     c'est la clé définissant le tableau de tâches.
             */
+            if(!json.equals("\n]")){
             Map<String, Object> tasks = j.parseJSON(new CharArrayReader(json.toCharArray()));
                        
             
@@ -114,24 +136,27 @@ public class ServiceUser {
             List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
 
             //Parcourir la liste des tâches Json
-            for (Map<String, Object> obj : list) {
-                //Création des tâches et récupération de leurs données
-                User u = new User();                
-                u.setId(Integer.valueOf(obj.get("idUser").toString()));
-                u.setNom(obj.get("nom").toString());
-                u.setPrenom(obj.get("prenom").toString());
-                u.setDateNaiss(new SimpleDateFormat("yyyy-MM-dd").parse(obj.get("dateNaiss").toString()));
-                u.setSexe(obj.get("sexe").toString());
-                u.setAdresse(obj.get("adresse").toString());
-                u.setEmail(obj.get("email").toString());
-                u.setPassword(obj.get("password").toString());
-                u.setRole(RoleUser.valueOf(obj.get("role").toString()));        
-                u.setConfirmationCode(obj.get("confirmationCode").toString());
-                u.setConfirmation(obj.get("confirmation").toString().equals("0")?false:true);
-                u.setActive(obj.get("active").toString().equals("0")?false:true);
-                System.out.println(u);               
-                listUsers.add(u);
+            if(list!=null){
+                for (Map<String, Object> obj : list) {
+                    //Création des tâches et récupération de leurs données
+                    User u = new User();                
+                    u.setId(Integer.valueOf(obj.get("idUser").toString()));
+                    u.setNom(obj.get("nom").toString());
+                    u.setPrenom(obj.get("prenom").toString());
+                    u.setDateNaiss(new SimpleDateFormat("yyyy-MM-dd").parse(obj.get("dateNaiss").toString()));
+                    u.setSexe(obj.get("sexe").toString());
+                    u.setAdresse(obj.get("adresse").toString());
+                    u.setEmail(obj.get("email").toString());
+                    u.setPassword(obj.get("password").toString());
+                    u.setRole(RoleUser.valueOf(obj.get("role").toString()));        
+                    u.setConfirmationCode(obj.get("confirmationCode").toString());
+                    u.setConfirmation(obj.get("confirmation").toString().equals("0")?false:true);
+                    u.setActive(obj.get("active").toString().equals("0")?false:true);
+                    System.out.println(u);               
+                    listUsers.add(u);
+                }
             }
+         }
         } catch (IOException ex) {
                 System.err.println(ex.getMessage());
         }
@@ -164,7 +189,10 @@ public class ServiceUser {
            }
        });
         NetworkManager.getInstance().addToQueueAndWait(con);
-        return lstUser.get(0);
+        if (lstUser.size()>0)
+            return lstUser.get(0);
+        else
+            return null;
     }
     
       public User findUserByEmail(String email){ 
@@ -184,8 +212,11 @@ public class ServiceUser {
            }
        });
         NetworkManager.getInstance().addToQueueAndWait(con);
-        return lstUser.get(0);
-    }
+        if (lstUser.size()>0)
+            return lstUser.get(0);
+        else
+            return null;
+      }
       
           public List<User> findUserToValid() {
         ConnectionRequest con = new ConnectionRequest();
@@ -225,8 +256,11 @@ public class ServiceUser {
            }
        });
         NetworkManager.getInstance().addToQueueAndWait(con);
-        return lstUser.get(0);
-    }
+        if (lstUser.size()>0)
+            return lstUser.get(0);
+        else
+            return null;
+        }
 
     
 

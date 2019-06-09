@@ -24,6 +24,7 @@ public class Menu {
  
     
     public static void getMenu(Form forme){
+       // UserSession.destroyUserSession();
         forme.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -102,7 +103,15 @@ public class Menu {
                     authentification.show();
                 }
             });
-        } else {
+        }
+        else{
+            forme.getToolbar().addCommandToLeftSideMenu("Utilisateur", FontImage.createMaterial(FontImage.MATERIAL_PERSON, s).toImage(), new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                      UserInfo userInfo = new UserInfo();
+                      userInfo.show();
+                }
+            });     
             forme.getToolbar().addCommandToLeftSideMenu("Déconnexion", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
