@@ -3,8 +3,13 @@ package com.esprit.Entity;
 
 public class Sponsor {
 	private int idSponsor;
+	private int matricule;
 	private String name;
 	private String desc;
+        private String responsable ;
+        private String fondateur ;
+        private String origine ;
+        private String domaine ;
         
         
         public Sponsor() {
@@ -49,6 +54,46 @@ public class Sponsor {
     @Override
     public String toString() {
         return "" + name + "";
+    }
+
+    public int getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(int matricule) {
+        this.matricule = matricule;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
+
+    public String getFondateur() {
+        return fondateur;
+    }
+
+    public void setFondateur(String fondateur) {
+        this.fondateur = fondateur;
+    }
+
+    public String getOrigine() {
+        return origine;
+    }
+
+    public void setOrigine(String origine) {
+        this.origine = origine;
+    }
+
+    public String getDomaine() {
+        return domaine;
+    }
+
+    public void setDomaine(String domaine) {
+        this.domaine = domaine;
     }
         
         

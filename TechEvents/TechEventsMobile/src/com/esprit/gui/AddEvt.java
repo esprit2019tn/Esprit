@@ -77,6 +77,14 @@ public class AddEvt {
                 }
             });
             
+               f.getToolbar().addMaterialCommandToLeftSideMenu("Mes réservations", FontImage.MATERIAL_HOME, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    ListReservation tse = new ListReservation();
+                    tse.getF().show();
+                }
+            });
+            
             f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {

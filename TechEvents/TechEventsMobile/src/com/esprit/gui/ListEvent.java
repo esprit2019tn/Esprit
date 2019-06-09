@@ -9,6 +9,7 @@ package com.esprit.gui;
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.components.ImageViewer;
 import com.codename1.ui.Button;
+import com.codename1.ui.CheckBox;
 import com.codename1.ui.Component;
 import static com.codename1.ui.Component.CENTER;
 import com.codename1.ui.Container;
@@ -37,10 +38,14 @@ public class ListEvent {
     ServiceEvent es;
     ArrayList<Event> lstEvt = new ArrayList<>();
     static Event evtStatic;
+    CheckBox cb ;
 
     public ListEvent() {
         f = new Form("List des événements", BoxLayout.y());
         es = new ServiceEvent();
+        cb = new CheckBox();
+         
+        
         f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -66,9 +71,27 @@ public class ListEvent {
                 int i = 0;
                 int j = 1;
                 for (Event p : lstEvt) {
-                    Label ps = new Label("            --------" + j + "--------");
+                   
+                    System.out.println(".fetchComponents()"+p.getStatut());
+                     Label ps = new Label();
+                     if(p.getStatut().equals("Annulé")){
+                        p.setStatut("Annulé");
+                        ps.getAllStyles().setFgColor(ColorUtil.rgb(255, 0, 0));
+                    }
+                    if(p.getStatut().equals("Reporté")){
+                        p.setStatut("Reporté");
+                        ps.getAllStyles().setFgColor(ColorUtil.rgb(204, 102, 0));
+                    }
+                    if(p.getStatut().equals("Terminé")){
+                        p.setStatut("Terminé");
+                        ps.getAllStyles().setFgColor(ColorUtil.rgb(0, 0, 255));
+                    }
+                    if(p.getStatut().equals("Disponible")){
+                        ps.getAllStyles().setFgColor(ColorUtil.rgb(0, 102, 51));
+                    }
                     ps.getAllStyles().set3DText(true, true);
-                    ps.getAllStyles().setFgColor(ColorUtil.rgb(255, 0, 0));
+                    ps.setText("            --------" + j + "--------"+p.getStatut());
+                    
                     //Creating custom container
                     Container element = new Container(BoxLayout.y());
                     Container line1 = new Container(BoxLayout.x());
@@ -82,6 +105,7 @@ public class ListEvent {
                     
                     
                     Label titre = new Label(p.getTitre());
+                    Label statut = new Label("            "+p.getStatut());
                     titre.getAllStyles().setFgColor(ColorUtil.rgb(0, 0, 255));
                     System.out.println(".fetchComponents()" + p.getDuree());
                     Label date = new Label(p.getDateEvent().toString());
@@ -97,7 +121,8 @@ public class ListEvent {
                     element.add(line1);
 
                     element.add(ps);
-
+                  //  element.add(statut);
+                    
                     Button b = new Button("button");
                     b.addActionListener(new ActionListener() {
                         @Override

@@ -19,18 +19,20 @@ import com.esprit.Metier.UserSession;
  * @author AYMEN
  */
 public class Menu {
-    public static void getMenu(Form forme){
-               forme.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
+
+    public static void getMenu(Form forme) {
+
+        forme.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-        forme.showBack();
+                forme.showBack();
             }
         });
-        String msg="Bienvenue";
-        if(UserSession.verifUserSession()){
-             User u=UserSession.getUserSession();
-            msg=msg+" "+u.getNom()+" "+u.getPrenom();
-        }       
+        String msg = "Bienvenue";
+        if (UserSession.verifUserSession()) {
+            User u = UserSession.getUserSession();
+            msg = msg + " " + u.getNom() + " " + u.getPrenom();
+        }
         forme.getToolbar().addMaterialCommandToLeftSideMenu(msg, FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -42,48 +44,57 @@ public class Menu {
         forme.getToolbar().addCommandToLeftSideMenu("Authentification", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                  Authentification authentification = new Authentification();
-                  authentification.show();
+                Authentification authentification = new Authentification();
+                authentification.show();
             }
         });
-        
+
         forme.getToolbar().addCommandToLeftSideMenu("Gérer événement", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                  AddEvt adv = new AddEvt();
-                  adv.getF().show();
+                if (UserSession.verifUserSession()) {
+                    User user = UserSession.getUserSession();
+                    if (user.getRole().equals(user.getRole().Admin)) {
+                        AddEvt adv = new AddEvt();
+                        adv.getF().show();
+                    }
+                    else {
+                        ListEvent lse = new ListEvent();
+                        lse.getF().show();
+                    }
+                }
+
             }
         });
-        
-        if(!UserSession.verifUserSession()){
-            forme.getToolbar().addCommandToLeftSideMenu("Inscription",FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
+
+        if (!UserSession.verifUserSession()) {
+            forme.getToolbar().addCommandToLeftSideMenu("Inscription", FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                      Inscription inscription = new Inscription();
+                    Inscription inscription = new Inscription();
 
-                      inscription.show();
+                    inscription.show();
                 }
             });
 
             forme.getToolbar().addCommandToLeftSideMenu("Authentification", FontImage.createMaterial(FontImage.MATERIAL_OPEN_IN_NEW, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                      Authentification authentification = new Authentification();
-                      authentification.show();
+                    Authentification authentification = new Authentification();
+                    authentification.show();
                 }
             });
-        }
-        else{
-                forme.getToolbar().addCommandToLeftSideMenu("Déconnexion", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
+        } else {
+            forme.getToolbar().addCommandToLeftSideMenu("Déconnexion", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                       UserSession.destroyUserSession();
-                      AccueilEvent accueilEvent = new AccueilEvent();
-                      accueilEvent.show();
+                    UserSession.destroyUserSession();
+                    AccueilEvent accueilEvent = new AccueilEvent();
+                    accueilEvent.show();
                 }
             });
-            
+
         }
     }
-    
+
 }

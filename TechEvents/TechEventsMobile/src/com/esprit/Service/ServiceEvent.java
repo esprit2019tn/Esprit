@@ -42,6 +42,24 @@ public class ServiceEvent {
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
     }
     
+    public void reserver(Event evt,int iduser) {
+        ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
+//        String Url = "http://41.226.11.252:1130/tasks/" + evt.getTitre() + "/" + evt.getDesc() +
+//                     "/"+evt.getCapaciteMax()+"/"+evt.getCapaciteMin()+"/"+evt.getDateEvent()+
+//                      "/"+evt.getDuree();// création de l'URL
+        String Url = "http://localhost/Servers/Event/Reservation.php?idevent="+evt.getIdEvent()
+                + "&iduser=" + iduser ; 
+         //+"&img="+evt.getImage();
+        con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
+
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+            System.out.println(str);//Affichage de la réponse serveur sur la console
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
+    }
+    
     public void UpdateEvent(Event evt) {
         ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
 //        String Url = "http://41.226.11.252:1130/tasks/" + evt.getTitre() + "/" + evt.getDesc() +
@@ -49,7 +67,8 @@ public class ServiceEvent {
 //                      "/"+evt.getDuree();// création de l'URL
         String Url = "http://localhost/Servers/Event/updateEvent.php?idEvent="+evt.getIdEvent()+"&titre=" + evt.getTitre()
                 + "&description=" + evt.getDesc() + "&capacitemax=" + evt.getCapaciteMax()
-                + "&capacitemin=" + evt.getCapaciteMin() + "&duree=" + evt.getDuree();//+"&img="+evt.getImage();
+                + "&capacitemin=" + evt.getCapaciteMin() + "&duree=" + evt.getDuree()
+                + "&statut=" + evt.getStatut() + "&dateevent='"+evt.getDateEvent()+"'";//+"&img="+evt.getImage();
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
 
         con.addResponseListener((e) -> {
@@ -86,6 +105,7 @@ public class ServiceEvent {
                 e.setDuree(Long.parseLong(obj.get("duree").toString()));
                 e.setCapaciteMax(Long.parseLong(obj.get("capaciteMax").toString()));
                 e.setCapaciteMin(Long.parseLong(obj.get("capaciteMin").toString()));
+                e.setStatut(obj.get("statut").toString());
 
                 System.out.println(e);
 
@@ -110,6 +130,40 @@ public class ServiceEvent {
     public ArrayList<Event> getList2() {
         ConnectionRequest con = new ConnectionRequest();
         con.setUrl("http://localhost/Servers/Event/getEvent.php");
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                System.out.println("0" + listEvents);
+                ServiceEvent ser = new ServiceEvent();
+                listEvents = ser.parseListTaskJson(new String(con.getResponseData()));
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return listEvents;
+    }
+    String str ;
+    public boolean userIsReserved(int idevent , int iduser){
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/Servers/Event/EventHasReservation.php?"
+                + "idevent="+idevent
+                + "&iduser="+iduser);
+        con.addResponseListener((e) -> {
+             str = new String(con.getResponseData());//Récupération de la réponse du serveur
+            System.out.println("---------------"+str);//Affichage de la réponse serveur sur la console
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        if(!str.contains("idEvent")){
+            System.out.println("Reservation OK");
+            return true ;
+        } else
+            System.out.println("Reservation NOT OK" + str);
+        return false;
+    }
+    
+    public ArrayList<Event> getListRservation(int iduser) {
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/Servers/Event/listReservation.php?iduser="+iduser);
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
