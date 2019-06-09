@@ -34,11 +34,10 @@ public class ServiceActualite {
         System.out.println(Url);
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
 
-        /*con.addResponseListener((e) -> {
-            String str = new String(con.getResponseData());//Récupération de la réponse du serveur
-            System.out.println(str);//Affichage de la réponse serveur sur la console
-
-        });*/
+//        con.addResponseListener((e) -> {
+//            String str = new String(con.getResponseData());//Récupération de la réponse du serveur
+//            System.out.println(str);//Affichage de la réponse serveur sur la console
+//        });
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
     }
     
@@ -155,6 +154,7 @@ public class ServiceActualite {
 
         try {
             JSONParser j = new JSONParser();
+            if(!json.equals("\r\n]")){
             Map<String, Object> events = j.parseJSON(new CharArrayReader(json.toCharArray()));
             List<Map<String, Object>> list = (List<Map<String, Object>>) events.get("root");
             for (Map<String, Object> obj : list) {
@@ -166,6 +166,7 @@ public class ServiceActualite {
 
                 listActualite.add(e);
             }
+          }
         } catch (IOException ex) {
         }     
         return listActualite;

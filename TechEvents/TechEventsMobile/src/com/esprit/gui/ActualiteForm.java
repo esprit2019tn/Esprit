@@ -49,7 +49,8 @@ Menu mn = new Menu();
     public void showForm(Form back) {
                 list = serAct.parseListEventJson(serAct.getEventJson());
         listActu = serAct.parseListActuJson(serAct.getActuJson());
-        Form hi = new Form("Nouvelle Actualte", new BoxLayout(BoxLayout.Y_AXIS));
+        Form hi = new Form("Nouvelle Actualité", new BoxLayout(BoxLayout.Y_AXIS));
+        Menu.getMenu(hi);
         /*hi.getToolbar().addCommandToRightBar("Back", null, e -> {
             back.showBack();
         });*/
@@ -106,7 +107,9 @@ Menu mn = new Menu();
     public void showList(Form back) {
                 list = serAct.parseListEventJson(serAct.getEventJson());
         listActu = serAct.parseListActuJson(serAct.getActuJson());
-        Form showActu = new Form("Actualte", new BoxLayout(BoxLayout.Y_AXIS));
+        Form showActu = new Form("Actualité", new BoxLayout(BoxLayout.Y_AXIS));
+                Menu.getMenu(showActu);
+
         /*showActu.getToolbar().addCommandToRightBar("Back", null, e -> {
             back.showBack();
         });*/
