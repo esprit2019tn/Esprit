@@ -105,7 +105,7 @@ public class EmailSend {
             String to = email;
             String from = "TestEsprit7@gmail.com";
             String subject = "Réclamation";
-            String messageText = "Votre réclamation sur l'évenement " + event.getTitre()+" a été traité " ;
+            String messageText = "Votre réclamation sur l'évenement " + event.getTitre()+ " a été traité " ;
             boolean sessionDebug = false;
 
             Properties props = System.getProperties();

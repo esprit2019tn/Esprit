@@ -44,33 +44,6 @@ public class Menu {
             }
         });
         Style s = UIManager.getInstance().getComponentStyle("Label");
-
-        forme.getToolbar().addCommandToLeftSideMenu("Authentification", null, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                Authentification authentification = new Authentification();
-                authentification.show();
-            }
-        });
-
-        forme.getToolbar().addMaterialCommandToLeftSideMenu("Gérer événement", FontImage.MATERIAL_WORK, new ActionListener() {
-            
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                if (UserSession.verifUserSession()) {
-                    User user = UserSession.getUserSession();
-                    if (user.getRole().equals(user.getRole().Admin)) {
-                        AddEvt adv = new AddEvt();
-                        adv.getF().show();
-                    }
-                    else {
-                        ListEvent lse = new ListEvent();
-                        lse.getF().show();
-                    }
-                }
-
-            }
-        });
         
           forme.getToolbar().addMaterialCommandToLeftSideMenu("Liste évenements", FontImage.MATERIAL_LIST , new ActionListener() {
                 @Override
@@ -146,6 +119,25 @@ public class Menu {
         }
         
         if(UserSession.verifUserSession() && UserSession.getUserSession().getRole().equals(RoleUser.Admin) ){ 
+            
+                    forme.getToolbar().addMaterialCommandToLeftSideMenu("Gérer événement", FontImage.MATERIAL_WORK, new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (UserSession.verifUserSession()) {
+                    User user = UserSession.getUserSession();
+                    if (user.getRole().equals(user.getRole().Admin)) {
+                        AddEvt adv = new AddEvt();
+                        adv.getF().show();
+                    }
+                    else {
+                        ListEvent lse = new ListEvent();
+                        lse.getF().show();
+                    }
+                }
+
+            }
+        });
                 forme.getToolbar().addCommandToLeftSideMenu("valider utilisateur", FontImage.createMaterial(FontImage.MATERIAL_CLOSE, s).toImage(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
