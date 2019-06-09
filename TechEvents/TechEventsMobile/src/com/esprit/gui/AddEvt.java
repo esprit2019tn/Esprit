@@ -45,6 +45,7 @@ public class AddEvt {
     public AddEvt() {
         try {
             f = new Form("Créer événement", BoxLayout.y());
+            Menu.getMenu(f);
             titre = new TextField("", "titre");
             tedesctat = new TextArea("");
             tedesctat.setRows(3);
@@ -69,21 +70,21 @@ public class AddEvt {
             f.add(btnaff);
             f.add(btnaddimg);
 
-            f.getToolbar().addMaterialCommandToLeftSideMenu("Liste évenements", FontImage.MATERIAL_HOME, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                    ListEvent tse = new ListEvent();
-                    tse.getF().show();
-                }
-            });
-            
-               f.getToolbar().addMaterialCommandToLeftSideMenu("Mes réservations", FontImage.MATERIAL_HOME, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                    ListReservation tse = new ListReservation();
-                    tse.getF().show();
-                }
-            });
+//            f.getToolbar().addMaterialCommandToLeftSideMenu("Liste évenements", FontImage.MATERIAL_HOME, new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent evt) {
+//                    ListEvent tse = new ListEvent();
+//                    tse.getF().show();
+//                }
+//            });
+//            
+//               f.getToolbar().addMaterialCommandToLeftSideMenu("Mes réservations", FontImage.MATERIAL_HOME, new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent evt) {
+//                    ListReservation tse = new ListReservation();
+//                    tse.getF().show();
+//                }
+//            });
             
             f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
                 @Override

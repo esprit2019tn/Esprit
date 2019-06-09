@@ -26,7 +26,8 @@ public class Menu {
         forme.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                forme.showBack();
+                AccueilEvent act = new AccueilEvent();
+                act.show();
             }
         });
         String msg = "Bienvenue";
@@ -50,7 +51,8 @@ public class Menu {
             }
         });
 
-        forme.getToolbar().addCommandToLeftSideMenu("Gérer événement", null, new ActionListener() {
+        forme.getToolbar().addMaterialCommandToLeftSideMenu("Gérer événement", FontImage.MATERIAL_WORK, new ActionListener() {
+            
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (UserSession.verifUserSession()) {
@@ -67,13 +69,31 @@ public class Menu {
 
             }
         });
-        forme.getToolbar().addCommandToLeftSideMenu("Gérer réclamation", null, new ActionListener() {
+        
+          forme.getToolbar().addMaterialCommandToLeftSideMenu("Liste évenements", FontImage.MATERIAL_LIST , new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    ListEvent tse = new ListEvent();
+                    tse.getF().show();
+                }
+            });
+        
+        forme.getToolbar().addMaterialCommandToLeftSideMenu("Gérer réclamation", FontImage.MATERIAL_FLAG , new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                   ListReclamation lst = new ListReclamation();
                   lst.getF().show();
             }
         });
+        
+        forme.getToolbar().addMaterialCommandToLeftSideMenu("Mes réservations", FontImage.MATERIAL_FAVORITE , new ActionListener() {
+            @Override
+           public void actionPerformed(ActionEvent evt) {
+                    ListReservation tse = new ListReservation();
+                    tse.getF().show();
+                }
+        });
+        
         
         if(!UserSession.verifUserSession()){
             forme.getToolbar().addCommandToLeftSideMenu("Inscription",FontImage.createMaterial(FontImage.MATERIAL_CREATE, s).toImage(), new ActionListener() {
