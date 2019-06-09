@@ -95,6 +95,7 @@ public class Menu {
             public void actionPerformed(ActionEvent evt) {
                   ListReclamation lst = new ListReclamation();
                   lst.getF().show();
+                  
             }
         });
         

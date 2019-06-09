@@ -83,6 +83,10 @@ public class EditEvent {
             ListEvent.evtStatic = new Event();
             ListEvent.evtStatic = ListReservation.evtStatic;
         }
+        if (ListEvent.evtStatic == null && ListReservation.evtStatic== null) {
+            ListEvent.evtStatic = new Event();
+            ListEvent.evtStatic = TechEvents.evtStatic;
+        }
         f = new Form(ListEvent.evtStatic.getTitre(), BoxLayout.y());
         es = new ServiceEvent();
         ss = new ServiceSponsor();
