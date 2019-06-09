@@ -45,14 +45,15 @@ public class ListEvent {
         es = new ServiceEvent();
         cb = new CheckBox();
          
+        Menu.getMenu(f);
         
-        f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                AddEvt ad = new AddEvt();
-                ad.getF().show();
-            }
-        });
+//        f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent evt) {
+//                AddEvt ad = new AddEvt();
+//                ad.getF().show();
+//            }
+//        });
 
         Container list = new InfiniteContainer() {
             @Override

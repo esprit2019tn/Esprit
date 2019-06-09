@@ -79,10 +79,14 @@ public class EditEvent {
     User u;
 
     public EditEvent() {
+        if (ListEvent.evtStatic == null) {
+            ListEvent.evtStatic = new Event();
+            ListEvent.evtStatic = ListReservation.evtStatic;
+        }
         f = new Form(ListEvent.evtStatic.getTitre(), BoxLayout.y());
         es = new ServiceEvent();
         ss = new ServiceSponsor();
-
+         Menu.getMenu(f);
         if (UserSession.verifUserSession()) {
             u = UserSession.getUserSession();
         }
@@ -98,15 +102,15 @@ public class EditEvent {
             }
         });
 
-        f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                ListEvent ad = new ListEvent();
-                ad.getF().show();
-                init();
-
-            }
-        });
+//        f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent evt) {
+//                ListEvent ad = new ListEvent();
+//                ad.getF().show();
+//                init();
+//
+//            }
+//        });
 
 //        Container flowLayout = new Container();
 //        flowLayout = FlowLayout.encloseIn(new Label(""),
@@ -208,12 +212,12 @@ public class EditEvent {
         if (u.getRole().equals(u.getRole().SimpleUser)) {
             f.add(btnreclam);
             titre.setEditable(false);
-        description.setEditable(false);
-        listsponsor.setEditable(false);
-        duree.setEditable(false);
-        capaciteMax.setEditable(false);
-        capaciteMin.setEditable(false);
-        statut.setEditable(false);
+            description.setEditable(false);
+            listsponsor.setEditable(false);
+            duree.setEditable(false);
+            capaciteMax.setEditable(false);
+            capaciteMin.setEditable(false);
+            statut.setEditable(false);
         }
         //  f.add(flowLayout);
 
@@ -345,17 +349,15 @@ public class EditEvent {
             sponsorform.show();
         });
 
-      //  line1.add(btnajout);
-       // line1.add(btninit);
-     //   line1.add(btnajoutrec);
+        //  line1.add(btnajout);
+        // line1.add(btninit);
+        //   line1.add(btnajoutrec);
 //        f.add(line1);
         //  f.add(flowLayout);
-
 //         btnajoutrec.addActionListener((e) -> {
 //             addReclam adr = new addReclam();
 //             adr.show();
 //         });
-        
         btnajout.addActionListener((e) -> {
             try {
                 ServiceEvent ser = new ServiceEvent();

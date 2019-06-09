@@ -50,14 +50,14 @@ public class ListReservation {
          if(UserSession.verifUserSession()){
               u=UserSession.getUserSession();
         } 
-        
-        f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                AddEvt ad = new AddEvt();
-                ad.getF().show();
-            }
-        });
+                 Menu.getMenu(f);
+//        f.getToolbar().addCommandToOverflowMenu("Back", null, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent evt) {
+//                ListEvent lse = new ListEvent();
+//                lse.getF().show();
+//            }
+//        });
 
         Container list = new InfiniteContainer() {
             @Override

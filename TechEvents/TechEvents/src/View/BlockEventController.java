@@ -14,6 +14,7 @@ import Dao.ReclamationDao;
 import Entity.Actualite;
 import Entity.Event;
 import Entity.Reclamation;
+import Metier.EmailSend;
 import Metier.UserSession;
 import java.io.IOException;
 import java.net.URL;
@@ -133,6 +134,12 @@ public class BlockEventController implements Initializable {
 
     @FXML
     private void blockEvent(ActionEvent event) {
+        EventDao eventDao=new EventDao();
+         Reclamation reclamation=reclamationTable.getSelectionModel().getSelectedItem();
+
+         eventDao.blockEvent(reclamation.getEvent().getIdEvent());
+        
+        EmailSend.sendRepReclamation(reclamation.getUser().getEmail(), reclamation.getEvent());
         
         
     }
