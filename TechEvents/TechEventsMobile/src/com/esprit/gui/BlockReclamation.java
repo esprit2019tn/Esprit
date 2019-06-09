@@ -7,6 +7,7 @@ package com.esprit.gui;
 
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
+import com.esprit.Metier.EmailSend;
 
 /**
  * GUI builder created Form
@@ -17,6 +18,7 @@ public class BlockReclamation extends com.codename1.ui.Form {
 
     public BlockReclamation() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
+        
         
     }
     
@@ -37,6 +39,13 @@ public class BlockReclamation extends com.codename1.ui.Form {
         
     }
 
+    public void onBlockervtActionEvent(com.codename1.ui.events.ActionEvent ev)
+    {
+     EmailSend.sendRepReclamation(ListReclamation.recStatic.getUser().getEmail(), ListReclamation.recStatic.getEvent());
+
+        
+        
+    }
 //-- DON'T EDIT BELOW THIS LINE!!!
     protected com.codename1.ui.Label gui_LabelEvt = new com.codename1.ui.Label();
     protected com.codename1.ui.Label gui_LabelNomUser = new com.codename1.ui.Label();
@@ -98,4 +107,5 @@ public class BlockReclamation extends com.codename1.ui.Form {
     }// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
+    
 }
