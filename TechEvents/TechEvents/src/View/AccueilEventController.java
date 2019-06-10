@@ -104,6 +104,7 @@ public class AccueilEventController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        eda.updateImage();
         eventData.addAll(eda.findAll());
         User user=UserSession.getUserSession();
         if(user!=null && !user.getNom().equals(""))

@@ -233,7 +233,7 @@ public class EventDao implements IDao<Event> {
             Statement pst = cnx.prepareStatement("select * from evenement");
             ResultSet rs = pst.executeQuery("select * from evenement");
             while (rs.next()) {
-                updateImage();
+                
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3) + rs.getString(13));
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                
