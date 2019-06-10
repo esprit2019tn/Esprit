@@ -136,7 +136,6 @@ public class BlockEventController implements Initializable {
     private void blockEvent(ActionEvent event) {
         EventDao eventDao=new EventDao();
          Reclamation reclamation=reclamationTable.getSelectionModel().getSelectedItem();
-
          eventDao.blockEvent(reclamation.getEvent().getIdEvent());
         
         EmailSend.sendRepReclamation(reclamation.getUser().getEmail(), reclamation.getEvent());
