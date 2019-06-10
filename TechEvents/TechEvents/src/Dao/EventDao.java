@@ -233,8 +233,11 @@ public class EventDao implements IDao<Event> {
             Statement pst = cnx.prepareStatement("select * from evenement");
             ResultSet rs = pst.executeQuery("select * from evenement");
             while (rs.next()) {
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+                updateImage();
+                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3) + rs.getString(13));
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               
+                    
                 InputStream is = rs.getBinaryStream("photoEvent");
                 OutputStream os = new FileOutputStream(new File("img.jpg"));
                 byte[] content = new byte[1024];
@@ -253,6 +256,12 @@ public class EventDao implements IDao<Event> {
 
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                 Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13) ,imv);
+                 if(rs.getString(13).equals("AnnulÃ©"))
+                     event.setStatut("Annulé");
+                 if(rs.getString(13).equals("ReportÃ©"))
+                     event.setStatut("Reporté");
+                 if(rs.getString(13).equals("TerminÃ©"))
+                     event.setStatut("Terminé");
                 lstevent.add(event);
             }
             // cnx.close();
