@@ -4,14 +4,9 @@
  * and open the template in the editor.
  */
 package View;
-import java.util.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.StringPropertyBase;
 import Entity.User;
 import Dao.EventDao;
 import Dao.ReclamationDao;
-import Entity.Actualite;
 import Entity.Event;
 import Entity.Reclamation;
 import Metier.EmailSend;
@@ -32,7 +27,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -70,13 +64,14 @@ public class BlockEventController implements Initializable {
     private TableColumn<Reclamation, String> Date;
     @FXML
     private Label explicationLabel;
-    @FXML
     private Pane menu;
     
      // @FXML
     //private Button Deconnecter;
     
     ReclamationDao recDao = new ReclamationDao();
+    @FXML
+    private Pane menuPane;
     /**
      * Initializes the controller class.
      */
@@ -127,9 +122,10 @@ public class BlockEventController implements Initializable {
     
     @FXML
     private void splitMenu(ActionEvent event) {if(menu.isVisible())
-            menu.setVisible(false);
+        if(menuPane.isVisible())
+            menuPane.setVisible(false);
         else
-            menu.setVisible(true);
+            menuPane.setVisible(true); 
     }
 
     @FXML
@@ -143,7 +139,6 @@ public class BlockEventController implements Initializable {
         
     }
 
-    @FXML
     private void btnHome(ActionEvent event) throws IOException {
         
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
@@ -155,7 +150,6 @@ public class BlockEventController implements Initializable {
         
     }
 
-    @FXML
     private void btnGrUser(ActionEvent event) throws IOException {
         
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationUser.fxml"));
@@ -167,7 +161,6 @@ public class BlockEventController implements Initializable {
         
     }
 
-    @FXML
     private void btnGrEvent(ActionEvent event) throws IOException {
         
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("CreteEVT.fxml"));
@@ -180,7 +173,6 @@ public class BlockEventController implements Initializable {
         
     }
 
-    @FXML
     private void btnGrPubli(ActionEvent event) throws IOException {
         
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("ListePublication.fxml"));
@@ -192,7 +184,6 @@ public class BlockEventController implements Initializable {
         
     }
 
-    @FXML
     private void btnGrRec(ActionEvent event) throws IOException {
          Parent home_page_parent = FXMLLoader.load(getClass().getResource("BlockEvent.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);

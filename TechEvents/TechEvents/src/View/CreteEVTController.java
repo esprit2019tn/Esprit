@@ -26,7 +26,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -42,49 +41,29 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.prefs.BackingStoreException;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
-import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 import javax.imageio.ImageIO;
 
@@ -179,8 +158,7 @@ public class CreteEVTController implements Initializable {
     private TableColumn<Event, ImageView> photo1;
     @FXML
     private TableColumn<Event, String> clnstatut;
-    @FXML
-    private Pane menu;
+    //private Pane menu;
     @FXML
     private Button showmenu;
 
@@ -213,6 +191,8 @@ public class CreteEVTController implements Initializable {
     private JFXTextField rechercheReservation;
     @FXML
     private TableColumn<Event, String> clnstatut1;
+    @FXML
+    private Pane menuPane;
 
     /**
      * Initializes the controller class.
@@ -754,14 +734,12 @@ public class CreteEVTController implements Initializable {
 
     @FXML
     private void splitMenu(ActionEvent event) {
-        if (menu.isVisible()) {
-            menu.setVisible(false);
-        } else {
-            menu.setVisible(true);
-        }
+              if(menuPane.isVisible())
+            menuPane.setVisible(false);
+        else
+            menuPane.setVisible(true);
     }
 
-    @FXML
     private void showEvent(ActionEvent event) {
         System.out.println("View.CreteEVTController.splitMenu()");
 
