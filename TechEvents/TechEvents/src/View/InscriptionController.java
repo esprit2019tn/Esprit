@@ -70,10 +70,11 @@ public class InscriptionController implements Initializable {
     @FXML
     private Label erreur;
 
-    @FXML
     private Pane menu;
         
     ToggleGroup groupSexe=new ToggleGroup();
+    @FXML
+    private Pane menuPane;
    /**
      * Initializes the controller class.
      */
@@ -87,10 +88,10 @@ public class InscriptionController implements Initializable {
     
     @FXML
     void splitMenu(ActionEvent event) {
-        if(menu.isVisible())
-            menu.setVisible(false);
+              if(menuPane.isVisible())
+            menuPane.setVisible(false);
         else
-            menu.setVisible(true);
+            menuPane.setVisible(true); 
     }
 
     
@@ -137,7 +138,6 @@ public class InscriptionController implements Initializable {
     }
     
     
-    @FXML
     void btnMenuHome(ActionEvent event) throws BackingStoreException, IOException {
         UserSession.destroyUserSession();
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));

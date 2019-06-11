@@ -45,7 +45,7 @@ public class BlockUserController implements Initializable {
     @FXML
     private Label ExplicationLabel;
     @FXML
-    private Pane menu;
+    private Pane menuPane;
 
     /**
      * Initializes the controller class.
@@ -57,30 +57,15 @@ public class BlockUserController implements Initializable {
 
     @FXML
     private void splitMenu(ActionEvent event) {
+        if(menuPane.isVisible())
+            menuPane.setVisible(false);
+        else
+            menuPane.setVisible(true); 
     }
 
     @FXML
     private void validUser(ActionEvent event) {
     }
 
-    @FXML
-    private void btnHome(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnGrUser(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnGrEvent(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnGrPubli(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnGrRec(ActionEvent event) {
-    }
     
 }

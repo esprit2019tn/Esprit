@@ -6,8 +6,6 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -16,8 +14,9 @@
        <children>
       <Pane layoutY="-6.0" prefHeight="161.0" prefWidth="884.0" style="-fx-background-color: #1d76ba;">
          <children>
-            <JFXButton layoutY="125.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="34.0" prefWidth="180.0" text="Menu" />
-         </children></Pane>
+            <JFXButton layoutX="5.0" layoutY="113.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="34.0" prefWidth="180.0" text="Menu" />
+         </children>
+      </Pane>
       <Pane layoutX="88.0" layoutY="100.0" prefHeight="458.0" prefWidth="708.0" stylesheets="@../Resources/style.css">
       <children>
       <JFXButton layoutX="49.0" layoutY="379.0" mnemonicParsing="false" onAction="#onClick" prefHeight="53.0" prefWidth="613.0" text="S'inscrire">
@@ -38,19 +37,8 @@
      </children> 
       
       </Pane>
-      <Pane fx:id="menu" layoutX="-2.0" layoutY="155.0" prefHeight="404.0" prefWidth="180.0" style="-fx-background-color: #f2f2f2;" visible="false">
-         <children>
-            <JFXButton nodeOrientation="LEFT_TO_RIGHT" onAction="#btnMenuHome" prefHeight="37.0" prefWidth="180.0" text="   Home" textFill="#1d76ba">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </JFXButton>
-            <ImageView layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Resources/homebtn.png" />
-               </image>
-            </ImageView>
-         </children>
+      <Pane fx:id="menuPane" layoutY="162.0" prefHeight="404.0" prefWidth="180.0" visible="false">
+             <fx:include source="Navigation.fxml" />
       </Pane>
    </children>
 </AnchorPane>
