@@ -56,14 +56,20 @@ public class ActualiteDao implements IDao<Actualite> {
     @Override
     public List<Actualite> findAll() {
         // TODO Auto-generated method stub
+        EventDao eda = new EventDao();
         List<Actualite> lstact = new ArrayList<Actualite>();
         try {
             Statement stmt = cnx.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM evenement e, actualite a WHERE e.idEvent = a.idEvent");
+           // ResultSet rs = stmt.executeQuery("SELECT * FROM evenement e, actualite a WHERE e.idEvent = a.idEvent");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM actualite");
             while (rs.next()) {
-                lstact.add(new Actualite(rs.getString(2), rs.getDate(13), rs.getString(15)));
+               // lstact.add(new Actualite(eda.findById(5).getTitre(), rs.getDate(2), rs.getString(4)));
+               Actualite act = new Actualite();
+               act.setTitre(eda.findById(rs.getInt(5)).getTitre());
+               act.setDateActu(rs.getDate(2));
+               act.setDescActu(rs.getString(4));
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
-              //  lstact.add(act);
+                lstact.add(act);
             }
             // cnx.close();
         } catch (SQLException e) {

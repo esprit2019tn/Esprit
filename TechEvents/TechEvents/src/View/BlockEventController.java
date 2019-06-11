@@ -110,7 +110,7 @@ public class BlockEventController implements Initializable {
                 System.out.println(".handle()" + reclamationTable.getSelectionModel().getSelectedItem().getTextReclam());
            Reclamation r = reclamationTable.getSelectionModel().getSelectedItem();
                 explicationLabel.setText(r.getTextReclam());
-
+                System.out.println(".handle()"+r.getEvent().getIdEvent());
             }
 
         });

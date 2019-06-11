@@ -116,6 +116,12 @@ public class Event {
         this.titre = titre;
         this.desc = desc;
     }
+    
+    public Event(int id ,String titre, String desc) {
+        this.idEvent = id ;
+        this.titre = titre;
+        this.desc = desc;
+    }
 
     public int getIdEvent() {
         return idEvent;

@@ -231,7 +231,7 @@ public class EventDao implements IDao<Event> {
             //ResultSet rs = stmt.executeQuery("select * from evenement");
 
             Statement pst = cnx.prepareStatement("select * from evenement");
-            ResultSet rs = pst.executeQuery("select * from evenement");
+            ResultSet rs = pst.executeQuery("select * from evenement where active = 1");
             while (rs.next()) {
                 
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3) + rs.getString(13));
@@ -336,10 +336,10 @@ public class EventDao implements IDao<Event> {
             //ResultSet rs = stmt.executeQuery("select * from evenement");
 
             Statement pst = cnx.prepareStatement("select * from evenement");
-            ResultSet rs = pst.executeQuery("select * from evenement where titre like '%"+word+"%'"
+            ResultSet rs = pst.executeQuery("select * from evenement where active = 1 and (titre like '%"+word+"%'"
                     + "or statut like '%"+word+"%' or capaciteMax like '%"+word+"%'"
                     + "or capaciteMin like '%"+word+"%' or duree like '%"+word+"%'"
-                    + "or dateEvent like '%"+word+"%'");
+                    + "or dateEvent like '%"+word+"%')");
             while (rs.next()) {
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -361,6 +361,12 @@ public class EventDao implements IDao<Event> {
 
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                 Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13) ,imv);
+                 if(rs.getString(13).equals("AnnulÃ©"))
+                     event.setStatut("Annulé");
+                 if(rs.getString(13).equals("ReportÃ©"))
+                     event.setStatut("Reporté");
+                 if(rs.getString(13).equals("TerminÃ©"))
+                     event.setStatut("Terminé");
                 lstevent.add(event);
             }
             // cnx.close();
@@ -382,8 +388,8 @@ public class EventDao implements IDao<Event> {
             // Statement stmt = cnx.createStatement();
             //ResultSet rs = stmt.executeQuery("select * from evenement");
 
-            Statement pst = cnx.prepareStatement("select * from evenement , reservation , user where reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent");
-            ResultSet rs = pst.executeQuery("select * from evenement , reservation , user where reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent and (titre like '%"+word+"%'"
+            Statement pst = cnx.prepareStatement("select * from evenement , reservation , user where evenement.active = 1 and reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent");
+            ResultSet rs = pst.executeQuery("select * from evenement , reservation , user where evenement.active = 1 and reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent and (titre like '%"+word+"%'"
                     + "or statut like '%"+word+"%' or capaciteMax like '%"+word+"%'"
                     + "or capaciteMin like '%"+word+"%' or duree like '%"+word+"%'"
                     + "or dateEvent like '%"+word+"%')");
@@ -408,6 +414,12 @@ public class EventDao implements IDao<Event> {
 
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                 Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13)  ,imv);
+                 if(rs.getString(13).equals("AnnulÃ©"))
+                     event.setStatut("Annulé");
+                 if(rs.getString(13).equals("ReportÃ©"))
+                     event.setStatut("Reporté");
+                 if(rs.getString(13).equals("TerminÃ©"))
+                     event.setStatut("Terminé");
                 lstevent.add(event);
             }
             // cnx.close();
@@ -429,8 +441,8 @@ public class EventDao implements IDao<Event> {
             // Statement stmt = cnx.createStatement();
             //ResultSet rs = stmt.executeQuery("select * from evenement");
 
-            Statement pst = cnx.prepareStatement("select * from evenement , reservation , user where reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent");
-            ResultSet rs = pst.executeQuery("select * from evenement , reservation , user where reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent");
+            Statement pst = cnx.prepareStatement("select * from evenement , reservation , user where evenement.active = 1 and reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent");
+            ResultSet rs = pst.executeQuery("select * from evenement , reservation , user where evenement.active = 1 and reservation.idUser = " + usr.getId() + " and user.idUser = " + usr.getId() + " and reservation.idEvent = evenement.idEvent");
             while (rs.next()) {
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -452,6 +464,12 @@ public class EventDao implements IDao<Event> {
 
                 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                 Event event = new Event(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getLong(5), rs.getString(6), rs.getLong(7),rs.getString(13)  ,imv);
+                if(rs.getString(13).equals("AnnulÃ©"))
+                     event.setStatut("Annulé");
+                 if(rs.getString(13).equals("ReportÃ©"))
+                     event.setStatut("Reporté");
+                 if(rs.getString(13).equals("TerminÃ©"))
+                     event.setStatut("Terminé");
                 lstevent.add(event);
             }
             // cnx.close();
@@ -491,7 +509,7 @@ public class EventDao implements IDao<Event> {
 			ResultSet rs=stmt.executeQuery("SELECT * FROM evenement WHERE "
                                 + "idEvent="+id+"");  
 			while (rs.next()){
-                           evt= new Event(rs.getString(2), rs.getString(3));
+                           evt= new Event(rs.getInt(1),rs.getString(2), rs.getString(3));
 			}
 			//cnx.close();  
 		} catch (SQLException e) {
@@ -557,7 +575,7 @@ public class EventDao implements IDao<Event> {
                         rs=stmt.execute(
                          "UPDATE evenement SET active =0 "+
                          " where idEvent="+idEvent);
-                         
+                         System.out.println("Dao.EventDao.blockEvent()"+idEvent);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

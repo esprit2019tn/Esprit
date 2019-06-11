@@ -114,12 +114,25 @@ public class addReclam extends com.codename1.ui.Form {
         System.out.println("----------------999999999999999999-----------------"+ListEvent.getEvtStatic().getTitre());
         ServiceReclamation src = new ServiceReclamation();
         Reclamation rcl = new Reclamation();
+        
+        if (gui_Sujet.getText().equals("")){
+                        Dialog.show("Svp remplir le sujet ", gui_Sujet.getText() + "", "OK", "");
+
+        }
+        if (gui_Explication.getText().equals(""))
+        {
+            Dialog.show("Svp remplir l'expilcation ", gui_Sujet.getText() + "", "OK", "");
+        }
+        else
+        {
         rcl.setSujetReclam(gui_Sujet.getText());
         rcl.setTextReclam(gui_Explication.getText());
         rcl.setUser(UserSession.getUserSession());
         rcl.setEvent(ListEvent.getEvtStatic());
         src.ajoutReclamation(rcl);
+        Dialog.show("La réclamation ", gui_Sujet.getText() + " a été ajouté", "OK", "");
+                
         
                                 
 
-}}
+}}}

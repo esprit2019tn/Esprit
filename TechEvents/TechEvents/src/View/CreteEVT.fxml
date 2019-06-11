@@ -41,12 +41,12 @@
                </font>
             </Button>
             <JFXTextField fx:id="srch" focusColor="WHITE" layoutX="781.0" layoutY="54.0" onKeyReleased="#search" promptText="Search" unFocusColor="#f8f0f0" />
-            <Button fx:id="Deconnecter" layoutX="915.0" layoutY="17.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="30.0" prefWidth="124.0" text="Déconnecter" textFill="#3d9bc3">
+            <Button fx:id="btnDeconnexion" layoutX="915.0" layoutY="17.0" mnemonicParsing="false" onAction="#deconnexion" prefHeight="30.0" prefWidth="124.0" text="Déconnecter" textFill="#3d9bc3" visible="false">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="Connecter" layoutX="741.0" layoutY="17.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="30.0" prefWidth="124.0" text="Connecter" textFill="#3d9bc3">
+            <Button fx:id="btnConnexion" layoutX="741.0" layoutY="17.0" mnemonicParsing="false" onAction="#connexion" prefHeight="30.0" prefWidth="124.0" text="Connecter" textFill="#3d9bc3">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
@@ -57,6 +57,11 @@
                   <Image url="@../img/Refresh.png" />
                </image>
             </ImageView>
+            <Button fx:id="btnInscription" layoutX="888.0" layoutY="17.0" mnemonicParsing="false" onAction="#inscription" prefHeight="30.0" prefWidth="124.0" text="Inscription" textFill="#3d9bc3">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
       <ScrollPane layoutY="98.0" prefHeight="427.0" prefWidth="1083.0">
@@ -165,5 +170,6 @@
       <Pane fx:id="menuPane" layoutY="162.0" prefHeight="404.0" prefWidth="180.0" stylesheets="@../Resources/style.css" visible="false">
              <fx:include source="Navigation.fxml" />
       </Pane>
+
    </children>
 </AnchorPane>

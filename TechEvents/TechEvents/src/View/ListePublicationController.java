@@ -66,12 +66,11 @@ public class ListePublicationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
+        list.addAll(ado.findAll());
         titreColumn.setCellValueFactory(new PropertyValueFactory<Actualite, String>("titre"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Actualite, String>("descActu"));
         datecolumn.setCellValueFactory(new PropertyValueFactory<Actualite, Date>("dateActu"));
 
-        list.addAll(ado.findAll());
         eventTable.setItems(list);
         
     }
