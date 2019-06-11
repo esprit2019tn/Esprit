@@ -102,6 +102,15 @@ public class ConsultEVTController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        User user = UserSession.getUserSession();
+//        if (user.getRole().equals(user.getRole().SimpleUser)) {
+//            reclambtn.setDisable(true);
+//            btntermine.setDisable(true);
+//            btnAnnulerEvt.setDisable(true);
+//            updatebtn.setDisable(true);
+//            btntermine.setDisable(true);
+//        }
+
         EventDao eda = new EventDao();
 
         titre.setText(CreteEVTController.getevt().getTitre());
@@ -115,14 +124,21 @@ public class ConsultEVTController implements Initializable {
         picker.setValue(LocalDate.parse(CreteEVTController.getevt().getDateEvent(), formatter));
         nbrres.setText(String.valueOf(eda.getnbrres(CreteEVTController.getevt())));
         nbrres.setStyle("-fx-text-fill: red;-fx-font-size: 20px;-fx-font-weight: bold;-fx-font-style: italic; ");
-       
-        switch (etat.getText()){
-            case "Annulé" :  etat.setStyle("-fx-text-fill: red;");break;
-            case "Terminé" :  etat.setStyle("-fx-text-fill: bleu;");break;
-            case "Disponible" :  etat.setStyle("-fx-text-fill: green;");break;
-            case "Reporté" :  etat.setStyle("-fx-text-fill: yellow; ");break;
+
+        switch (etat.getText()) {
+            case "Annulé":
+                etat.setStyle("-fx-text-fill: red;");
+                break;
+            case "Terminé":
+                etat.setStyle("-fx-text-fill: bleu;");
+                break;
+            case "Disponible":
+                etat.setStyle("-fx-text-fill: green;");
+                break;
+            case "Reporté":
+                etat.setStyle("-fx-text-fill: yellow; ");
+                break;
         }
-        User user = UserSession.getUserSession();
         try {
             if (UserSession.verifUserSession()) {
                 username.setText(UserSession.getUserSession().getNom() + " " + UserSession.getUserSession().getPrenom());
@@ -199,7 +215,8 @@ public class ConsultEVTController implements Initializable {
         LocalDate ld = LocalDate.parse(CreteEVTController.getevt().getDateEvent(), formatter);
         System.out.println("update" + picker.getValue().compareTo(ld));
         EventDao eda = new EventDao();
-        Event evt = new Event();System.out.println("View.ConsultEVTController.addsponsor()"+titre.getText());
+        Event evt = new Event();
+        System.out.println("View.ConsultEVTController.addsponsor()" + titre.getText());
         evt.setIdEvent(CreteEVTController.getevt().getIdEvent());
         evt.setTitre(titre.getText());
         evt.setDuree(Long.parseLong(duree.getText()));

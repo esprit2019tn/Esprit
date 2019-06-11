@@ -40,8 +40,8 @@
       <JFXTextField fx:id="cptmax" layoutX="64.0" layoutY="185.0" promptText="Capacité max" />
       <JFXTextField fx:id="cptmin" layoutX="315.0" layoutY="185.0" promptText="Capacité min" />
       <JFXTextArea fx:id="desc" layoutX="133.0" layoutY="264.0" maxWidth="370.0" minWidth="185.0" prefHeight="88.0" prefWidth="239.0" />
-      <JFXButton fx:id="reserver" buttonType="RAISED" layoutX="43.0" layoutY="377.0" onAction="#reserver" ripplerFill="#3313d3" text="Réserver" textFill="#3d2fb9" wrapText="true" />
-      <JFXButton fx:id="updatebtn" buttonType="RAISED" layoutX="189.0" layoutY="377.0" onAction="#addsponsor" ripplerFill="RED" text="Mettre à jour" textFill="RED" />
+      <JFXButton fx:id="reserver" buttonType="RAISED" layoutX="208.0" layoutY="377.0" onAction="#reserver" ripplerFill="#3313d3" text="Réserver" textFill="#3d2fb9" wrapText="true" />
+      <JFXButton fx:id="updatebtn" buttonType="RAISED" layoutX="32.0" layoutY="377.0" onAction="#addsponsor" ripplerFill="RED" text="Mettre à jour" textFill="RED" />
       <JFXButton fx:id="btnAnnulerEvt" buttonType="RAISED" layoutX="113.0" layoutY="425.0" onAction="#AnnulerEvt" ripplerFill="#29a437" text="Annuler" textFill="#337231" />
       <JFXTextField fx:id="duree" layoutX="604.0" layoutY="125.0" promptText="Durée" />
       <JFXTextField fx:id="etat" disable="true" layoutX="604.0" layoutY="185.0" promptText="Etat" />
