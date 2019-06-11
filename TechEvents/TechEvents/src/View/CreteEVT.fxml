@@ -68,7 +68,7 @@
          <content>
             <JFXTabPane prefHeight="410.0" prefWidth="1082.0">
                <tabs>
-                  <Tab text="Créer événement">
+                  <Tab fx:id="createEVT" text="Créer événement">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="708.0">
                            <children>
@@ -97,7 +97,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Ajouter sponsor">
+                  <Tab fx:id="AddSponsors" text="Ajouter sponsor">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="708.0">
                            <children>
