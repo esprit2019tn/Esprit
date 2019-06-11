@@ -11,7 +11,8 @@
    <children>
       <Pane layoutY="-6.0" prefHeight="161.0" prefWidth="884.0" style="-fx-background-color: #1d76ba;">
          <children>
-            <JFXButton layoutY="113.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="34.0" prefWidth="230.0" text="Creer une Publication" />
+            <JFXButton layoutX="21.0" layoutY="113.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="34.0" prefWidth="230.0" text="Creer une Publication" />
+            <JFXButton layoutX="619.0" layoutY="113.0" mnemonicParsing="false" onAction="#listPublication" prefHeight="34.0" prefWidth="230.0" text="Liste des Publications" />
          </children>
       </Pane>
       <Label contentDisplay="CENTER" layoutX="275.0" layoutY="246.0" prefHeight="23.0" prefWidth="102.0" text="Evenement" textAlignment="CENTER" />

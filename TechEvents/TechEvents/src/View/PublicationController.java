@@ -13,14 +13,20 @@ import Metier.UserSession;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -71,6 +77,16 @@ public class PublicationController implements Initializable {
 
     @FXML
     private void splitMenu(ActionEvent event) {
+    }
+
+    @FXML
+    private void listPublication(ActionEvent event) throws IOException {
+          Parent home_page_parent = FXMLLoader.load(getClass().getResource("ListePublication.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
     }
 
 }

@@ -41,12 +41,12 @@
                </font>
             </Button>
             <JFXTextField fx:id="srch" focusColor="WHITE" layoutX="781.0" layoutY="54.0" onKeyReleased="#search" promptText="Search" unFocusColor="#f8f0f0" />
-            <Button fx:id="Deconnecter" layoutX="915.0" layoutY="17.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="30.0" prefWidth="124.0" text="Déconnecter" textFill="#3d9bc3">
+            <Button fx:id="btnDeconnexion" layoutX="915.0" layoutY="17.0" mnemonicParsing="false" onAction="#deconnexion" prefHeight="30.0" prefWidth="124.0" text="Déconnecter" textFill="#3d9bc3" visible="false">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="Connecter" layoutX="741.0" layoutY="17.0" mnemonicParsing="false" onAction="#splitMenu" prefHeight="30.0" prefWidth="124.0" text="Connecter" textFill="#3d9bc3">
+            <Button fx:id="btnConnexion" layoutX="741.0" layoutY="17.0" mnemonicParsing="false" onAction="#connexion" prefHeight="30.0" prefWidth="124.0" text="Connecter" textFill="#3d9bc3">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
@@ -57,6 +57,11 @@
                   <Image url="@../img/Refresh.png" />
                </image>
             </ImageView>
+            <Button fx:id="btnInscription" layoutX="888.0" layoutY="17.0" mnemonicParsing="false" onAction="#inscription" prefHeight="30.0" prefWidth="124.0" text="Inscription" textFill="#3d9bc3">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
       <ScrollPane layoutY="98.0" prefHeight="427.0" prefWidth="1083.0">
@@ -169,22 +174,22 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" graphicTextGap="5.0" layoutY="37.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="160.0" ripplerFill="#15d755" style="-fx-background-color: #ffffff;" text="Gérer utilisateur" textFill="#1d76ba">
+            <JFXButton buttonType="RAISED" graphicTextGap="5.0" layoutY="37.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#gererutilisateur" prefHeight="37.0" prefWidth="160.0" ripplerFill="#15d755" style="-fx-background-color: #ffffff;" text="Gérer utilisateur" textFill="#1d76ba">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" graphicTextGap="5.0" layoutY="74.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#showEvent" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="Gérer événement" textFill="#1d76ba">
+            <JFXButton buttonType="RAISED" graphicTextGap="5.0" layoutY="74.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#showEvent" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff; -fx-border-color: rgba(255, 255, 255, .80);" text="Gérer événement" textFill="#1d76ba">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutY="111.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="Gérer publication" textAlignment="CENTER" textFill="#1d76ba">
+            <JFXButton buttonType="RAISED" layoutY="111.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#gererpublication" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="Gérer publication" textAlignment="CENTER" textFill="#1d76ba">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutY="148.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="Gérer réclamation" textAlignment="CENTER" textFill="#1d76ba">
+            <JFXButton buttonType="RAISED" layoutY="148.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#gererreclamation" prefHeight="37.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="Gérer réclamation" textAlignment="CENTER" textFill="#1d76ba">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
