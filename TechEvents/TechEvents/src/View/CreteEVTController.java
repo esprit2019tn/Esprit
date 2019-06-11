@@ -47,6 +47,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TablePosition;
 import javafx.scene.Parent;
@@ -163,10 +164,7 @@ public class CreteEVTController implements Initializable {
     private Button showmenu;
 
     private String photoPath;
-    @FXML
-    private Button Deconnecter;
-    @FXML
-    private Button Connecter;
+    
     @FXML
     private JFXTextArea autre;
     @FXML
@@ -193,6 +191,11 @@ public class CreteEVTController implements Initializable {
     private TableColumn<Event, String> clnstatut1;
     @FXML
     private Pane menuPane;
+    private Button btnDeconnexion;
+    @FXML
+    private Button btnConnexion;
+    @FXML
+    private Button btnInscription;
 
     /**
      * Initializes the controller class.
@@ -240,6 +243,14 @@ public class CreteEVTController implements Initializable {
         });
 
         User user = UserSession.getUserSession();
+        if(user!=null && !user.getNom().equals(""))
+        {   
+            btnConnexion.setVisible(false);
+            btnInscription.setVisible(false);
+            btnDeconnexion.setVisible(true);
+            username.setVisible(true);
+            
+        }
         try {
             if (UserSession.verifUserSession()) {
                 username.setText(UserSession.getUserSession().getNom() + " " + UserSession.getUserSession().getPrenom());
@@ -731,7 +742,6 @@ public class CreteEVTController implements Initializable {
     public void setA(int a) {
         this.a = a;
     }
-
     @FXML
     private void splitMenu(ActionEvent event) {
               if(menuPane.isVisible())
@@ -739,6 +749,11 @@ public class CreteEVTController implements Initializable {
         else
             menuPane.setVisible(true);
     }
+//        if(menuPane.isVisible())
+//            menuPane.setVisible(false);
+//        else
+//            menuPane.setVisible(true);
+//    }
 
     private void showEvent(ActionEvent event) {
         System.out.println("View.CreteEVTController.splitMenu()");
@@ -891,6 +906,70 @@ public class CreteEVTController implements Initializable {
         list.clear();
         this.list();
         reservationlst();
+    }
+
+    @FXML
+    private void deconnexion(ActionEvent event)throws BackingStoreException, IOException {
+        UserSession.destroyUserSession();
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+        
+
+    }
+
+    @FXML
+    private void connexion(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Authentification.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();  
+    }
+
+    @FXML
+    private void inscription(ActionEvent event) throws IOException {
+                Parent home_page_parent = FXMLLoader.load(getClass().getResource("Inscription.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+
+    } 
+
+    @FXML 
+    private void gererutilisateur(ActionEvent event) throws IOException{
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("ValidationUser.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+    }
+
+    @FXML
+    private void gererpublication(ActionEvent event) throws IOException{
+         Parent home_page_parent = FXMLLoader.load(getClass().getResource("Publication.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+    }
+
+    @FXML 
+    private void gererreclamation(ActionEvent event)  throws IOException{
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("BlockEvent.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
     }
 
 }
