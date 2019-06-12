@@ -119,13 +119,10 @@ public class AccueilEventController implements Initializable {
         }
         
         
-        try {
             if(UserSession.verifUserSession())
                 userName.setText(UserSession.getUserSession().getNom()+" "+UserSession.getUserSession().getPrenom());
                 setTable();
-        } catch (BackingStoreException ex) {
-            Logger.getLogger(ValidationUserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+ 
        // lstevent.addAll(eda.findAll());
        // comboEvent.setItems(lstevent);
         titreColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("titre"));

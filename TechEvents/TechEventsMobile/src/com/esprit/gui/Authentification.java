@@ -133,7 +133,6 @@ public class Authentification extends com.codename1.ui.Form {
              gui_Errors.setText("Email ou mot de passe incorrect");
         }
         else{
-            UserSession.createUserSession(user);
             if(!user.getConfirmation()){
                  ConfirmationAdresse confirmationAdresse = new ConfirmationAdresse();
                  confirmationAdresse.gui_email.setText(gui_email.getText());
@@ -148,6 +147,7 @@ public class Authentification extends com.codename1.ui.Form {
 ////                 validationUser.show();     
 //            }
             else {//if(user.getRole().equals(RoleUser.SimpleUser)){
+                            UserSession.createUserSession(user);
                  AccueilEvent accueilEvent = new AccueilEvent();
                  accueilEvent.show();     
             }

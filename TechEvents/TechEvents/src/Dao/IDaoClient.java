@@ -6,6 +6,7 @@
 package Dao;
 
 import Entity.User;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -14,12 +15,12 @@ import java.util.List;
  */
 public  interface IDaoClient {
 	
-	public  void insert(User obj);
-	public void delete(int id);
-	public void update(User obj);
-	public List<User> findAll();
-	public User findById(int id);
-        public User findUser(String email,String password);
+	public  void insert(User obj)throws SQLException;
+	public void delete(int id)throws SQLException;
+	public void update(User obj) throws SQLException;
+	public List<User> findAll()throws SQLException;
+	public User findById(int id)throws SQLException;
+        public User findUser(String email,String password)throws SQLException;
 
         
 

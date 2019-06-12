@@ -21,14 +21,15 @@ public class ConfirmationAdresse extends com.codename1.ui.Form {
     
     public ConfirmationAdresse(com.codename1.ui.util.Resources resourceObjectInstance) {
         initGuiBuilderComponents(resourceObjectInstance);
+        Menu.getMenu(this);
     }
 
 //-- DON'T EDIT BELOW THIS LINE!!!
-    protected com.codename1.ui.Label gui_Label = new com.codename1.ui.Label();
     protected com.codename1.ui.TextField gui_email = new com.codename1.ui.TextField();
     protected com.codename1.ui.TextField gui_confirmationCode = new com.codename1.ui.TextField();
     protected com.codename1.ui.Label gui_msgErreur = new com.codename1.ui.Label();
     protected com.codename1.ui.Button gui_confirmer = new com.codename1.ui.Button();
+    protected com.codename1.ui.Label gui_Label = new com.codename1.ui.Label();
 
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
@@ -69,11 +70,6 @@ public class ConfirmationAdresse extends com.codename1.ui.Form {
                 setInlineStylesTheme(resourceObjectInstance);
         setTitle("ConfirmationAdresse");
         setName("ConfirmationAdresse");
-        gui_Label.setPreferredSizeStr("53.968254mm inherit");
-        gui_Label.setText("Entrer le code de confirmation");
-                gui_Label.setInlineStylesTheme(resourceObjectInstance);
-        gui_Label.setInlineAllStyles("transparency:21; alignment:center;");
-        gui_Label.setName("Label");
         gui_email.setHint("email");
                 gui_email.setInlineStylesTheme(resourceObjectInstance);
         gui_email.setName("email");
@@ -89,22 +85,24 @@ public class ConfirmationAdresse extends com.codename1.ui.Form {
         gui_confirmer.setText("Confirmer");
                 gui_confirmer.setInlineStylesTheme(resourceObjectInstance);
         gui_confirmer.setName("confirmer");
-        addComponent(gui_Label);
+        gui_Label.setText("Entrez votre code de confirmation");
+                gui_Label.setInlineStylesTheme(resourceObjectInstance);
+        gui_Label.setName("Label");
         addComponent(gui_email);
         addComponent(gui_confirmationCode);
         addComponent(gui_msgErreur);
         addComponent(gui_confirmer);
-        ((com.codename1.ui.layouts.LayeredLayout)gui_Label.getParent().getLayout()).setInsets(gui_Label, "23.574144% auto auto 35.19553%").setReferenceComponents(gui_Label, "-1 -1 -1 -1").setReferencePositions(gui_Label, "0.0 0.0 0.0 0.0");
-        ((com.codename1.ui.layouts.LayeredLayout)gui_email.getParent().getLayout()).setInsets(gui_email, "15.0% auto auto auto").setReferenceComponents(gui_email, "0 -1 -1 -1").setReferencePositions(gui_email, "1.0 0.0 0.0 0.0");
-        ((com.codename1.ui.layouts.LayeredLayout)gui_confirmationCode.getParent().getLayout()).setInsets(gui_confirmationCode, "15.0% auto auto auto").setReferenceComponents(gui_confirmationCode, "1 -1 -1 -1").setReferencePositions(gui_confirmationCode, "1.0 0.0 0.0 0.0");
-        ((com.codename1.ui.layouts.LayeredLayout)gui_msgErreur.getParent().getLayout()).setInsets(gui_msgErreur, "auto auto 5.291008mm auto").setReferenceComponents(gui_msgErreur, "2 -1 4 -1").setReferencePositions(gui_msgErreur, "1.0 0.0 1.0 0.0");
-        ((com.codename1.ui.layouts.LayeredLayout)gui_confirmer.getParent().getLayout()).setInsets(gui_confirmer, "37.037037% auto auto auto").setReferenceComponents(gui_confirmer, "3 -1 3 -1").setReferencePositions(gui_confirmer, "0.0 0.0 0.0 0.0");
+        addComponent(gui_Label);
+        ((com.codename1.ui.layouts.LayeredLayout)gui_email.getParent().getLayout()).setInsets(gui_email, "3.1746032mm auto auto auto").setReferenceComponents(gui_email, "4 -1 1 -1").setReferencePositions(gui_email, "1.0 0.0 1.0 0.0");
+        ((com.codename1.ui.layouts.LayeredLayout)gui_confirmationCode.getParent().getLayout()).setInsets(gui_confirmationCode, "3.4391534mm auto auto auto").setReferenceComponents(gui_confirmationCode, "0 -1 2 -1").setReferencePositions(gui_confirmationCode, "1.0 0.0 1.0 0.0");
+        ((com.codename1.ui.layouts.LayeredLayout)gui_msgErreur.getParent().getLayout()).setInsets(gui_msgErreur, "auto auto 60.294117% 66.402115mm").setReferenceComponents(gui_msgErreur, "1 -1 3 -1").setReferencePositions(gui_msgErreur, "1.0 0.0 1.0 0.0");
+        ((com.codename1.ui.layouts.LayeredLayout)gui_confirmer.getParent().getLayout()).setInsets(gui_confirmer, "48.859314% auto auto auto").setReferenceComponents(gui_confirmer, "-1 -1 -1 -1").setReferencePositions(gui_confirmer, "0.0 0.0 0.0 0.0");
+        ((com.codename1.ui.layouts.LayeredLayout)gui_Label.getParent().getLayout()).setInsets(gui_Label, "9.78836mm auto auto auto").setReferenceComponents(gui_Label, "-1 -1 -1 -1").setReferencePositions(gui_Label, "0.0 0.0 0.0 0.0");
     }// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
-
     public void onconfirmerActionEvent(com.codename1.ui.events.ActionEvent ev) {
-                ServiceUser serviceUser =new ServiceUser();
+                        ServiceUser serviceUser =new ServiceUser();
         User user =serviceUser.findUserByEmail(gui_email.getText());
         
         String confCode=user.getConfirmationCode();
@@ -122,4 +120,5 @@ public class ConfirmationAdresse extends com.codename1.ui.Form {
                 gui_msgErreur.setText("Email incorrecte");
         }
     }
+
 }

@@ -46,7 +46,27 @@ public class NavigationController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         int i=0;
-       try {        
+                      
+        //button Accueil
+        JFXButton button_Accueil = new JFXButton("Accueil");
+        button_Accueil.setMaxSize(1000, 20);
+        button_Accueil.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Parent home_page_parent;
+                try {
+                home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();  
+                } catch (IOException ex) {
+                    Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        //**********************************************************************
         //button validation  user
         JFXButton button_validation = new JFXButton("Valider utilisateur");
         button_validation.setMaxSize(1000, 20);
@@ -150,23 +170,46 @@ public class NavigationController implements Initializable {
             }
         });
         //****************************************************************************
-
-        menu.addRow(i++, button_g_event);
+        
+        //button Gérer Utilisateur        
+        JFXButton button_Utilisateur = new JFXButton("Utilisateur");
+        button_Utilisateur.setMaxSize(1000, 20);
+        button_Utilisateur.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Parent home_page_parent;
+                try {
+                home_page_parent = FXMLLoader.load(getClass().getResource("User.fxml"));
+                Scene home_page_scene = new Scene(home_page_parent);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();  
+                } catch (IOException ex) {
+                    Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        //****************************************************************************
+        
+        menu.addRow(i++, button_Accueil);
+        menu.addRow(i++, button_g_event);//
         menu.addRow(i++, button_g_Actu);   
 
-        
-            if((UserSession.verifUserSession()) && (UserSession.getUserSession().getRole().equals(RoleUser.Admin))){
-                menu.addRow(i++, button_validation);
+        if((UserSession.verifUserSession())){
+                menu.addRow(i++, button_Utilisateur);
+            
+            if( (UserSession.getUserSession().getRole().equals(RoleUser.Admin))){
+                menu.addRow(i++, button_validation);//
                 menu.addRow(i++, button_valid_event);
                 menu.addRow(i++, button_g_reclam);
+            }
        }
             
             
             
             
-        } catch (BackingStoreException ex) {
-            Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
-        }           
+         
     }    
 
 

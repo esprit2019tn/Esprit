@@ -31,7 +31,7 @@ public class UserInfo extends com.codename1.ui.Form {
             if(user.getSexe().equals("Homme"))
                 gui_homme.setSelected(true);
             else if(user.getSexe().equals("Femme"))
-                gui_homme.setSelected(true);
+                gui_femme.setSelected(true);
             gui_email.setText(user.getEmail());
             gui_adresse.setText(user.getAdresse());           
         }

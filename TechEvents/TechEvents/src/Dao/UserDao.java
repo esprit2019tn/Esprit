@@ -46,22 +46,27 @@ public class UserDao implements IDaoClient {
 	}
 
     @Override
-    public void update(User obj) {
+    public void update(User user) throws SQLException{
 		// TODO Auto-generated method stub
-		try {
 			Statement stmt = cnx.createStatement();
-			stmt.executeUpdate("update user set "
-					+ "nom = '"+ obj.getNom() +"' ,"
-					+ "prenom = '"+ obj.getPrenom() +"' ,"
-					+ "adresse = '" +obj.getAdresse()+"' "
-                                        + "email = '" +obj.getAdresse()+"' "
-                                        + "password = '" +obj.getAdresse()+"' "
-					+ "where id = "+obj.getId()+""); 				
-			System.out.println("Utilisateur N� "+obj.getId()+" a �t� modifi�");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+                        String sql="update user set ";
+                        if(user.getNom()!=null)
+                            sql=sql+ "  nom = '"+ user.getNom() +"' ";
+                        if(user.getPrenom()!=null)
+                            sql=sql+ " , prenom = '"+ user.getPrenom()+"' ";
+                        if(user.getDateNaiss()!=null)
+                            sql=sql+ " , dateNaiss = '"+ new java.sql.Date(user.getDateNaiss().getTime()) +"' ";
+                        if(user.getSexe()!=null)
+                            sql=sql+ " , sexe = '"+ user.getSexe()+"' ";
+                        if(user.getAdresse()!=null)
+                            sql=sql+ " , adresse = '"+ user.getAdresse()+"' ";
+                        if(user.getEmail()!=null)
+                            sql=sql+ " , email = '"+ user.getEmail()+"' ";
+                        if(user.getPassword()!=null)
+                            sql=sql+ " , password = '"+ user.getPassword()+"' ";                       
+                        sql=sql+ " where idUser = "+user.getId()+""; 
+     			stmt.executeUpdate(sql); 	
+			System.out.println("Utilisateur "+user.getId()+" a été modifié");
     }
 
     @Override

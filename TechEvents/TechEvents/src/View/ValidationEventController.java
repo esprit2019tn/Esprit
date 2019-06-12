@@ -6,11 +6,9 @@
 package View;
 
 import Dao.EventDao;
-import Dao.UserDao;
 import Entity.Event;
-import Entity.User;
 import Metier.UserSession;
-import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -74,10 +72,18 @@ public class ValidationEventController implements Initializable {
     @FXML
     private Label dureeLabel;
 
-    @FXML
-    private Pane menu;
     
     int idEvent;
+    @FXML
+    private Pane userPane;
+    @FXML
+    private JFXButton btnInscription;
+    @FXML
+    private JFXButton btnConnexion;
+    @FXML
+    private JFXButton btnDeconnexion;
+    @FXML
+    private Pane menuPane;
 
 
     /**
@@ -99,13 +105,10 @@ public class ValidationEventController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
             if(UserSession.verifUserSession())
                 userName.setText(UserSession.getUserSession().getNom()+" "+UserSession.getUserSession().getPrenom());
                 setTable();
-        } catch (BackingStoreException ex) {
-            Logger.getLogger(ValidationUserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         
     }   
     
@@ -170,10 +173,43 @@ void validUser(ActionEvent event) throws IOException {
 
     @FXML
     void splitMenu(ActionEvent event) {
-        if(menu.isVisible())
-            menu.setVisible(false);
+              if(menuPane.isVisible())
+            menuPane.setVisible(false);
         else
-            menu.setVisible(true);
+            menuPane.setVisible(true); 
+    }
+
+   @FXML
+  public  void connexion(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Authentification.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show();  
+    }
+
+    @FXML
+ public   void inscription(ActionEvent event) throws IOException {
+                Parent home_page_parent = FXMLLoader.load(getClass().getResource("Inscription.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+
+    } 
+    @FXML
+  public  void deconnexion(ActionEvent event) throws BackingStoreException, IOException {
+        UserSession.destroyUserSession();
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccueilEvent.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                app_stage.setScene(home_page_scene);
+                app_stage.show(); 
+        
+
     }
 
     

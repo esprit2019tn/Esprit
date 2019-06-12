@@ -40,7 +40,8 @@ public class Menu {
         forme.getToolbar().addMaterialCommandToLeftSideMenu(msg, FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                forme.showBack();
+                    ListEvent tse = new ListEvent();
+                    tse.getF().show();
             }
         });
         Style s = UIManager.getInstance().getComponentStyle("Label");

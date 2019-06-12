@@ -41,11 +41,7 @@
             <JFXButton fx:id="btnDeconnexion" layoutX="664.0" layoutY="32.0" mnemonicParsing="false" onAction="#deconnexion" prefHeight="32.0" prefWidth="106.0" text="Deconnexion" visible="false" />
          </children>
       </Pane>
-      <Label layoutX="273.0" layoutY="203.0" text="Recent Tasks" textFill="#39a67f">
-         <font>
-            <Font name="Segoe UI Bold" size="17.0" />
-         </font>
-      </Label>
+
       <TableView fx:id="eventTable" layoutX="-1.0" layoutY="161.0" prefHeight="404.0" prefWidth="884.0" style="-fx-background-color: #fff;">
         <columns>
           <TableColumn fx:id="photoColumn" minWidth="0.0" prefWidth="228.0" text="Photo" />
@@ -56,7 +52,7 @@
          <columnResizePolicy>
          </columnResizePolicy>
       </TableView>
-      <Pane fx:id="menuPane" layoutY="162.0" prefHeight="404.0" prefWidth="180.0">
+      <Pane fx:id="menuPane" layoutY="162.0" prefHeight="404.0" prefWidth="180.0" visible="false">
              <fx:include source="Navigation.fxml" />
       </Pane>
    </children>

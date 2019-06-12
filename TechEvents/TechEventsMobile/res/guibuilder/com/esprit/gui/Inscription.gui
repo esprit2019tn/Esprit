@@ -23,6 +23,8 @@
     </component>
     <component type="TextField" hint="Confirmation Mot De Passe" constraint="65536" name="ConfMotDePasse">
     </component>
+    <component type="Label" text=" " styles="fgColor:f01501; alignment:center;" name="erreur">
+    </component>
     <component type="Button" text="S'inscrire" name="Inscrire" actionEvent="true">
     </component>
   </component>
