@@ -266,13 +266,10 @@ public class CreteEVTController implements Initializable {
             AddSponsors.setDisable(true);
         }
 
-        try {
             if (UserSession.verifUserSession()) {
                 username.setText(UserSession.getUserSession().getNom() + " " + UserSession.getUserSession().getPrenom());
             }
-        } catch (BackingStoreException ex) {
-            Logger.getLogger(CreteEVTController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
     public static Event getevt() {

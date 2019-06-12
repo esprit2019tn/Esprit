@@ -109,14 +109,10 @@ public class ValidationUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
             if(UserSession.verifUserSession())
                 userName.setText(UserSession.getUserSession().getNom()+" "+UserSession.getUserSession().getPrenom());
                 setTable();
-        } catch (BackingStoreException ex) {
-            Logger.getLogger(ValidationUserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+  
     }   
     
     public void setTable(){

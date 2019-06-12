@@ -5,6 +5,7 @@
  */
 package View;
 
+import Dao.UserDao;
 import Entity.User;
 import Metier.UserSession;
 import com.jfoenix.controls.JFXButton;
@@ -12,10 +13,21 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,8 +37,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import static jdk.nashorn.tools.ShellFunctions.input;
 
 /**
  * FXML Controller class
@@ -39,14 +54,12 @@ public class UserController implements Initializable {
      * Initializes the controller class.
      */
     
-       @FXML
+    @FXML
     private Pane userPane;
 
     @FXML
     private Label userName;
 
-    @FXML
-    private JFXPasswordField password;
 
     @FXML
     private JFXTextField nom;
@@ -60,8 +73,6 @@ public class UserController implements Initializable {
     @FXML
     private JFXTextField email;
 
-    @FXML
-    private JFXPasswordField password1;
 
     @FXML
     private JFXDatePicker dateNaiss;
@@ -86,14 +97,21 @@ public class UserController implements Initializable {
     private JFXButton btnDeconnexion;
     @FXML
     private Pane menuPane;
+    @FXML
+    private JFXPasswordField ancienMotDePasse;
+    @FXML
+    private JFXPasswordField nouveauMotDePasse;
 
+    User user;
+    ToggleGroup groupSexe=new ToggleGroup();
 
 
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        homme.setToggleGroup(groupSexe);
+        femme.setToggleGroup(groupSexe);
         User user=UserSession.getUserSession();
         if(!user.getNom().equals(""))
         {   
@@ -106,20 +124,21 @@ public class UserController implements Initializable {
             
         }
         
-        nom.setText(user.getNom());
-        prenom.setText(user.getPrenom());
-        Date date = user.getDateNaiss();		
-	//ZoneId defaultZoneId = ZoneId.systemDefault();		
-	//Instant instant = date.toInstant();		
-	//LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-        //dateNaiss.setValue(localDate);
-        
+            if(UserSession.verifUserSession()){
+                this.user=UserSession.getUserSession();
+                nom.setText(user.getNom());
+                prenom.setText(user.getPrenom());
+                dateNaiss.setValue(Instant.ofEpochMilli(user.getDateNaiss().getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
         if(user.getSexe().equals("Homme"))
-            homme.setSelected(true);
-        else if(user.getSexe().equals("Femme"))
-            femme.setSelected(true); 
-        email.setText(user.getEmail());
-        adresse.setText(user.getAdresse());
+                    homme.setSelected(true);
+                else if(user.getSexe().equals("Femme"))
+                    femme.setSelected(true);
+                email.setText(user.getEmail());           
+                adresse.setText(user.getAdresse());
+            }
+
+        ancienMotDePasse.setText(null);
+        nouveauMotDePasse.setText(null);
     }   
     @FXML
     void splitMenu(ActionEvent event) {
@@ -164,6 +183,38 @@ public class UserController implements Initializable {
     
     @FXML
     void modifier(ActionEvent event) {
+        User u=UserSession.getUserSession();
+        if(ancienMotDePasse.getText()==null || ancienMotDePasse.getText()=="" || u.getPassword().equals(ancienMotDePasse.getText())){
+        String sexe=null;
+        if(homme.isSelected())
+            sexe="Homme";
+        else if(femme.isSelected())
+            sexe="Femme";       
+        user.setNom(nom.getText());
+        user.setPrenom(prenom.getText());
+        if(dateNaiss.getValue()!=null)
+            user.setDateNaiss(Date.from(dateNaiss.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));   
+        user.setSexe(sexe);
+        user.setAdresse(adresse.getText());
+        user.setEmail(email.getText());
+        user.setPassword(nouveauMotDePasse.getText());
+            UserDao userDao=new UserDao();
+            try {
+            userDao.update(user);
+            } catch (Exception e) {
+               erreur.setTextFill(Color.web("#FF0000"));
+               erreur.setText("Impossible de mettre a jour");
+            }
+            UserSession.createUserSession(user);
+        erreur.setTextFill(Color.web("#008000"));
+        erreur.setText("Mise à jour effectuée avec succès");
+        nouveauMotDePasse.setText(null);
+        ancienMotDePasse.setText(null);
+        }
+        else{
+               erreur.setTextFill(Color.web("#FF0000"));
+               erreur.setText("Ancien mot de passe incorrect");        }
+        
 
     }
     

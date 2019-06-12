@@ -7,6 +7,8 @@ package Metier;
 
 import Dao.UserDao;
 import Entity.User;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -35,14 +37,18 @@ public class UserSession {
         return  userDao.findById(id);
     }
     
-    public static void destroyUserSession() throws BackingStoreException{ 
+    public static void destroyUserSession(){ 
         Preferences userPreferences = Preferences.userRoot();
-        userPreferences.clear();
+        try {
+            userPreferences.clear();
+        } catch (BackingStoreException ex) {
+            Logger.getLogger(UserSession.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
         
-    public static Boolean verifUserSession() throws BackingStoreException{ 
+    public static Boolean verifUserSession(){ 
         Boolean res=true;
             if(getUserSession()==null)
                 res=false;          

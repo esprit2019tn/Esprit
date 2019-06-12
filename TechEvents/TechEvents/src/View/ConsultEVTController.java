@@ -158,13 +158,10 @@ public class ConsultEVTController implements Initializable {
                 etat.setStyle("-fx-text-fill: yellow; ");
                 break;
         }
-        try {
             if (UserSession.verifUserSession()) {
 //                username.setText(UserSession.getUserSession().getNom() + " " + UserSession.getUserSession().getPrenom());
             }
-        } catch (BackingStoreException ex) {
-            Logger.getLogger(CreteEVTController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         if (sdo.eventHasSponsor(CreteEVTController.getevt())) {
             LstSprEvent.setVisible(false);
             addSponsor();
