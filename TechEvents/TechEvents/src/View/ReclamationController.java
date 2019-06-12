@@ -152,6 +152,23 @@ public class ReclamationController implements Initializable {
     private void insertReclam(ActionEvent event) throws IOException {
         reclamation=new Reclamation();
         reclamation.setEvent(new Event(idEvent, "test"));
+        
+        if (sujetReclam.getText().equals("")){
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ajout réclamation");
+        alert.setHeaderText("La réclamation n'a pas été ajouté");
+        alert.setContentText("Veuillez saisir le sujet  ");
+
+        }
+        if (explicationReclam.getText().equals(""))
+        {
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ajout réclamation");
+        alert.setHeaderText("La réclamation n'a pas été ajouté ");
+        alert.setContentText("Veuillez saisir l'explication ");
+        }
+        else
+        {
         reclamation.setTextReclam(explicationReclam.getText());
         reclamation.setSujetReclam(sujetReclam.getText());
         reclamation.setUser(UserSession.getUserSession()); 
@@ -172,7 +189,7 @@ public class ReclamationController implements Initializable {
                 app_stage.setScene(home_page_scene);
                 app_stage.show();
                 
-    }
+    }}
 
     @FXML
     private void init(ActionEvent event) {

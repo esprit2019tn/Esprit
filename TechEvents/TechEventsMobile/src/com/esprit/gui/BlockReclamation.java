@@ -41,6 +41,7 @@ public class BlockReclamation extends com.codename1.ui.Form {
 
     public void onBlockervtActionEvent(com.codename1.ui.events.ActionEvent ev)
     {
+        
      EmailSend.sendRepReclamation(ListReclamation.recStatic.getUser().getEmail(), ListReclamation.recStatic.getEvent());
 
         
