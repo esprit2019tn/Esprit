@@ -8,6 +8,7 @@ package View;
 import Dao.UserDao;
 import Entity.RoleUser;
 import Entity.User;
+import Metier.ControleUtility;
 import Metier.EmailSend;
 import Metier.UserSession;
 import com.jfoenix.controls.JFXDatePicker;
@@ -26,6 +27,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
@@ -97,6 +101,23 @@ public class InscriptionController implements Initializable {
     
         @FXML
     void onClick(ActionEvent event) throws IOException {
+            if(!ControleUtility.isEmailValid(email.getText()))
+                erreur.setText("Adresse e-mail invalide"); 
+            else if(!ControleUtility.isPasswordValid(password.getText())){
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Mot de passse invalide");
+                alert.setContentText("-un chiffre doit apparaître au moins une fois \n"
+                        + "-une lettre minuscule doit apparaître au moins une fois \n "
+                        + "-an upper case letter must occur at least once \n"
+                        + "-un caractère spécial doit apparaître au moins une fois \n"
+                        + "-aucun espace n'est autorisé dans toute la chaîne \n" 
+                        + "-au moins 8 caractères"
+                        );
+                alert.showAndWait();
+            }
+            else{
+            
         
         if(password.getText().equals(password1.getText())){
         
@@ -134,7 +155,7 @@ public class InscriptionController implements Initializable {
             erreur.setText("Les mots de passe ne correspondent pas");
         }
                
-        
+      }
     }
     
     

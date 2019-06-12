@@ -8,6 +8,7 @@ package View;
 import Dao.UserDao;
 import Entity.RoleUser;
 import Entity.User;
+import Metier.ControleUtility;
 import Metier.UserSession;
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +25,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
+import javafx.scene.input.ZoomEvent;
 import javafx.stage.Stage;
 
 /**
@@ -52,11 +55,15 @@ public class AuthentificationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
     }    
     
     @FXML
-    void connexion(ActionEvent event) throws IOException {     
-              UserDao userDao=new UserDao();
+    void connexion(ActionEvent event) throws IOException {   
+        if(!ControleUtility.isEmailValid(email.getText()))
+            Errors.setText("Adresse e-mail invalide"); 
+        else{
+        UserDao userDao=new UserDao();
         User user=userDao.findUser(email.getText(), password.getText());
         if(user==null){
              Errors.setText("Email ou mot de passe incorrect");
@@ -91,6 +98,7 @@ public class AuthentificationController implements Initializable {
             
 
         }
+      }
     }
 
     @FXML
@@ -117,6 +125,14 @@ public class AuthentificationController implements Initializable {
                 app_stage.show(); 
 
     }
+
+
+
+
+
+
+    
+
 
 
     
