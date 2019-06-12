@@ -5,8 +5,10 @@
  */
 package com.esprit.gui;
 
+import com.codename1.ui.Dialog;
 import com.esprit.Entity.RoleUser;
 import com.esprit.Entity.User;
+import com.esprit.Metier.ControleUtility;
 import com.esprit.Metier.EmailSend;
 import com.esprit.Service.ServiceUser;
 import java.util.Random;
@@ -39,6 +41,7 @@ public class Inscription extends com.codename1.ui.Form {
     protected com.codename1.ui.TextField gui_adresse = new com.codename1.ui.TextField();
     protected com.codename1.ui.TextField gui_motDePasse = new com.codename1.ui.TextField();
     protected com.codename1.ui.TextField gui_ConfMotDePasse = new com.codename1.ui.TextField();
+    protected com.codename1.ui.Label gui_erreur = new com.codename1.ui.Label();
     protected com.codename1.ui.Button gui_Inscrire = new com.codename1.ui.Button();
 
 
@@ -113,6 +116,10 @@ public class Inscription extends com.codename1.ui.Form {
                 gui_ConfMotDePasse.setInlineStylesTheme(resourceObjectInstance);
         gui_ConfMotDePasse.setName("ConfMotDePasse");
         gui_ConfMotDePasse.setConstraint(com.codename1.ui.TextArea.PASSWORD);
+        gui_erreur.setText(" ");
+                gui_erreur.setInlineStylesTheme(resourceObjectInstance);
+        gui_erreur.setInlineAllStyles("fgColor:f01501; alignment:center;");
+        gui_erreur.setName("erreur");
         gui_Inscrire.setText("S'inscrire");
                 gui_Inscrire.setInlineStylesTheme(resourceObjectInstance);
         gui_Inscrire.setName("Inscrire");
@@ -134,18 +141,40 @@ public class Inscription extends com.codename1.ui.Form {
         gui_Box_Layout_Y.addComponent(gui_adresse);
         gui_Box_Layout_Y.addComponent(gui_motDePasse);
         gui_Box_Layout_Y.addComponent(gui_ConfMotDePasse);
+        gui_Box_Layout_Y.addComponent(gui_erreur);
         gui_Box_Layout_Y.addComponent(gui_Inscrire);
         ((com.codename1.ui.layouts.LayeredLayout)gui_Box_Layout_Y.getParent().getLayout()).setInsets(gui_Box_Layout_Y, "0.0mm 0.0mm 0.0mm 0.0mm").setReferenceComponents(gui_Box_Layout_Y, "-1 -1 -1 -1").setReferencePositions(gui_Box_Layout_Y, "0.0 0.0 0.0 0.0");
     }// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
     public void onInscrireActionEvent(com.codename1.ui.events.ActionEvent ev) {
+
+
+        
+        //////////////////////
+        
+        
+        if(!ControleUtility.isEmailValid(gui_email.getText()))
+                gui_erreur.setText("Adresse e-mail invalide"); 
+            else if(!ControleUtility.isPasswordValid(gui_motDePasse.getText())){                               
+                       Dialog.show("Mot de passse invalide","-un chiffre doit apparaître au moins une fois \n"
+                        + "-une lettre minuscule doit apparaître au moins une fois \n "
+                        + "-une lettre majuscule doit apparaître au moins une fois \n"
+                        + "-un caractère spécial doit apparaître au moins une fois \n"
+                        + "-aucun espace n'est autorisé dans toute la chaîne \n" 
+                        + "-au moins 8 caractères", "OK",null);
+            }
+            else{
+            
+        
+        if(gui_motDePasse.getText().equals(gui_ConfMotDePasse.getText())){
+        
         String sexe=null;
         if(gui_homme.isSelected())
             sexe="Homme";
         else if(gui_femme.isSelected())
             sexe="Femme";
-        
+         
         Random rand = new Random();
         int randomNum = rand.nextInt((999999 - 100000) + 1) + 100000;
         String confirmationCode=String.valueOf(randomNum);
@@ -153,7 +182,13 @@ public class Inscription extends com.codename1.ui.Form {
         ServiceUser.ajoutUser(user);
         EmailSend.sendConfirmation(gui_email.getText(),confirmationCode);
         Authentification authentification =new Authentification();
-        authentification.show();    
+        authentification.show(); 
+        }
+        else{
+            gui_erreur.setText("Les mots de passe ne correspondent pas");
+        }
+               
+      }
     }
     
 

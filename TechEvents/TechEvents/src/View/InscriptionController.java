@@ -105,7 +105,7 @@ public class InscriptionController implements Initializable {
                 erreur.setText("Adresse e-mail invalide"); 
             else if(!ControleUtility.isPasswordValid(password.getText())){
                 Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error Dialog");
+                alert.setTitle("Erreur");
                 alert.setHeaderText("Mot de passse invalide");
                 alert.setContentText("-un chiffre doit apparaître au moins une fois \n"
                         + "-une lettre minuscule doit apparaître au moins une fois \n "
